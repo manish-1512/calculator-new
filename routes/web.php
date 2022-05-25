@@ -105,8 +105,65 @@ Route::get('/forgot-password', function () {
         Route::post('/store','TwoWheelerOneYearController@store')->name('store');
         Route::get('/edit/{id}','TwoWheelerOneYearController@edit')->name('edit');
         Route::delete('/delete/{id}','TwoWheelerOneYearController@destroy')->name('destroy');
+
+
+        Route::group(['prefix' => 'cc-tp','as'=>'cc_tp.'],function() {   
+
+            Route::get('/','TwoWheeler_cc_and_tp_Controller@index')->name('index');
+            Route::post('/store','TwoWheeler_cc_and_tp_Controller@store')->name('store');
+            Route::get('/edit/{id}','TwoWheeler_cc_and_tp_Controller@edit')->name('edit');
+            Route::delete('/delete/{id}','TwoWheeler_cc_and_tp_Controller@destroy')->name('destroy');
+            
+    
+        });
     });
 
+    Route::group(['prefix' => 'private-car','as'=>'private_car.'],function() {   
+
+        Route::get('/','PrivateCarController@index')->name('index');
+        Route::post('/store','PrivateCarController@store')->name('store');
+        Route::get('/edit/{id}','PrivateCarController@edit')->name('edit');
+        Route::delete('/delete/{id}','PrivateCarController@destroy')->name('destroy');
+
+        Route::group(['prefix' => 'cc-tp','as'=>'cc_tp.'],function() {   
+
+            Route::get('/','PrivateCar_cc_and_tp_Controller@index')->name('index');
+            Route::post('/store','PrivateCar_cc_and_tp_Controller@store')->name('store');
+            Route::get('/edit/{id}','PrivateCar_cc_and_tp_Controller@edit')->name('edit');
+            Route::delete('/delete/{id}','PrivateCar_cc_and_tp_Controller@destroy')->name('destroy');
+
+        });
+
+        Route::group(['prefix' => 'lpg-cng','as'=>'lpg_cng.'],function() {   
+
+            Route::get('/','PrivateCar_lpg_and_cng_Controller@index')->name('index');
+            Route::post('/store','PrivateCar_lpg_and_cng_Controller@store')->name('store');
+            Route::get('/edit/{id}','PrivateCar_lpg_and_cng_Controller@edit')->name('edit');
+            Route::delete('/delete/{id}','PrivateCar_lpg_and_cng_Controller@destroy')->name('destroy');
+
+        });
+
+
+    });
+
+    Route::group(['prefix' => 'goods-carrying-public','as'=>'goods_carrying_public.'],function() {   
+
+        Route::get('/','GoodsCarryingPublicController@index')->name('index');
+        Route::post('/store','GoodsCarryingPublicController@store')->name('store');
+        Route::get('/edit/{id}','GoodsCarryingPublicController@edit')->name('edit');
+        Route::delete('/delete/{id}','GoodsCarryingPublicController@destroy')->name('destroy');
+
+
+        Route::group(['prefix' => 'weight-tp','as'=>'weight_tp.'],function() {   
+
+            Route::get('/','GoodsCarryingPublicTpWeightRatesController@index')->name('index');
+            Route::post('/store','GoodsCarryingPublicTpWeightRatesController@store')->name('store');
+            Route::get('/edit/{id}','GoodsCarryingPublicTpWeightRatesController@edit')->name('edit');
+            Route::delete('/delete/{id}','GoodsCarryingPublicTpWeightRatesController@destroy')->name('destroy');
+
+        });
+
+    });
 
 
     
@@ -130,6 +187,12 @@ Route::get('/forgot-password', function () {
     Route::group(['prefix' => 'calculate-premium','as'=>'calculate_premium.'],function() {   
 
         Route::post('two-wheeler-one-year','Front\TwoWheelerOneYearController@calcuatePolicyPremiun');
+        Route::post('two-wheeler-five-year','Front\TwoWheelerFiveYearController@calcuatePolicyPremiun');
+        Route::post('electric-two-wheeler-one-year','Front\ElectricTwoWheelerOneYearController@calcuatePolicyPremiun');
+        Route::post('electric-two-wheeler-five-year','Front\ElectricTwoWheelerFiveYearController@calcuatePolicyPremiun');
+        Route::post('private-car-one-year','Front\PrivateCarOneYearController@calcuatePolicyPremiun');
+        Route::post('private-car-three-year','Front\PrivateCarThreeYearController@calcuatePolicyPremiun');
+        Route::post('goods-carrying-public','Front\GoodsCarryingPublicController@calcuatePolicyPremiun');
 
     });
 

@@ -28,7 +28,7 @@ class PoliciesController extends Controller
             'is_active' => "required|digits_between:0,1",
             'order' => "required|integer",
             'tag' => "sometimes|string",
-            'image' => 'required|image|mimes:png|max:1024',
+            'image' => 'required|image|mimes:png,jpg|max:1024',
         ]);
 
         if($validator->fails()){

@@ -8,13 +8,11 @@
 </script>
 
 <div class="row ">
-    <h3 class="text-center">Basic rates and tp charges details for 
-        Two Wheeler
+    <h3 class="text-center">LPG AND CNG CHARGES FOR PRIVATE  CAR
     </h3>
-    <div class="col-lg-12 margin-tb">
+    <div class="col-lg-12 margin-tb mx-auto ">
 
-   <button type="button" class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#add_policy">Add new Type</button>
-   <a href="{{route('admin.two_wheeler_one_year.cc_tp.index')}}" class="btn btn-info">CC And Tp For 2 Wheeler </a>
+      <button type="button" class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#add_policy">Add new Type</button>
 
 </div>
 
@@ -30,23 +28,23 @@
                   <th>Age  </th>
                   <th>Engine CC </th>
            
-                  <th>Vehicle Basic Rate</th>
+                  <th>Price</th>
                   <th>Action</th>
                 </tr>
               </thead>
          
-          @if ($two_wheeler_rate_chart !== null)
+          @if ( isset($private_car_lpg_cng_chart))
        
                <tbody>
 
-                @foreach ($two_wheeler_rate_chart as $key =>  $data)
+                @foreach ($private_car_lpg_cng_chart as $key =>  $data)
 
                   <tr>
                     <td>{{++$key}}</td>
                     <td>{{$data->zone}}</td>                       
                     <td>{{$data->age}}</td>
                     <td>{{$data->cubic}}</td>
-                    <td>{{$data->vehicle_basic_rate}}</td>
+                    <td>{{$data->price}}</td>
                     <td style="width: 220px;">
 
                         <form action="" method="POST">
@@ -80,21 +78,10 @@
                     
                 <div class="container" >
 
-                  <form action="{{route('admin.two_wheeler_one_year.store')}}"  method="POST" id="two_wheeler_create" enctype="multipart/form-data" >
+                  <form action="{{route('admin.private_car.lpg_cng.store')}}"  method="POST" id="private_car_lpg_cng_create" enctype="multipart/form-data" >
 
                           @csrf                  
 
-                    <div class="form-group">
-                      <label for="name">Select Policy</label>
-                      <select name="policy_id" id="" class="form-control" required> 
-                        @if($policies !== null)
-                            @foreach ( $policies as $policy)
-                            <option value="{{$policy->id}}">{{$policy->name}}</option>                              
-                            @endforeach
-                        @endif
-                      </select>
-                      <span class="text-danger error-text policy_id "></span>
-                    </div>
                     
                     <div class="form-group">
                       <label for="">Select Zone</label>
@@ -133,7 +120,7 @@
                       <select name="cc" id="" class="form-control" required> 
 
                         <option >Select CC</option>
-                        @foreach ($cc_and_tp_for_two_wheeler as $cc)
+                        @foreach ($cc_and_tp_for_private_car as $cc)
                         <option value="{{$cc->id}}">{{$cc->cc}}</option>
                         @endforeach
                         
@@ -147,9 +134,9 @@
 
 
                     <div class="form-group">
-                      <label for="image_order">Vehicle Basic Rate</label>
-                      <input type="text" class="form-control" value="" min="0" name="vehicle_basic_rate" required>
-                      <span class="text-danger error-text vehicle_basic_rate_error "></span>
+                      <label for="image_order">Price</label>
+                      <input type="text" class="form-control" value="" min="0" name="price" required>
+                      <span class="text-danger error-text price_error "></span>
                     </div>
 
                                
@@ -183,24 +170,14 @@
 
                     
                 <div class="container" >
-                <form action="{{route('admin.two_wheeler_one_year.store')}}"  method="POST" id="two_wheeler_update" enctype="multipart/form-data" >
+                <form action="{{route('admin.private_car.lpg_cng.store')}}"  method="POST" id="private_car_lpg_cng_update" enctype="multipart/form-data" >
                       @csrf                  
 
-                      <div class="form-group">
-                      <label for="name">Select Policy</label>
-                      <input type="text" name="id" id="edit_id">
-                      <select name="policy_id" id="edit_policy_id" class="form-control" required> 
-                      @if($policies !== null)
-                        @foreach ( $policies as $policy)
-                        <option value="{{$policy->id}}">{{$policy->name}}</option>                              
-                        @endforeach
-                      @endif
-                      </select>
-                      <span class="text-danger error-text policy_id "></span>
-                      </div>
+                      
 
                       <div class="form-group">
                       <label for="">Select Zone</label>
+                      <input type="text" name="id" id="edit_id">
                       <select name="zone" id="edit_zone" class="form-control" required> 
                         <option >Select Zone</option>
                         <option value="a">A</option>
@@ -235,7 +212,7 @@
                       <select name="cc" id="edit_cc" class="form-control" required> 
 
                         <option >Select CC</option>
-                        @foreach ($cc_and_tp_for_two_wheeler as $cc)
+                        @foreach ($cc_and_tp_for_private_car as $cc)
                         <option value="{{$cc->id}}">{{$cc->cc}}</option>
                         @endforeach
                         
@@ -247,12 +224,11 @@
 
 
                       <div class="form-group">
-                        <label for="image_order">Vehicle Basic Rate</label>
-                        <input type="text" class="form-control" value="" name="vehicle_basic_rate" min="0" id="edit_vehicle_basic_rate" required>
-                        <span class="text-danger error-text vehicle_basic_rate_error "></span>
+                        <label for="image_order">Price</label>
+                        <input type="text" class="form-control" value="" name="price" min="0" id="edit_price" required>
+                        <span class="text-danger error-text price_error "></span>
                       </div>
 
-                          
                       <button type="submit" class="btn btn-primary">Submit</button>
                       </form>
 
@@ -311,7 +287,7 @@
     
     $(document).ready( function(){
       
-      $("#two_wheeler_create").on('submit',function(e){
+      $("#private_car_lpg_cng_create").on('submit',function(e){
 
           e.preventDefault();
 
@@ -346,7 +322,7 @@
                             );
                       }else if(data.status == 200){
 
-                        $('#two_wheeler_create')[0].reset();
+                        $('#private_car_lpg_cng_create')[0].reset();
 
                         Swal.fire({
 
@@ -383,7 +359,7 @@
       $.ajax({
 
       type:"GET",
-      url:  "{{APP_PATH}}"+"admin/two-wheeler-one-year/edit/"+rate_chart_id,
+      url:  "{{APP_PATH}}"+"admin/private-car/lpg-cng/edit/"+rate_chart_id,
 
 
               success:function(response){
@@ -399,12 +375,11 @@
             }else{
 
                 $('#edit_id').val(rate_chart_id);
-                $('#edit_policy_id').val(response.two_wheeler_one_year_data.policy_id );
-                $('#edit_zone').val(response.two_wheeler_one_year_data.zone );
-                $('#edit_age').val(response.two_wheeler_one_year_data.age);
-                $('#edit_cc').val(response.two_wheeler_one_year_data.cc);
-                $('#edit_tp_one_year').val(response.two_wheeler_one_year_data.tp_one_year );
-                $('#edit_vehicle_basic_rate').val(response.two_wheeler_one_year_data.vehicle_basic_rate );
+                $('#edit_zone').val(response.private_car_lpg_cng_data.zone );
+                $('#edit_age').val(response.private_car_lpg_cng_data.age);
+                $('#edit_cc').val(response.private_car_lpg_cng_data.cc);
+               
+                $('#edit_price').val(response.private_car_lpg_cng_data.price );
                  
 
             }  
@@ -419,7 +394,7 @@
 
 
 
-$("#two_wheeler_update").on('submit',function(e){
+$("#private_car_lpg_cng_update").on('submit',function(e){
 
         e.preventDefault();
 
@@ -445,7 +420,7 @@ $("#two_wheeler_update").on('submit',function(e){
 
                     }else if(data.status == 200){
 
-                        $('#two_wheeler_update')[0].reset();
+                        $('#private_car_lpg_cng_update')[0].reset();
 
                         Swal.fire(
                                     'Good job!',
@@ -499,7 +474,7 @@ var policy_id = $('#delete_policy_id').val();
 $.ajax({
 
     type:"DELETE",
-    url: "{{APP_PATH}}"+"admin/two-wheeler-one-year/delete/"+policy_id,
+    url: "{{APP_PATH}}"+"admin/private-car/lpg-cng/delete/"+policy_id,
 
     data:{'_token': '{{ csrf_token() }}' },
 

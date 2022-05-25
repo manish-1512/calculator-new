@@ -8,13 +8,11 @@
 </script>
 
 <div class="row ">
-    <h3 class="text-center">Basic rates and tp charges details for 
-        Two Wheeler
-    </h3>
-    <div class="col-lg-12 margin-tb">
+    <h3 class="text-center"> Goods Carrying Vehicle Weight AND TP Rates  </h3>
+    <div class="col-lg-12 margin-tb mx-auto ">
 
-   <button type="button" class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#add_policy">Add new Type</button>
-   <a href="{{route('admin.two_wheeler_one_year.cc_tp.index')}}" class="btn btn-info">CC And Tp For 2 Wheeler </a>
+      <button type="button" class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#add_policy">Add New</button>
+      <a href="{{route('admin.goods_carrying_public.index')}}" class="btn btn-info">Go Back</a>
 
 </div>
 
@@ -26,32 +24,27 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Zone</th>
-                  <th>Age  </th>
-                  <th>Engine CC </th>
-           
-                  <th>Vehicle Basic Rate</th>
+                  <th>KG</th>
+                  <th>TP Rate</th>
                   <th>Action</th>
                 </tr>
               </thead>
          
-          @if ($two_wheeler_rate_chart !== null)
+          @if ( isset($goods_carrying_public_tp_rates))
        
                <tbody>
 
-                @foreach ($two_wheeler_rate_chart as $key =>  $data)
+                @foreach ($goods_carrying_public_tp_rates as $key =>  $data)
 
                   <tr>
                     <td>{{++$key}}</td>
-                    <td>{{$data->zone}}</td>                       
-                    <td>{{$data->age}}</td>
-                    <td>{{$data->cubic}}</td>
-                    <td>{{$data->vehicle_basic_rate}}</td>
+                    <td>{{$data->kilogram}}</td>                       
+                    <td>{{$data->tp_rate}}</td>
+                                
                     <td style="width: 220px;">
 
                         <form action="" method="POST">
-                          
-                       
+
                         <button type="button" data-bs-toggle="modal" data-bs-target="#edit_policy" class="edit_policy btn-sm  btn btn-primary "  value="{{$data->id }}" >Edit</button>
                         <button type="button" data-bs-toggle="modal" data-bs-target="#delete_policy" class="delete_policy btn-sm  btn btn-danger" value="{{$data->id }}" >Delete</button>
 
@@ -80,79 +73,22 @@
                     
                 <div class="container" >
 
-                  <form action="{{route('admin.two_wheeler_one_year.store')}}"  method="POST" id="two_wheeler_create" enctype="multipart/form-data" >
+                  <form action="{{route('admin.goods_carrying_public.weight_tp.store')}}"  method="POST" id="goods_carrying_weight_tp_create" enctype="multipart/form-data" >
 
-                          @csrf                  
+                          @csrf                
 
                     <div class="form-group">
-                      <label for="name">Select Policy</label>
-                      <select name="policy_id" id="" class="form-control" required> 
-                        @if($policies !== null)
-                            @foreach ( $policies as $policy)
-                            <option value="{{$policy->id}}">{{$policy->name}}</option>                              
-                            @endforeach
-                        @endif
-                      </select>
-                      <span class="text-danger error-text policy_id "></span>
-                    </div>
-                    
-                    <div class="form-group">
-                      <label for="">Select Zone</label>
-                      <select name="zone" id="" class="form-control" required> 
-
-                        <option >Select Zone</option>
-                        <option value="a">A</option>
-                          <option value="b">B</option>
-                      </select>
-                      <span class="text-danger error-text  zone_error "></span>
+                      <label for="image_order">Vehicle Weight</label>
+                      <input type="text" class="form-control" value="" name="kilogram" required>
+                      <span class="text-danger error-text kilogram_error "></span>
                     </div>
 
                     <div class="form-group">
-                      <label for="age">Vehicle  Age  </label>
-                      <select name="age" id="" class="form-control" required> 
-
-                        <option >Select Age</option>
-
-                        <option value="0_to_5">Up to 5 years</option>
-                        <option value="5_to_10">5 to 10 years</option>
-                        <option value="10_to_more"> > 10 years</option>
-                        
-                      </select>
-                      <span class="text-danger error-text age_error "></span>
+                      <label for="image_order">TP Rate </label>
+                      <input type="text" class="form-control" value="" min="0" name="tp_rate" required>
+                      <span class="text-danger error-text tp_rate_error "></span>
                     </div>
 
-                    <!-- <div class="form-group">
-                      <label for="image_order">Vehicle  Age   (<) Year  </label>
-                      <input type="number" class="form-control" value="" name="age_lessthen" min="0" required>
-                      <span class="text-danger error-text age_lessthen_error "></span>
-                    </div> -->
-
-                    <div class="form-group">
-                      <label for="cc">Vehicle  Engine  </label>
-
-                      <select name="cc" id="" class="form-control" required> 
-
-                        <option >Select CC</option>
-                        @foreach ($cc_and_tp_for_two_wheeler as $cc)
-                        <option value="{{$cc->id}}">{{$cc->cc}}</option>
-                        @endforeach
-                        
-                        
-                      </select>
-
-                      <span class="text-danger error-text cc_error "></span>
-                    </div>
-
-                   
-
-
-                    <div class="form-group">
-                      <label for="image_order">Vehicle Basic Rate</label>
-                      <input type="text" class="form-control" value="" min="0" name="vehicle_basic_rate" required>
-                      <span class="text-danger error-text vehicle_basic_rate_error "></span>
-                    </div>
-
-                               
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </form>
 
@@ -183,74 +119,22 @@
 
                     
                 <div class="container" >
-                <form action="{{route('admin.two_wheeler_one_year.store')}}"  method="POST" id="two_wheeler_update" enctype="multipart/form-data" >
+                <form action="{{route('admin.goods_carrying_public.weight_tp.store')}}"  method="POST" id="two_wheeler_update" enctype="multipart/form-data" >
                       @csrf                  
 
+                    
                       <div class="form-group">
-                      <label for="name">Select Policy</label>
+                      <label for="image_order">Vehicle Weight</label>
                       <input type="text" name="id" id="edit_id">
-                      <select name="policy_id" id="edit_policy_id" class="form-control" required> 
-                      @if($policies !== null)
-                        @foreach ( $policies as $policy)
-                        <option value="{{$policy->id}}">{{$policy->name}}</option>                              
-                        @endforeach
-                      @endif
-                      </select>
-                      <span class="text-danger error-text policy_id "></span>
-                      </div>
-
-                      <div class="form-group">
-                      <label for="">Select Zone</label>
-                      <select name="zone" id="edit_zone" class="form-control" required> 
-                        <option >Select Zone</option>
-                        <option value="a">A</option>
-                        <option value="b">B</option>
-                      </select>
-                      <span class="text-danger error-text  zone_error "></span>
-                      </div>
-
-                      <div class="form-group">
-                      <label for="age">Vehicle  Age  </label>
-                      <select name="age" id="edit_age" class="form-control" required> 
-
-                        <option >Select Zone</option>
-
-                        <option value="0_to_5">Up to 5 years</option>
-                        <option value="5_to_10">5 to 10 years</option>
-                        <option value="10_to_more"> > 10 years</option>
-                        
-                      </select>
-                      <span class="text-danger error-text age_error "></span>
+                      <input type="text" class="form-control" value="" name="kilogram" id="edit_kilogram" required>
+                      <span class="text-danger error-text kilogram_error "></span>
                     </div>
-
-                    <!-- <div class="form-group">
-                      <label for="image_order">Vehicle  Age   (<) Year  </label>
-                      <input type="number" class="form-control" value="" name="age_lessthen" min="0" required>
-                      <span class="text-danger error-text age_lessthen_error "></span>
-                    </div> -->
 
                     <div class="form-group">
-                      <label for="cc">Vehicle  Engine  </label>
-
-                      <select name="cc" id="edit_cc" class="form-control" required> 
-
-                        <option >Select CC</option>
-                        @foreach ($cc_and_tp_for_two_wheeler as $cc)
-                        <option value="{{$cc->id}}">{{$cc->cc}}</option>
-                        @endforeach
-                        
-                        
-                      </select>
-
-                      <span class="text-danger error-text cc_error "></span>
+                      <label for="image_order">TP Rate </label>
+                      <input type="text" class="form-control" value="" min="0" name="tp_rate" id="edit_tp_rate" required>
+                      <span class="text-danger error-text tp_rate_error "></span>
                     </div>
-
-
-                      <div class="form-group">
-                        <label for="image_order">Vehicle Basic Rate</label>
-                        <input type="text" class="form-control" value="" name="vehicle_basic_rate" min="0" id="edit_vehicle_basic_rate" required>
-                        <span class="text-danger error-text vehicle_basic_rate_error "></span>
-                      </div>
 
                           
                       <button type="submit" class="btn btn-primary">Submit</button>
@@ -277,7 +161,7 @@
   <div class="modal-dialog ">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete Policy</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Delete </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
         <div class="modal-body">
@@ -311,7 +195,7 @@
     
     $(document).ready( function(){
       
-      $("#two_wheeler_create").on('submit',function(e){
+      $("#goods_carrying_weight_tp_create").on('submit',function(e){
 
           e.preventDefault();
 
@@ -346,7 +230,7 @@
                             );
                       }else if(data.status == 200){
 
-                        $('#two_wheeler_create')[0].reset();
+                        $('#goods_carrying_weight_tp_create')[0].reset();
 
                         Swal.fire({
 
@@ -383,7 +267,7 @@
       $.ajax({
 
       type:"GET",
-      url:  "{{APP_PATH}}"+"admin/two-wheeler-one-year/edit/"+rate_chart_id,
+      url:  "{{APP_PATH}}"+"admin/goods-carrying-public/weight-tp/edit/"+rate_chart_id,
 
 
               success:function(response){
@@ -399,12 +283,8 @@
             }else{
 
                 $('#edit_id').val(rate_chart_id);
-                $('#edit_policy_id').val(response.two_wheeler_one_year_data.policy_id );
-                $('#edit_zone').val(response.two_wheeler_one_year_data.zone );
-                $('#edit_age').val(response.two_wheeler_one_year_data.age);
-                $('#edit_cc').val(response.two_wheeler_one_year_data.cc);
-                $('#edit_tp_one_year').val(response.two_wheeler_one_year_data.tp_one_year );
-                $('#edit_vehicle_basic_rate').val(response.two_wheeler_one_year_data.vehicle_basic_rate );
+                $('#edit_kilogram').val(response.goods_carrying_public_tp_data.kilogram);
+                $('#edit_tp_rate').val(response.goods_carrying_public_tp_data.tp_rate);
                  
 
             }  
@@ -499,7 +379,7 @@ var policy_id = $('#delete_policy_id').val();
 $.ajax({
 
     type:"DELETE",
-    url: "{{APP_PATH}}"+"admin/two-wheeler-one-year/delete/"+policy_id,
+    url: "{{APP_PATH}}"+"admin/goods-carrying-public/weight-tp/delete/"+policy_id,
 
     data:{'_token': '{{ csrf_token() }}' },
 

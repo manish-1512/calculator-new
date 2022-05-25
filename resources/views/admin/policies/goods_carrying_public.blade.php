@@ -8,13 +8,13 @@
 </script>
 
 <div class="row ">
-    <h3 class="text-center">Basic rates and tp charges details for 
-        Two Wheeler
+    <h3 class="text-center text-uppercase">Basic rates for goods Carriyng vehicle Public 
     </h3>
-    <div class="col-lg-12 margin-tb">
+    <div class="col-lg-12 margin-tb mx-auto ">
 
-   <button type="button" class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#add_policy">Add new Type</button>
-   <a href="{{route('admin.two_wheeler_one_year.cc_tp.index')}}" class="btn btn-info">CC And Tp For 2 Wheeler </a>
+      <button type="button" class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#add_policy">Add new Type</button>
+
+      <a href="{{route('admin.goods_carrying_public.weight_tp.index')}}" class="btn btn-warning mb-2">show TP rates goods carrying Vehicle</a>
 
 </div>
 
@@ -27,25 +27,22 @@
                 <tr>
                   <th>#</th>
                   <th>Zone</th>
-                  <th>Age  </th>
-                  <th>Engine CC </th>
-           
+                  <th>Age  </th>        
                   <th>Vehicle Basic Rate</th>
                   <th>Action</th>
                 </tr>
               </thead>
          
-          @if ($two_wheeler_rate_chart !== null)
+          @if (isset($goods_carrying_data))
        
                <tbody>
 
-                @foreach ($two_wheeler_rate_chart as $key =>  $data)
+                @foreach ($goods_carrying_data as $key =>  $data)
 
                   <tr>
                     <td>{{++$key}}</td>
                     <td>{{$data->zone}}</td>                       
                     <td>{{$data->age}}</td>
-                    <td>{{$data->cubic}}</td>
                     <td>{{$data->vehicle_basic_rate}}</td>
                     <td style="width: 220px;">
 
@@ -80,7 +77,7 @@
                     
                 <div class="container" >
 
-                  <form action="{{route('admin.two_wheeler_one_year.store')}}"  method="POST" id="two_wheeler_create" enctype="multipart/form-data" >
+                  <form action="{{route('admin.goods_carrying_public.store')}}"  method="POST" id="goods_carrying_public_create" enctype="multipart/form-data" >
 
                           @csrf                  
 
@@ -102,7 +99,8 @@
 
                         <option >Select Zone</option>
                         <option value="a">A</option>
-                          <option value="b">B</option>
+                        <option value="b">B</option>
+                        <option value="c">C</option>
                       </select>
                       <span class="text-danger error-text  zone_error "></span>
                     </div>
@@ -114,36 +112,14 @@
                         <option >Select Age</option>
 
                         <option value="0_to_5">Up to 5 years</option>
-                        <option value="5_to_10">5 to 10 years</option>
-                        <option value="10_to_more"> > 10 years</option>
+                        <option value="5_to_7">5 to 7 years</option>
+                        <option value="7_to_more"> > 7 years</option>
                         
                       </select>
                       <span class="text-danger error-text age_error "></span>
                     </div>
 
-                    <!-- <div class="form-group">
-                      <label for="image_order">Vehicle  Age   (<) Year  </label>
-                      <input type="number" class="form-control" value="" name="age_lessthen" min="0" required>
-                      <span class="text-danger error-text age_lessthen_error "></span>
-                    </div> -->
-
-                    <div class="form-group">
-                      <label for="cc">Vehicle  Engine  </label>
-
-                      <select name="cc" id="" class="form-control" required> 
-
-                        <option >Select CC</option>
-                        @foreach ($cc_and_tp_for_two_wheeler as $cc)
-                        <option value="{{$cc->id}}">{{$cc->cc}}</option>
-                        @endforeach
-                        
-                        
-                      </select>
-
-                      <span class="text-danger error-text cc_error "></span>
-                    </div>
-
-                   
+          
 
 
                     <div class="form-group">
@@ -183,7 +159,7 @@
 
                     
                 <div class="container" >
-                <form action="{{route('admin.two_wheeler_one_year.store')}}"  method="POST" id="two_wheeler_update" enctype="multipart/form-data" >
+                <form action="{{route('admin.goods_carrying_public.store')}}"  method="POST" id="goods_carrying_public_update" enctype="multipart/form-data" >
                       @csrf                  
 
                       <div class="form-group">
@@ -205,6 +181,7 @@
                         <option >Select Zone</option>
                         <option value="a">A</option>
                         <option value="b">B</option>
+                        <option value="c">C</option>
                       </select>
                       <span class="text-danger error-text  zone_error "></span>
                       </div>
@@ -214,11 +191,9 @@
                       <select name="age" id="edit_age" class="form-control" required> 
 
                         <option >Select Zone</option>
-
                         <option value="0_to_5">Up to 5 years</option>
-                        <option value="5_to_10">5 to 10 years</option>
-                        <option value="10_to_more"> > 10 years</option>
-                        
+                        <option value="5_to_7">5 to 7 years</option>
+                        <option value="7_to_more"> > 7 years</option>     
                       </select>
                       <span class="text-danger error-text age_error "></span>
                     </div>
@@ -229,21 +204,7 @@
                       <span class="text-danger error-text age_lessthen_error "></span>
                     </div> -->
 
-                    <div class="form-group">
-                      <label for="cc">Vehicle  Engine  </label>
-
-                      <select name="cc" id="edit_cc" class="form-control" required> 
-
-                        <option >Select CC</option>
-                        @foreach ($cc_and_tp_for_two_wheeler as $cc)
-                        <option value="{{$cc->id}}">{{$cc->cc}}</option>
-                        @endforeach
-                        
-                        
-                      </select>
-
-                      <span class="text-danger error-text cc_error "></span>
-                    </div>
+                   
 
 
                       <div class="form-group">
@@ -311,7 +272,7 @@
     
     $(document).ready( function(){
       
-      $("#two_wheeler_create").on('submit',function(e){
+      $("#goods_carrying_public_create").on('submit',function(e){
 
           e.preventDefault();
 
@@ -346,7 +307,7 @@
                             );
                       }else if(data.status == 200){
 
-                        $('#two_wheeler_create')[0].reset();
+                        $('#goods_carrying_public_create')[0].reset();
 
                         Swal.fire({
 
@@ -383,7 +344,7 @@
       $.ajax({
 
       type:"GET",
-      url:  "{{APP_PATH}}"+"admin/two-wheeler-one-year/edit/"+rate_chart_id,
+      url:  "{{APP_PATH}}"+"admin/goods-carrying-public/edit/"+rate_chart_id,
 
 
               success:function(response){
@@ -399,12 +360,10 @@
             }else{
 
                 $('#edit_id').val(rate_chart_id);
-                $('#edit_policy_id').val(response.two_wheeler_one_year_data.policy_id );
-                $('#edit_zone').val(response.two_wheeler_one_year_data.zone );
-                $('#edit_age').val(response.two_wheeler_one_year_data.age);
-                $('#edit_cc').val(response.two_wheeler_one_year_data.cc);
-                $('#edit_tp_one_year').val(response.two_wheeler_one_year_data.tp_one_year );
-                $('#edit_vehicle_basic_rate').val(response.two_wheeler_one_year_data.vehicle_basic_rate );
+                $('#edit_policy_id').val(response.goods_carrying_public_data.policy_id );
+                $('#edit_zone').val(response.goods_carrying_public_data.zone );
+                $('#edit_age').val(response.goods_carrying_public_data.age);
+                $('#edit_vehicle_basic_rate').val(response.goods_carrying_public_data.vehicle_basic_rate );
                  
 
             }  
@@ -419,7 +378,7 @@
 
 
 
-$("#two_wheeler_update").on('submit',function(e){
+$("#goods_carrying_public_update").on('submit',function(e){
 
         e.preventDefault();
 
@@ -445,7 +404,7 @@ $("#two_wheeler_update").on('submit',function(e){
 
                     }else if(data.status == 200){
 
-                        $('#two_wheeler_update')[0].reset();
+                        $('#goods_carrying_public_update')[0].reset();
 
                         Swal.fire(
                                     'Good job!',
@@ -499,7 +458,7 @@ var policy_id = $('#delete_policy_id').val();
 $.ajax({
 
     type:"DELETE",
-    url: "{{APP_PATH}}"+"admin/two-wheeler-one-year/delete/"+policy_id,
+    url: "{{APP_PATH}}"+"admin/goods-carrying-public/delete/"+policy_id,
 
     data:{'_token': '{{ csrf_token() }}' },
 

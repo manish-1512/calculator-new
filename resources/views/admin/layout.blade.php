@@ -317,8 +317,22 @@ table.dataTable thead .sorting_desc_disabled:before {
                   
                   </a>
               </li> 
-             
-          </li>
+              <li class="nav-item">                       
+                  <a href="{{route('admin.private_car.index')}}" class="nav-link {{  (request()->segment(3) =='social')? 'active':''; }} ">
+                  <!-- <i class="far fa-circle nav-icon"></i> -->
+                  <p>  PRIVATE CAR PREMIUM </p>
+                  
+                  </a>
+              </li> 
+
+              <li class="nav-item">                       
+                  <a href="{{route('admin.goods_carrying_public.index')}}" class="nav-link {{  (request()->segment(3) =='social')? 'active':''; }} ">
+                  <!-- <i class="far fa-circle nav-icon"></i> -->
+                  <p>GOODS CARRYING (other then 3 Wheeler)  </p>
+                  </a>
+              </li> 
+            </ul>
+           </li>
 
 
 
