@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Models\GoodsCarryingVehicle_public_other_then_three_wheeler;
-use App\Models\GoodsCarryingVehicle_public_other_then_three_wheeler_tp_rates;
+use App\Models\GoodsCarryingVehicle_private_other_then_three_wheeler;
+use App\Models\GoodsCarryingVehicle_private_other_then_three_wheeler_tp_rates;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class GoodsCarryingPublicController extends Controller
+class GoodsCarryingPrivateController extends Controller
 {
     public function calcuatePolicyPremiun(Request $request){
 
@@ -56,11 +57,11 @@ class GoodsCarryingPublicController extends Controller
              
                     $ll_to_employee_other_then_paid_driver = $request->ll_to_employee_other_then_paid_driver;
                     
-                    $chart =  GoodsCarryingVehicle_public_other_then_three_wheeler::where('zone',$request->zone)->where('age',$request->age)->first();
+                    $chart =  GoodsCarryingVehicle_private_other_then_three_wheeler::where('zone',$request->zone)->where('age',$request->age)->first();
                    
                     //od premium
                     //to be continue
-                         $tp_charges =  GoodsCarryingVehicle_public_other_then_three_wheeler_tp_rates::where('id',$request->gross_vehicle_weight)->first();           
+                         $tp_charges =  GoodsCarryingVehicle_private_other_then_three_wheeler_tp_rates::where('id',$request->gross_vehicle_weight)->first();           
 
                                 $idv = $request->idv;
                                 $zone = $request->zone;
@@ -155,14 +156,14 @@ class GoodsCarryingPublicController extends Controller
                         "restriccted_tppd" =>  $restriccted_tppd,
                         "lpg_cng_kit" => $lpg_cng_kit,
                                                
-                        "total_b" => ($basic_tp + $request->pa_to_owner_driver + $request->ll_to_paid_driver + $lpg_cng_kit - $restriccted_tppd )
+                        "total_b" => ($basic_tp + $request->pa_to_owner_driver + $request->ll_to_paid_driver  + $request->ll_to_employee_other_then_paid_driver+ $lpg_cng_kit - $restriccted_tppd )
 
                     ];
 
 
                     $premium_before_gst=  $own_damage_premium['total_a'] + $liablity_premium['total_b'];
                      $gst_on_basic_tp =  ( ($basic_tp - $restriccted_tppd )* 12  / 100);
-                     $gst_on_rest_others =  ( $net_own_damage_premium * 18  / 100);
+                     $gst_on_rest_others =  ( $net_own_damage_premium * 18  / 100);// this is not confirm
 
                       $total_premium = [
 

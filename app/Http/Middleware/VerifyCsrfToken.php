@@ -12,6 +12,11 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'register','login','calculate-premium/two-wheeler-one-year','calculate-premium/two-wheeler-five-year','calculate-premium/private-car-one-year','calculate-premium/private-car-three-year','calculate-premium/goods-carrying-public'
+        'register','login','calculate-premium/two-wheeler-one-year',
+        'calculate-premium/two-wheeler-five-year',
+        'calculate-premium/private-car-one-year',
+        'calculate-premium/private-car-three-year',
+        'calculate-premium/goods-carrying-public',
+        'calculate-premium/goods-carrying-private'
     ];
 }

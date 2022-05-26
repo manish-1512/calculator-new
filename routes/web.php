@@ -165,6 +165,48 @@ Route::get('/forgot-password', function () {
 
     });
 
+    Route::group(['prefix' => 'goods-carrying-private','as'=>'goods_carrying_private.'],function() {   
+
+        Route::get('/','GoodsCarryingPrivateController@index')->name('index');
+        Route::post('/store','GoodsCarryingPrivateController@store')->name('store');
+        Route::get('/edit/{id}','GoodsCarryingPrivateController@edit')->name('edit');
+        Route::delete('/delete/{id}','GoodsCarryingPrivateController@destroy')->name('destroy');
+
+
+        Route::group(['prefix' => 'weight-tp','as'=>'weight_tp.'],function() {   
+
+            Route::get('/','GoodsCarryingPrivateTpWeightRatesController@index')->name('index');
+            Route::post('/store','GoodsCarryingPrivateTpWeightRatesController@store')->name('store');
+            Route::get('/edit/{id}','GoodsCarryingPrivateTpWeightRatesController@edit')->name('edit');
+            Route::delete('/delete/{id}','GoodsCarryingPrivateTpWeightRatesController@destroy')->name('destroy');
+
+        });
+
+    });
+
+    Route::group(['prefix' => 'three-wheeler-goods-carrying-public','as'=>'three_wheeler_goods_carrying_public.'],function() {   
+
+        Route::get('/','ThreeWheelerGoodsCarryingPublicController@index')->name('index');
+        Route::post('/store','ThreeWheelerGoodsCarryingPublicController@store')->name('store');
+        Route::get('/edit/{id}','ThreeWheelerGoodsCarryingPublicController@edit')->name('edit');
+        Route::delete('/delete/{id}','ThreeWheelerGoodsCarryingPublicController@destroy')->name('destroy');
+        
+    });
+
+    Route::group(['prefix' => 'three-wheeler-goods-carrying-private','as'=>'three_wheeler_goods_carrying_private.'],function() {   
+
+        Route::get('/','ThreeWheelerGoodsCarryingPrivateController@index')->name('index');
+        Route::post('/store','ThreeWheelerGoodsCarryingPrivateController@store')->name('store');
+        Route::get('/edit/{id}','ThreeWheelerGoodsCarryingPrivateController@edit')->name('edit');
+        Route::delete('/delete/{id}','ThreeWheelerGoodsCarryingPrivateController@destroy')->name('destroy');
+        
+
+    });
+
+
+
+
+
 
     
  });
@@ -193,6 +235,7 @@ Route::get('/forgot-password', function () {
         Route::post('private-car-one-year','Front\PrivateCarOneYearController@calcuatePolicyPremiun');
         Route::post('private-car-three-year','Front\PrivateCarThreeYearController@calcuatePolicyPremiun');
         Route::post('goods-carrying-public','Front\GoodsCarryingPublicController@calcuatePolicyPremiun');
+        Route::post('goods-carrying-private','Front\GoodsCarryingPrivateController@calcuatePolicyPremiun');
 
     });
 

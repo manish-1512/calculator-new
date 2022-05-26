@@ -8,11 +8,11 @@
 </script>
 
 <div class="row ">
-    <h3 class="text-center"> Goods Carrying Vehicle Public Weight AND TP Rates  </h3>
+    <h3 class="text-center"> Goods Carrying Vehicle Private Weight AND TP Rates  </h3>
     <div class="col-lg-12 margin-tb mx-auto ">
 
       <button type="button" class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#add_policy">Add New</button>
-      <a href="{{route('admin.goods_carrying_public.index')}}" class="btn btn-info">Go Back</a>
+      <a href="{{route('admin.goods_carrying_private.index')}}" class="btn btn-info">Go Back</a>
 
 </div>
 
@@ -30,11 +30,11 @@
                 </tr>
               </thead>
          
-          @if ( isset($goods_carrying_public_tp_rates))
+          @if ( isset($goods_carrying_private_tp_rates))
        
                <tbody>
 
-                @foreach ($goods_carrying_public_tp_rates as $key =>  $data)
+                @foreach ($goods_carrying_private_tp_rates as $key =>  $data)
 
                   <tr>
                     <td>{{++$key}}</td>
@@ -73,7 +73,7 @@
                     
                 <div class="container" >
 
-                  <form action="{{route('admin.goods_carrying_public.weight_tp.store')}}"  method="POST" id="goods_carrying_weight_tp_create" enctype="multipart/form-data" >
+                  <form action="{{route('admin.goods_carrying_private.weight_tp.store')}}"  method="POST" id="goods_carrying_weight_tp_create" enctype="multipart/form-data" >
 
                           @csrf                
 
@@ -119,7 +119,7 @@
 
                     
                 <div class="container" >
-                <form action="{{route('admin.goods_carrying_public.weight_tp.store')}}"  method="POST" id="two_wheeler_update" enctype="multipart/form-data" >
+                <form action="{{route('admin.goods_carrying_private.weight_tp.store')}}"  method="POST" id="two_wheeler_update" enctype="multipart/form-data" >
                       @csrf                  
 
                     
@@ -267,7 +267,7 @@
       $.ajax({
 
       type:"GET",
-      url:  "{{APP_PATH}}"+"admin/goods-carrying-public/weight-tp/edit/"+rate_chart_id,
+      url:  "{{APP_PATH}}"+"admin/goods-carrying-private/weight-tp/edit/"+rate_chart_id,
 
 
               success:function(response){
@@ -283,8 +283,8 @@
             }else{
 
                 $('#edit_id').val(rate_chart_id);
-                $('#edit_kilogram').val(response.goods_carrying_public_tp_data.kilogram);
-                $('#edit_tp_rate').val(response.goods_carrying_public_tp_data.tp_rate);
+                $('#edit_kilogram').val(response.goods_carrying_private_tp_data.kilogram);
+                $('#edit_tp_rate').val(response.goods_carrying_private_tp_data.tp_rate);
                  
 
             }  
@@ -379,7 +379,7 @@ var policy_id = $('#delete_policy_id').val();
 $.ajax({
 
     type:"DELETE",
-    url: "{{APP_PATH}}"+"admin/goods-carrying-public/weight-tp/delete/"+policy_id,
+    url: "{{APP_PATH}}"+"admin/goods-carrying-private/weight-tp/delete/"+policy_id,
 
     data:{'_token': '{{ csrf_token() }}' },
 

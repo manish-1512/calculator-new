@@ -8,11 +8,13 @@
 </script>
 
 <div class="row ">
-    <h3 class="text-center"> Goods Carrying Vehicle Public Weight AND TP Rates  </h3>
+    <h3 class="text-center text-uppercase">Basic rates for goods Carriyng vehicle Private 
+    </h3>
     <div class="col-lg-12 margin-tb mx-auto ">
 
-      <button type="button" class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#add_policy">Add New</button>
-      <a href="{{route('admin.goods_carrying_public.index')}}" class="btn btn-info">Go Back</a>
+      <button type="button" class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#add_policy">Add new Type</button>
+
+      <a href="{{route('admin.goods_carrying_private.weight_tp.index')}}" class="btn btn-warning mb-2">show TP rates goods carrying Vehicle</a>
 
 </div>
 
@@ -24,27 +26,29 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>KG</th>
-                  <th>TP Rate</th>
+                  <th>Zone</th>
+                  <th>Age  </th>        
+                  <th>Vehicle Basic Rate</th>
                   <th>Action</th>
                 </tr>
               </thead>
          
-          @if ( isset($goods_carrying_public_tp_rates))
+          @if (isset($goods_carrying_data))
        
                <tbody>
 
-                @foreach ($goods_carrying_public_tp_rates as $key =>  $data)
+                @foreach ($goods_carrying_data as $key =>  $data)
 
                   <tr>
                     <td>{{++$key}}</td>
-                    <td>{{$data->kilogram}}</td>                       
-                    <td>{{$data->tp_rate}}</td>
-                                
+                    <td>{{$data->zone}}</td>                       
+                    <td>{{$data->age}}</td>
+                    <td>{{$data->vehicle_basic_rate}}</td>
                     <td style="width: 220px;">
 
                         <form action="" method="POST">
-
+                          
+                       
                         <button type="button" data-bs-toggle="modal" data-bs-target="#edit_policy" class="edit_policy btn-sm  btn btn-primary "  value="{{$data->id }}" >Edit</button>
                         <button type="button" data-bs-toggle="modal" data-bs-target="#delete_policy" class="delete_policy btn-sm  btn btn-danger" value="{{$data->id }}" >Delete</button>
 
@@ -73,22 +77,58 @@
                     
                 <div class="container" >
 
-                  <form action="{{route('admin.goods_carrying_public.weight_tp.store')}}"  method="POST" id="goods_carrying_weight_tp_create" enctype="multipart/form-data" >
+                  <form action="{{route('admin.goods_carrying_private.store')}}"  method="POST" id="goods_carrying_private_create" enctype="multipart/form-data" >
 
-                          @csrf                
+                          @csrf                  
 
                     <div class="form-group">
-                      <label for="image_order">Vehicle Weight</label>
-                      <input type="text" class="form-control" value="" name="kilogram" required>
-                      <span class="text-danger error-text kilogram_error "></span>
+                      <label for="name">Select Policy</label>
+                      <select name="policy_id" id="" class="form-control" required> 
+                        @if($policies !== null)
+                            @foreach ( $policies as $policy)
+                            <option value="{{$policy->id}}">{{$policy->name}}</option>                              
+                            @endforeach
+                        @endif
+                      </select>
+                      <span class="text-danger error-text policy_id "></span>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="">Select Zone</label>
+                      <select name="zone" id="" class="form-control" required> 
+
+                        <option >Select Zone</option>
+                        <option value="a">A</option>
+                        <option value="b">B</option>
+                        <option value="c">C</option>
+                      </select>
+                      <span class="text-danger error-text  zone_error "></span>
                     </div>
 
                     <div class="form-group">
-                      <label for="image_order">TP Rate </label>
-                      <input type="text" class="form-control" value="" min="0" name="tp_rate" required>
-                      <span class="text-danger error-text tp_rate_error "></span>
+                      <label for="age">Vehicle  Age  </label>
+                      <select name="age" id="" class="form-control" required> 
+
+                        <option >Select Age</option>
+
+                        <option value="0_to_5">Up to 5 years</option>
+                        <option value="5_to_7">5 to 7 years</option>
+                        <option value="7_to_more"> > 7 years</option>
+                        
+                      </select>
+                      <span class="text-danger error-text age_error "></span>
                     </div>
 
+          
+
+
+                    <div class="form-group">
+                      <label for="image_order">Vehicle Basic Rate</label>
+                      <input type="text" class="form-control" value="" min="0" name="vehicle_basic_rate" required>
+                      <span class="text-danger error-text vehicle_basic_rate_error "></span>
+                    </div>
+
+                               
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </form>
 
@@ -119,22 +159,59 @@
 
                     
                 <div class="container" >
-                <form action="{{route('admin.goods_carrying_public.weight_tp.store')}}"  method="POST" id="two_wheeler_update" enctype="multipart/form-data" >
+                <form action="{{route('admin.goods_carrying_private.store')}}"  method="POST" id="goods_carrying_private_update" enctype="multipart/form-data" >
                       @csrf                  
 
-                    
                       <div class="form-group">
-                      <label for="image_order">Vehicle Weight</label>
+                      <label for="name">Select Policy</label>
                       <input type="text" name="id" id="edit_id">
-                      <input type="text" class="form-control" value="" name="kilogram" id="edit_kilogram" required>
-                      <span class="text-danger error-text kilogram_error "></span>
+                      <select name="policy_id" id="edit_policy_id" class="form-control" required> 
+                      @if($policies !== null)
+                        @foreach ( $policies as $policy)
+                        <option value="{{$policy->id}}">{{$policy->name}}</option>                              
+                        @endforeach
+                      @endif
+                      </select>
+                      <span class="text-danger error-text policy_id "></span>
+                      </div>
+
+                      <div class="form-group">
+                      <label for="">Select Zone</label>
+                      <select name="zone" id="edit_zone" class="form-control" required> 
+                        <option >Select Zone</option>
+                        <option value="a">A</option>
+                        <option value="b">B</option>
+                        <option value="c">C</option>
+                      </select>
+                      <span class="text-danger error-text  zone_error "></span>
+                      </div>
+
+                      <div class="form-group">
+                      <label for="age">Vehicle  Age  </label>
+                      <select name="age" id="edit_age" class="form-control" required> 
+
+                        <option >Select Zone</option>
+                        <option value="0_to_5">Up to 5 years</option>
+                        <option value="5_to_7">5 to 7 years</option>
+                        <option value="7_to_more"> > 7 years</option>     
+                      </select>
+                      <span class="text-danger error-text age_error "></span>
                     </div>
 
-                    <div class="form-group">
-                      <label for="image_order">TP Rate </label>
-                      <input type="text" class="form-control" value="" min="0" name="tp_rate" id="edit_tp_rate" required>
-                      <span class="text-danger error-text tp_rate_error "></span>
-                    </div>
+                    <!-- <div class="form-group">
+                      <label for="image_order">Vehicle  Age   (<) Year  </label>
+                      <input type="number" class="form-control" value="" name="age_lessthen" min="0" required>
+                      <span class="text-danger error-text age_lessthen_error "></span>
+                    </div> -->
+
+                   
+
+
+                      <div class="form-group">
+                        <label for="image_order">Vehicle Basic Rate</label>
+                        <input type="text" class="form-control" value="" name="vehicle_basic_rate" min="0" id="edit_vehicle_basic_rate" required>
+                        <span class="text-danger error-text vehicle_basic_rate_error "></span>
+                      </div>
 
                           
                       <button type="submit" class="btn btn-primary">Submit</button>
@@ -161,7 +238,7 @@
   <div class="modal-dialog ">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete </h5>
+        <h5 class="modal-title" id="exampleModalLabel">Delete Policy</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
         <div class="modal-body">
@@ -195,7 +272,7 @@
     
     $(document).ready( function(){
       
-      $("#goods_carrying_weight_tp_create").on('submit',function(e){
+      $("#goods_carrying_private_create").on('submit',function(e){
 
           e.preventDefault();
 
@@ -230,7 +307,7 @@
                             );
                       }else if(data.status == 200){
 
-                        $('#goods_carrying_weight_tp_create')[0].reset();
+                        $('#goods_carrying_private_create')[0].reset();
 
                         Swal.fire({
 
@@ -267,7 +344,7 @@
       $.ajax({
 
       type:"GET",
-      url:  "{{APP_PATH}}"+"admin/goods-carrying-public/weight-tp/edit/"+rate_chart_id,
+      url:  "{{APP_PATH}}"+"admin/goods-carrying-private/edit/"+rate_chart_id,
 
 
               success:function(response){
@@ -283,8 +360,10 @@
             }else{
 
                 $('#edit_id').val(rate_chart_id);
-                $('#edit_kilogram').val(response.goods_carrying_public_tp_data.kilogram);
-                $('#edit_tp_rate').val(response.goods_carrying_public_tp_data.tp_rate);
+                $('#edit_policy_id').val(response.goods_carrying_private_data.policy_id );
+                $('#edit_zone').val(response.goods_carrying_private_data.zone );
+                $('#edit_age').val(response.goods_carrying_private_data.age);
+                $('#edit_vehicle_basic_rate').val(response.goods_carrying_private_data.vehicle_basic_rate );
                  
 
             }  
@@ -299,7 +378,7 @@
 
 
 
-$("#two_wheeler_update").on('submit',function(e){
+$("#goods_carrying_private_update").on('submit',function(e){
 
         e.preventDefault();
 
@@ -325,7 +404,7 @@ $("#two_wheeler_update").on('submit',function(e){
 
                     }else if(data.status == 200){
 
-                        $('#two_wheeler_update')[0].reset();
+                        $('#goods_carrying_private_update')[0].reset();
 
                         Swal.fire(
                                     'Good job!',
@@ -379,7 +458,7 @@ var policy_id = $('#delete_policy_id').val();
 $.ajax({
 
     type:"DELETE",
-    url: "{{APP_PATH}}"+"admin/goods-carrying-public/weight-tp/delete/"+policy_id,
+    url: "{{APP_PATH}}"+"admin/goods-carrying-private/delete/"+policy_id,
 
     data:{'_token': '{{ csrf_token() }}' },
 
@@ -407,10 +486,4 @@ $.ajax({
 
 
 @endsection
-
-
-
- 
-
-
 
