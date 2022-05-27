@@ -17,6 +17,10 @@ class VerifyCsrfToken extends Middleware
         'calculate-premium/private-car-one-year',
         'calculate-premium/private-car-three-year',
         'calculate-premium/goods-carrying-public',
-        'calculate-premium/goods-carrying-private'
+        'calculate-premium/goods-carrying-private',
+        'calculate-premium/three-wheeler-goods-carrying-public',
+        'calculate-premium/three-wheeler-goods-carrying-private',
+        'calculate-premium/three-wheeler-pcv-upto-6-passengers',
+        'calculate-premium/three-wheeler-pcv-upto-17-passengers',
     ];
 }

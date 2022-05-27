@@ -203,6 +203,39 @@ Route::get('/forgot-password', function () {
 
     });
 
+    Route::group(['prefix' => 'three-wheeler-pcv-upto-6-passengers','as'=>'three_wheeler_pcv_upto_6_passengers.'],function() {   
+        Route::get('/','ThreeWheelerPCV_UpTo_6_PassengersController@index')->name('index');
+        Route::post('/store','ThreeWheelerPCV_UpTo_6_PassengersController@store')->name('store');
+        Route::get('/edit/{id}','ThreeWheelerPCV_UpTo_6_PassengersController@edit')->name('edit');
+        Route::delete('/delete/{id}','ThreeWheelerPCV_UpTo_6_PassengersController@destroy')->name('destroy');
+    });
+
+    Route::group(['prefix' => 'three-wheeler-pcv-upto-17-passengers','as'=>'three_wheeler_pcv_upto_17_passengers.'],function() {   
+        Route::get('/','ThreeWheelerPCV_UpTo_17_PassengersController@index')->name('index');
+        Route::post('/store','ThreeWheelerPCV_UpTo_17_PassengersController@store')->name('store');
+        Route::get('/edit/{id}','ThreeWheelerPCV_UpTo_17_PassengersController@edit')->name('edit');
+        Route::delete('/delete/{id}','ThreeWheelerPCV_UpTo_17_PassengersController@destroy')->name('destroy');
+    });
+
+    Route::group(['prefix' => 'four-wheeler-upto-6-passengers-taxi','as'=>'four_wheeler_upto_6_passengers_taxi.'],function() {   
+        Route::get('/','FourWheeler_UpTo_6_Passengers_Taxi_Controller@index')->name('index');
+        Route::post('/store','FourWheeler_UpTo_6_Passengers_Taxi_Controller@store')->name('store');
+        Route::get('/edit/{id}','FourWheeler_UpTo_6_Passengers_Taxi_Controller@edit')->name('edit');
+        Route::delete('/delete/{id}','FourWheeler_UpTo_6_Passengers_Taxi_Controller@destroy')->name('destroy');
+
+
+        Route::group(['prefix' => 'tp','as'=>'tp.'],function() {   
+
+            Route::get('/','FourWheeler_UpTo_6_Passengers_Taxi_CC_TP_Controller@index')->name('index');
+            Route::post('/store','FourWheeler_UpTo_6_Passengers_Taxi_CC_TP_Controller@store')->name('store');
+            Route::get('/edit/{id}','FourWheeler_UpTo_6_Passengers_Taxi_CC_TP_Controller@edit')->name('edit');
+            Route::delete('/delete/{id}','FourWheeler_UpTo_6_Passengers_Taxi_CC_TP_Controller@destroy')->name('destroy');
+
+        });
+
+
+    });
+
 
 
 
@@ -236,6 +269,13 @@ Route::get('/forgot-password', function () {
         Route::post('private-car-three-year','Front\PrivateCarThreeYearController@calcuatePolicyPremiun');
         Route::post('goods-carrying-public','Front\GoodsCarryingPublicController@calcuatePolicyPremiun');
         Route::post('goods-carrying-private','Front\GoodsCarryingPrivateController@calcuatePolicyPremiun');
+
+        Route::post('three-wheeler-goods-carrying-public','Front\ThreeWheelerGoodsCarryingPublicController@calcuatePolicyPremiun');
+        Route::post('three-wheeler-goods-carrying-private','Front\ThreeWheelerGoodsCarryingPrivateController@calcuatePolicyPremiun');
+
+        Route::post('three-wheeler-pcv-upto-6-passengers','Front\ThreeWheelerPCV_Upto_6_PassangersController@calcuatePolicyPremiun');
+        Route::post('three-wheeler-pcv-upto-17-passengers','Front\ThreeWheelerPCV_Upto_17_PassangersController@calcuatePolicyPremiun');
+
 
     });
 

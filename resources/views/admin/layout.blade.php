@@ -301,7 +301,7 @@ table.dataTable thead .sorting_desc_disabled:before {
           </li>
           <!--  -->
           <li class="nav-item">
-            <a href="{{route('admin.moter_policies.index')}}" class="nav-link {{  (request()->segment(2) =='user-management')? 'active':''; }} ">
+            <a href="{{route('admin.moter_policies.index')}}" class="nav-link {{  (request()->segment(2) =='moter-policies')? 'active':''; }} ">
             <img  src="{{asset('images/policy.png')}}" alt="" height="25" width="30">
               <p class="ps-3"> MOTER POLICIES </p>
             </a>
@@ -316,14 +316,14 @@ table.dataTable thead .sorting_desc_disabled:before {
             <ul class="nav nav-treeview " >
 
               <li class="nav-item">                       
-                  <a href="{{route('admin.two_wheeler_one_year.index')}}" class="nav-link {{  (request()->segment(3) =='social')? 'active':''; }} ">
+                  <a href="{{route('admin.two_wheeler_one_year.index')}}" class="nav-link {{  (request()->segment(2) =='two-wheeler-one-year')? 'active':''; }} ">
                   <!-- <i class="far fa-circle nav-icon"></i> -->
                   <p>  TWO WHEELER PREMIUM </p>
                   
                   </a>
               </li> 
               <li class="nav-item">                       
-                  <a href="{{route('admin.private_car.index')}}" class="nav-link {{  (request()->segment(3) =='social')? 'active':''; }} ">
+                  <a href="{{route('admin.private_car.index')}}" class="nav-link {{  (request()->segment(2) =='private-car')? 'active':''; }} ">
                   <!-- <i class="far fa-circle nav-icon"></i> -->
                   <p>  PRIVATE CAR PREMIUM </p>
                   
@@ -331,28 +331,47 @@ table.dataTable thead .sorting_desc_disabled:before {
               </li> 
 
               <li class="nav-item">                       
-                  <a href="{{route('admin.goods_carrying_public.index')}}" class="nav-link {{  (request()->segment(3) =='social')? 'active':''; }} ">
+                  <a href="{{route('admin.goods_carrying_public.index')}}" class="nav-link {{  (request()->segment(2) =='goods-carrying-public')? 'active':''; }} ">
                   <!-- <i class="far fa-circle nav-icon"></i> -->
                   <p>GOODS CARRYING PUBLIC (other then 3 Wheeler)  </p>
                   </a>
               </li> 
 
               <li class="nav-item">                       
-                  <a href="{{route('admin.goods_carrying_private.index')}}" class="nav-link {{  (request()->segment(3) =='social')? 'active':''; }} ">
+                  <a href="{{route('admin.goods_carrying_private.index')}}" class="nav-link {{  (request()->segment(2) =='goods-carrying-private')? 'active':''; }} ">
                   <!-- <i class="far fa-circle nav-icon"></i> -->
                   <p>GOODS CARRYING PRIVATE (other then 3 Wheeler)  </p>
                   </a>
               </li> 
               <li class="nav-item">                       
-                  <a href="{{route('admin.three_wheeler_goods_carrying_public.index')}}" class="nav-link {{  (request()->segment(3) =='social')? 'active':''; }} ">
+                  <a href="{{route('admin.three_wheeler_goods_carrying_public.index')}}" class="nav-link {{  (request()->segment(2) =='three-wheeler-goods-carrying-public')? 'active':''; }} ">
                   <!-- <i class="far fa-circle nav-icon"></i> -->
                   <p>THREE WHEELER GOODS CARRYING PUBLIC  </p>
                   </a>
               </li> 
               <li class="nav-item">                       
-                  <a href="{{route('admin.three_wheeler_goods_carrying_private.index')}}" class="nav-link {{  (request()->segment(3) =='social')? 'active':''; }} ">
+                  <a href="{{route('admin.three_wheeler_goods_carrying_private.index')}}" class="nav-link {{  (request()->segment(2) =='three-wheeler-goods-carrying-private')? 'active':''; }} ">
                   <!-- <i class="far fa-circle nav-icon"></i> -->
                   <p>THREE WHEELER GOODS CARRYING PRIVATE  </p>
+                  </a>
+              </li> 
+
+              <li class="nav-item">                       
+                  <a href="{{route('admin.three_wheeler_pcv_upto_6_passengers.index')}}" class="nav-link {{  (request()->segment(2) =='three-wheeler-pcv-upto-6-passengers')? 'active':''; }} ">
+                  <!-- <i class="far fa-circle nav-icon"></i> -->
+                  <p>THREE WHEELER PCV UP TO 6 PASSENGERS </p>
+                  </a>
+              </li> 
+              <li class="nav-item">                       
+                  <a href="{{route('admin.three_wheeler_pcv_upto_17_passengers.index')}}" class="nav-link {{  (request()->segment(2) =='three-wheeler-pcv-upto-17-passengers')? 'active':''; }} ">
+                  <!-- <i class="far fa-circle nav-icon"></i> -->
+                  <p>THREE WHEELER PCV > 6 UP TO 17 PASSENGERS </p>
+                  </a>
+              </li> 
+              <li class="nav-item">                       
+                  <a href="{{route('admin.four_wheeler_upto_6_passengers_taxi.index')}}" class="nav-link {{  (request()->segment(2) =='three-wheeler-pcv-upto-17-passengers')? 'active':''; }} ">
+                  <!-- <i class="far fa-circle nav-icon"></i> -->
+                  <p>FOUR WHEELER UP TO 6 PASSENGERS TAXI </p>
                   </a>
               </li> 
             </ul>

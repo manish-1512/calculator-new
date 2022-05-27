@@ -8,7 +8,7 @@
 </script>
 
 <div class="row ">
-    <h3 class="text-center text-uppercase">Basic Rates And Tp for  Three Wheeler goods Carriyng vehicle Public 
+    <h3 class="text-center text-uppercase">Basic Rates And Tp for  Three Wheeler goods Carriyng vehicle Private 
     </h3>
     <div class="col-lg-12 margin-tb mx-auto ">
 
@@ -435,8 +435,6 @@ $("#goods_carrying_private_update").on('submit',function(e){
                     }
 
                 } 
-
-
 
         });
 
