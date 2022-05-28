@@ -21,7 +21,6 @@ class UserController extends Controller
             'email' => "required|unique:users,email,email,id",
             'password' => "required|confirmed|min:6",
             'phone' => "required|between:10,10",
-            'm_pin' => "required|between:4,4"
         ]);
 
         if($validator->fails()){
@@ -38,7 +37,7 @@ class UserController extends Controller
                     "email" => $request->email,
                     "password" => bcrypt($request->password),
                     "phone" => $request->phone,
-                    "m_pin" => bcrypt($request->m_pin)
+
               ]);
 
         return response()->json([
@@ -56,7 +55,6 @@ class UserController extends Controller
     public function login(Request $request){
         
         $credentials = $request->validate([
-
             'email' => 'required|email',
             'password' => 'required',
         ]); 

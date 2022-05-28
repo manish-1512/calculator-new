@@ -10,7 +10,23 @@ use Illuminate\Support\Facades\Validator as FacadesValidator;
 
 class ElectricTwoWheelerOneYearController extends Controller
 {
-    public function calcuatePolicyPremiun(Request $request){
+
+    public function twoWheelerCcData(){
+
+        $two_wheeler_cc = Two_wheeler_cc_tp::get();
+
+        return response()->json([
+
+            'status' => 200,
+            'data' =>$two_wheeler_cc
+
+        ]);
+
+    }
+
+
+
+    public function calcuatePolicyPremium(Request $request){
 
 
         $validator = FacadesValidator::make($request->all(), [   

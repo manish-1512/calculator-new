@@ -22,5 +22,15 @@ class VerifyCsrfToken extends Middleware
         'calculate-premium/three-wheeler-goods-carrying-private',
         'calculate-premium/three-wheeler-pcv-upto-6-passengers',
         'calculate-premium/three-wheeler-pcv-upto-17-passengers',
+        'calculate-premium/four-wheeler-upto-6-passengers-taxi',
+
+
+
+
+
+        'calculate-premium/two-wheeler-cc-data',
+        'calculate-premium/private-car-cc-data',
+        'calculate-premium/goods-carrying-public-kg-tp-rate',
+
     ];
 }

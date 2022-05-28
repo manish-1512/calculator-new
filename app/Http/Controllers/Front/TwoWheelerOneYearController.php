@@ -10,8 +10,22 @@ use Illuminate\Support\Facades\Validator;
 
 class TwoWheelerOneYearController extends Controller
 
-{
-    public function calcuatePolicyPremiun(Request $request){
+{   
+    public function twoWheelerCcData(){
+
+        $two_wheeler_cc = Two_wheeler_cc_tp::select('id','cc')->get();
+
+        return response()->json([
+
+            'status' => 200,
+            'data' =>$two_wheeler_cc
+
+        ]);
+
+    }
+
+
+    public function calcuatePolicyPremium(Request $request){
 
 
         $validator = Validator::make($request->all(), [   

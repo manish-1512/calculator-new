@@ -9,8 +9,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class GoodsCarryingPublicController extends Controller
+
 {
-    public function calcuatePolicyPremiun(Request $request){
+
+      public function kgTpRate(){
+
+              $kg_cc_data =  GoodsCarryingVehicle_public_other_then_three_wheeler_tp_rates::select('id','kilogram')->get();
+              
+        return response()->json([
+            'status' => 200,
+            'data' =>$kg_cc_data
+        ]);
+    
+  }  
+
+
+
+    public function calcuatePolicyPremium(Request $request){
 
 
         $validator = Validator::make($request->all(), [  
@@ -24,7 +39,7 @@ class GoodsCarryingPublicController extends Controller
             'electrical_accessories' => "required", 
             'lpg_cng_kit' => "required",
             'external_lpg_cng_kit_price'=> "required",  
-            // 'geographical_ext' => "required",         
+             // 'geographical_ext' => "required",         
             'imt_23' => "required",
             'no_claim_bonus' => 'required|numeric',
             'pa_to_owner_driver' => "required|numeric",
@@ -41,13 +56,6 @@ class GoodsCarryingPublicController extends Controller
 
         }else{
 
-              
-                    
-             
-                    
-    
-               
-                  
                     
                     // $geographical_ext =$request->geographical_ext;             
            

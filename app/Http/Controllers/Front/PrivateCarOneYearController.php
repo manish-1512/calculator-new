@@ -10,7 +10,19 @@ use Illuminate\Support\Facades\Validator;
 
 class PrivateCarOneYearController extends Controller
 {
-    public function calcuatePolicyPremiun(Request $request){
+
+    public function carCcData(){
+
+        $private_car_cc = PrivateCar_cc_tp::select('id','cc')->get();
+
+        return response()->json([
+            'status' => 200,
+            'data' =>$private_car_cc
+        ]);
+    }
+
+
+        public function calcuatePolicyPremium(Request $request){
 
 
         $validator = Validator::make($request->all(), [   
@@ -18,7 +30,7 @@ class PrivateCarOneYearController extends Controller
             'depreciation' => "required|numeric",
             'discount_on_od_premium' => "required|numeric",
             'accessories_value' => "required|numeric",
-            'age_of_vehicle' => "required",
+            'age' => "required",
             'zone' => "required",
             'cc' => "required",
             'electrical_accessories' => "required", 

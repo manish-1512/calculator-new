@@ -374,6 +374,12 @@ table.dataTable thead .sorting_desc_disabled:before {
                   <p>FOUR WHEELER UP TO 6 PASSENGERS TAXI </p>
                   </a>
               </li> 
+              <li class="nav-item">                       
+                  <a href="{{route('admin.four_wheeler_bus_above_6_passengers_basic_rates.index')}}" class="nav-link {{  (request()->segment(2) =='three-wheeler-pcv-upto-17-passengers')? 'active':''; }} ">
+                  <!-- <i class="far fa-circle nav-icon"></i> -->
+                  <p>FOUR WHEELER ABOVE 6 PASSENGERS BUS </p>
+                  </a>
+              </li> 
             </ul>
            </li>
 

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class PrivateCarThreeYearController extends Controller
 {
-    public function calcuatePolicyPremiun(Request $request){
+    public function calcuatePolicyPremium(Request $request){
 
 
         $validator = Validator::make($request->all(), [   

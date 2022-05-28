@@ -11,7 +11,7 @@ class ThreeWheelerPCV_Upto_17_PassangersController extends Controller
 {
       //18 % gst is verry  
 
-      public function calcuatePolicyPremiun(Request $request){
+      public function calcuatePolicyPremium(Request $request){
 
 
         $validator = Validator::make($request->all(), [  
