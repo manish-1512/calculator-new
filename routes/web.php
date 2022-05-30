@@ -306,7 +306,9 @@ Route::get('/forgot-password', function () {
         Route::post('three-wheeler-pcv-upto-17-passengers','Front\ThreeWheelerPCV_Upto_17_PassangersController@calcuatePolicyPremium');
 
         Route::post('four-wheeler-upto-6-passengers-taxi','Front\FourWheeler_Upto_6_PassangersTaxiController@calcuatePolicyPremium');
+        Route::post('four-wheeler-above-6-passengers-bus','Front\FourWheeler_Above_6_PassangersBusController@calcuatePolicyPremium');
         
+
 
 
     });
