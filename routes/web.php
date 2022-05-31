@@ -254,6 +254,13 @@ Route::get('/forgot-password', function () {
 
 
 
+    Route::group(['prefix' => 'misc-special-vehicles','as'=>'misc_special_vehicles.'],function() {   
+        Route::get('/','MiscSpecialVehiclesController@index')->name('index');
+        Route::post('/store','MiscSpecialVehiclesController@store')->name('store');
+        Route::get('/edit/{id}','MiscSpecialVehiclesController@edit')->name('edit');
+        Route::delete('/delete/{id}','MiscSpecialVehiclesController@destroy')->name('destroy');
+    });
+
 
 
 
@@ -283,8 +290,8 @@ Route::get('/forgot-password', function () {
 
         Route::post('two-wheeler-five-year','Front\TwoWheelerFiveYearController@calcuatePolicyPremium');
 
-        Route::post('electric-two-wheeler-one-year','Front\ElectricTwoWheelerOneYearController@calcuatePolicyPremium');
-        Route::post('electric-two-wheeler-five-year','Front\ElectricTwoWheelerFiveYearController@calcuatePolicyPremium');
+        // Route::post('electric-two-wheeler-one-year','Front\ElectricTwoWheelerOneYearController@calcuatePolicyPremium');
+        // Route::post('electric-two-wheeler-five-year','Front\ElectricTwoWheelerFiveYearController@calcuatePolicyPremium');
 
         Route::post('private-car-one-year','Front\PrivateCarOneYearController@calcuatePolicyPremium');
         Route::post('private-car-three-year','Front\PrivateCarThreeYearController@calcuatePolicyPremium');
@@ -298,16 +305,21 @@ Route::get('/forgot-password', function () {
         //this route for same one four wheeler one year and three year for dynamic gross_vehicle_weight field 
         
         Route::post('goods-carrying-public-kg-tp-rate','Front\GoodsCarryingPublicController@kgTpRate');
+        Route::post('goods-carrying-private-kg-tp-rate','Front\GoodsCarryingPrivateController@kgTpRate');
+
 
         Route::post('three-wheeler-goods-carrying-public','Front\ThreeWheelerGoodsCarryingPublicController@calcuatePolicyPremium');
+
         Route::post('three-wheeler-goods-carrying-private','Front\ThreeWheelerGoodsCarryingPrivateController@calcuatePolicyPremium');
 
         Route::post('three-wheeler-pcv-upto-6-passengers','Front\ThreeWheelerPCV_Upto_6_PassangersController@calcuatePolicyPremium');
         Route::post('three-wheeler-pcv-upto-17-passengers','Front\ThreeWheelerPCV_Upto_17_PassangersController@calcuatePolicyPremium');
 
         Route::post('four-wheeler-upto-6-passengers-taxi','Front\FourWheeler_Upto_6_PassangersTaxiController@calcuatePolicyPremium');
-        Route::post('four-wheeler-above-6-passengers-bus','Front\FourWheeler_Above_6_PassangersBusController@calcuatePolicyPremium');
-        
+
+        Route::post('four-wheeler-above-6-passengers-bus','Front\FourWheeler_Above_6_PassangersBusController@calcuatePolicyPremium');   
+
+        Route::post('four-wheeler-above-6-school-bus','Front\FourWheeler_Above_6_SchoolBusController@calcuatePolicyPremium');        
 
 
 

@@ -23,9 +23,7 @@ class ThreeWheelerPCV_Upto_6_PassangersController extends Controller
             "no_of_passengers" => "required|integer",
             'discount_on_od_premium' => "required|numeric",
             'electrical_accessories' => "required", 
-            'lpg_cng_kit' => "required",
-            'external_lpg_cng_kit_price'=> "required",  
-           
+            'lpg_cng_kit' => "required",           
             'imt_23' => "required",
             'no_claim_bonus' => 'required|numeric',
             'pa_to_owner_driver' => "required|numeric",
@@ -63,11 +61,11 @@ class ThreeWheelerPCV_Upto_6_PassangersController extends Controller
                                 
                                 $electrical_accessories = (($request->electrical_accessories * 4) / 100 );
 
-                                $lpg_cng_kit = ($request->lpg_cng_kit == 1)? 60 : 0 ;  //this will ad on liblity premium
+                                $lpg_cng_kit = ($request->lpg_cng_kit * 4 ) / 100;
 
-                                $external_lpg_cng_kit_price = ($request->external_lpg_cng_kit_price * 4 ) / 100;
+                               
 
-                                $basic_od_premium = $basic_for_vehicle + $electrical_accessories + $external_lpg_cng_kit_price;
+                                $basic_od_premium = $basic_for_vehicle + $electrical_accessories + $lpg_cng_kit;
 
                                 $imt_23 = ($request->imt_23 == 1) ?  ( ( ($basic_od_premium ) * 15) /100 ) : 0;
 
@@ -99,7 +97,7 @@ class ThreeWheelerPCV_Upto_6_PassangersController extends Controller
                                 "basic_for_vehicle" => $basic_for_vehicle   ,
                                 "electrical_accessories" => $electrical_accessories ,
                            
-                                "external_cng_lpg_price" => $external_lpg_cng_kit_price,
+                                "cng_lpg_price" => $lpg_cng_kit,
                                 "basic_od_premium" => $basic_od_premium,
                                 'imt_23' => $imt_23,
 
@@ -119,6 +117,7 @@ class ThreeWheelerPCV_Upto_6_PassangersController extends Controller
                           $restriccted_tppd =  ( $request->restriccted_tppd == 1)? 150 : 0;
                           $passenger_coverage = ($chart->per_passengers_rate * $request->no_of_passengers);
                        
+                          $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? 60 :0;
 
                     $liablity_premium = [
 
@@ -128,9 +127,9 @@ class ThreeWheelerPCV_Upto_6_PassangersController extends Controller
                         "ll_to_paid_driver" => $request->ll_to_paid_driver,
 
                         "restriccted_tppd" =>  $restriccted_tppd,
-                        "lpg_cng_kit" => $lpg_cng_kit,
+                        "lpg_cng_kit" => $lpg_cng_liablity,
                                                
-                        "total_b" => ($basic_tp + $request->pa_to_owner_driver + $passenger_coverage+$request->ll_to_paid_driver + $lpg_cng_kit - $restriccted_tppd )
+                        "total_b" => ($basic_tp + $request->pa_to_owner_driver + $passenger_coverage+$request->ll_to_paid_driver + $lpg_cng_liablity - $restriccted_tppd )
 
                     ];
 

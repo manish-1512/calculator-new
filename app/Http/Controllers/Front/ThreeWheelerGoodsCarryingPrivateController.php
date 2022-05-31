@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Validator;
 
 class ThreeWheelerGoodsCarryingPrivateController extends Controller
 {
-   //18 % gst is verry  
+    //18 % gst is verry  
+
+
+
 
    public function calcuatePolicyPremium(Request $request){
 
@@ -20,18 +23,16 @@ class ThreeWheelerGoodsCarryingPrivateController extends Controller
         'depreciation' => "required|numeric",
         'age' => "required",
         'zone' => "required",
-        'gross_vehicle_weight' => "required",
+      
         'discount_on_od_premium' => "required|numeric",
         'electrical_accessories' => "required", 
-        'lpg_cng_kit' => "required",
-        'external_lpg_cng_kit_price'=> "required",  
-       
+        'lpg_cng_kit' => "required",       
         'imt_23' => "required",
         'no_claim_bonus' => 'required|numeric',
         'pa_to_owner_driver' => "required|numeric",
         'll_to_paid_driver' => "required|numeric",
         // 'zero_deprication' => "required|numeric",
-        'restriccted_tppd' => "required|between:0,1",
+
         
     ]);
 
@@ -59,11 +60,11 @@ class ThreeWheelerGoodsCarryingPrivateController extends Controller
                             
                             $electrical_accessories = (($request->electrical_accessories * 4) / 100 );
 
-                            $lpg_cng_kit = ($request->lpg_cng_kit == 1)? 60 : 0 ;  //this will ad on liblity premium
+                       
 
-                            $external_lpg_cng_kit_price = ($request->external_lpg_cng_kit_price * 4 ) / 100;
+                            $lpg_cng_kit = ($request->lpg_cng_kit * 4 ) / 100;
 
-                            $basic_od_premium = $basic_for_vehicle + $electrical_accessories + $external_lpg_cng_kit_price;
+                            $basic_od_premium = $basic_for_vehicle + $electrical_accessories + $lpg_cng_kit;
 
                             $imt_23 = ($request->imt_23 == 1) ?  ( ( ($basic_od_premium ) * 15) /100 ) : 0;
 
@@ -95,7 +96,7 @@ class ThreeWheelerGoodsCarryingPrivateController extends Controller
                             "basic_for_vehicle" => $basic_for_vehicle   ,
                             "electrical_accessories" => $electrical_accessories ,
                        
-                            "external_cng_lpg_price" => $external_lpg_cng_kit_price,
+                            "cng_lpg_price" => $lpg_cng_kit,
                             "basic_od_premium" => $basic_od_premium,
                             'imt_23' => $imt_23,
 
@@ -105,15 +106,15 @@ class ThreeWheelerGoodsCarryingPrivateController extends Controller
                             "basic_od_before_ncb" =>$basic_od_before_ncb,
                             "no_claim_bonus" =>  $no_claim_bonus,
 
-                            "net_own_damage_premium" => $net_own_damage_premium ,
+                            "net_own_damage_premium" => round($net_own_damage_premium ,2),
                             "total_a" => $total  ,
                            
                             "as" => $chart
 
                 ];
 
-                      $restriccted_tppd =  ( $request->restriccted_tppd == 1)? 150 : 0;
-                   
+                      
+                $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? 60 :0;
 
                 $liablity_premium = [
 
@@ -121,16 +122,15 @@ class ThreeWheelerGoodsCarryingPrivateController extends Controller
                     "pa_owner_driver" => $request->pa_to_owner_driver,
                     "ll_to_paid_driver" => $request->ll_to_paid_driver,
 
-                    "restriccted_tppd" =>  $restriccted_tppd,
-                    "lpg_cng_kit" => $lpg_cng_kit,
+                    "lpg_cng_kit" => $lpg_cng_liablity,
                                            
-                    "total_b" => ($basic_tp + $request->pa_to_owner_driver + $request->ll_to_paid_driver + $lpg_cng_kit - $restriccted_tppd )
+                    "total_b" => ($basic_tp + $request->pa_to_owner_driver + $request->ll_to_paid_driver + $lpg_cng_liablity  )
 
                 ];
 
 
                 $premium_before_gst=  $own_damage_premium['total_a'] + $liablity_premium['total_b'];
-                 $gst_on_basic_tp =  ( ($basic_tp - $restriccted_tppd )* 12  / 100);
+                 $gst_on_basic_tp =  ( ($basic_tp  )* 12  / 100);
                  $gst_on_rest_others =  ( $net_own_damage_premium * 18  / 100);
 
                   $total_premium = [

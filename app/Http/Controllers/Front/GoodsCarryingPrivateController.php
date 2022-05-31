@@ -11,6 +11,20 @@ use Illuminate\Support\Facades\Validator;
 
 class GoodsCarryingPrivateController extends Controller
 {
+
+
+    public function kgTpRate(){
+
+        $kg_tp_data =  GoodsCarryingVehicle_private_other_then_three_wheeler_tp_rates::select('id','kilogram')->get();
+        
+    return response()->json([
+        'status' => 200,
+        'data' =>$kg_tp_data
+    ]);
+
+}  
+
+
     public function calcuatePolicyPremium(Request $request){
 
 
@@ -32,7 +46,7 @@ class GoodsCarryingPrivateController extends Controller
             'll_to_paid_driver' => "required|numeric",
             'll_to_employee_other_then_paid_driver' => "required|numeric",
             // 'zero_deprication' => "required|numeric",
-            'restriccted_tppd' => "required|between:0,1",
+            // 'restriccted_tppd' => "required|between:0,1",
             
         ]);
 

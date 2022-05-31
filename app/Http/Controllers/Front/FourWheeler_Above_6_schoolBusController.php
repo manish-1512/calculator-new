@@ -1,17 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\Front;
-
-use App\Http\Controllers\Controller;
 use App\Models\Four_wheeler_above_6_passengers_bus_basic_rates;
 use App\Models\Four_wheeler_above_6_passengers_bus_tp_additional_rates;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class FourWheeler_Above_6_PassangersBusController extends Controller
+class FourWheeler_Above_6_schoolBusController extends Controller
 {
     
- 
+     
 
  public function calcuatePolicyPremium(Request $request){
 
@@ -51,10 +50,7 @@ class FourWheeler_Above_6_PassangersBusController extends Controller
                
                 $bus_basic_rate =  Four_wheeler_above_6_passengers_bus_basic_rates::where('zone',$request->zone)->where('age',$request->age)->first();
                 $bus_tp_rate_additional = Four_wheeler_above_6_passengers_bus_tp_additional_rates::where('id',$request->seating_capacity)->first();
-
-
-                //od premium
-                //to be continue
+            
 
                             $idv = $request->idv;
                             $zone = $request->zone;
@@ -88,7 +84,7 @@ class FourWheeler_Above_6_PassangersBusController extends Controller
 
                 //liability premium
                 
-                $basic_tp = $bus_tp_rate_additional->other_bus_tp	;
+                $basic_tp = $bus_tp_rate_additional->school_bus_tp	;
 
 
                 $own_damage_premium=  [
@@ -119,12 +115,12 @@ class FourWheeler_Above_6_PassangersBusController extends Controller
                 ];
 
                     //   $restriccted_tppd =  ( $request->restriccted_tppd == 1)? 150 : 0;
-                      $passenger_coverage = ($bus_tp_rate_additional->other_bus_per_person * $request->no_of_seat);
+                      $passenger_coverage = ($bus_tp_rate_additional->school_bus_per_person * $request->no_of_seat);
                    
 
                 $liablity_premium = [
 
-                    "basic_liability" => $bus_tp_rate_additional->other_bus_tp,
+                    "basic_liability" => $bus_tp_rate_additional->school_bus_tp,
                     "passenger_coverage" => $passenger_coverage,
                     "pa_owner_driver" => $request->pa_to_owner_driver,
                     "ll_to_paid_driver" => $request->ll_to_paid_driver,
@@ -133,7 +129,7 @@ class FourWheeler_Above_6_PassangersBusController extends Controller
                     // "restriccted_tppd" =>  $restriccted_tppd,
 
                                            
-                    "total_b" => ($bus_tp_rate_additional->other_bus_tp + $request->ll_to_employee_other_then_paid_driver + $request->pa_to_owner_driver + $passenger_coverage+$request->ll_to_paid_driver )
+                    "total_b" => ($bus_tp_rate_additional->school_bus_tp + $request->ll_to_employee_other_then_paid_driver + $request->pa_to_owner_driver + $passenger_coverage+$request->ll_to_paid_driver )
 
                 ];
 
@@ -157,5 +153,4 @@ class FourWheeler_Above_6_PassangersBusController extends Controller
 
           }
     } 
-
 }
