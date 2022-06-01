@@ -40,6 +40,8 @@ class CalculatePremiumController extends Controller
                 'idv' => "required|numeric",
                 'depreciation' => "required|numeric",
                 'discount_on_od_premium' => "required|numeric",
+                "year_of_manufacture"=> "required|numeric",
+                "cc" => "required",
                 'accessories_value' => "required|numeric",
                 'no_claim_bonus' => 'required|numeric',
                 'pa_to_owner_driver' => "required|numeric",

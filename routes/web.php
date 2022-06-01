@@ -284,6 +284,9 @@ Route::get('/forgot-password', function () {
     Route::post('/policies','Front\PoliciesController@index')->name('policies');
     Route::post('calculate-premium','Api\CalculatePremiumController@calcuatePolicyPremium');
 
+    Route::post('dynamic-fields','Api\DynamicFieldsController@index');
+
+
 
     // Route::group(['prefix' => 'calculate-premium','as'=>'calculate_premium.'],function() {   
 

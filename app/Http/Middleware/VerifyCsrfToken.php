@@ -16,6 +16,7 @@ class VerifyCsrfToken extends Middleware
         'login','calculate-premium/two-wheeler-one-year',
         'calculate-premium',
         'policies',
+        'dynamic-fields',
         'calculate-premium/two-wheeler-five-year',
         'calculate-premium/private-car-one-year',
         'calculate-premium/private-car-three-year',
