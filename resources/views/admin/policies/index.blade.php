@@ -62,10 +62,10 @@
 
                         <form action="" method="POST">
                           
-                        <a href="{{route('admin.moter_policies.status',$data->id)}}" class="btn btn-warning btn-sm" >Status</a>
+                        {{-- <a href="{{route('admin.moter_policies.status',$data->id)}}" class="btn btn-warning btn-sm" >Status</a> --}}
                         <button type="button" data-bs-toggle="modal" data-bs-target="#edit_policy" class="edit_policy btn-sm  btn btn-primary "  value="{{$data->id }}" >Edit</button>
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#delete_policy" class="delete_policy btn-sm  btn btn-danger" value="{{$data->id }}" >Delete</button>
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#" class=" btn-sm  btn btn-info" value="{{$data->id }}" >view</button>
+                        {{-- <button type="button" data-bs-toggle="modal" data-bs-target="#delete_policy" class="delete_policy btn-sm  btn btn-danger" value="{{$data->id }}" >Delete</button> --}}
+                        {{-- <button type="button" data-bs-toggle="modal" data-bs-target="#" class=" btn-sm  btn btn-info" value="{{$data->id }}" >view</button> --}}
                         </form>
                     </td>
                   

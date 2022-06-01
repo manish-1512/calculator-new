@@ -11,7 +11,12 @@ class PoliciesController extends Controller
 
     public function index(){
 
-         $policies =  Policies::where('is_active',1)->OrderBy('order','ASC')->get();
+         $policies = Policies::where('is_active',1)->OrderBy('order','ASC')->get();
+
+                foreach($policies as $policy){
+
+                   $policy->image = APP_PATH.POLICIES_IMAGES_URL.$policy->image; 
+                }
 
          if(!$policies->isEmpty()){
 

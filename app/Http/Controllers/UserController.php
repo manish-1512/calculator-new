@@ -45,7 +45,7 @@ class UserController extends Controller
                     'status' => "success",
                     'message' => "register successfully",
                     "data" => [
-
+                        $result
                     ] ,200
                 ]);
         }
@@ -68,7 +68,7 @@ class UserController extends Controller
                 'status' => "success",
                 'message' => "login successfully",
                     "data" => [
-
+                            $user
                     ] ,200
 
             ]);
