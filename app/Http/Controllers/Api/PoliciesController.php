@@ -93,7 +93,7 @@ class PoliciesController extends Controller
                 "error",$message
             ]); die;
         }else{
-            echo $request->input('user_id');
+         
                 $userDetails	=	DB::table('users')->where('id',$request->input('user_id'))->first();
                 if($userDetails != null ){
                     if($userDetails->is_active == 0){
