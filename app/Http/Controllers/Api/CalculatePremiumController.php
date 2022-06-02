@@ -108,7 +108,8 @@ class CalculatePremiumController extends Controller
 
         if(($request->id ==1) ||  ($request->id == 2) ){
 
-            $validator = Validator::make($request->all(), [   
+            $validator = Validator::make($request->all(), [ 
+                "age" => "required",  
                 'idv' => "required|numeric",
                 'depreciation' => "required|numeric",
                 'discount_on_od_premium' => "required|numeric",
@@ -652,12 +653,13 @@ class CalculatePremiumController extends Controller
                         'zone' => "required",
                         'year_of_manufacture' => "required",
                         'discount_on_od_premium' => "required|numeric",
-                        'electrical_accessories' => "required", 
-                        'lpg_cng_kit' => "required",
+                        // 'electrical_accessories' => "required", 
+                        // 'lpg_cng_kit' => "required",
                         'imt_23' => "required",
                         'no_claim_bonus' => 'required|numeric',
                         'pa_to_owner_driver' => "required|numeric",
-                        'll_to_paid_driver' => "required|numeric",
+                        //'ll_to_paid_driver' => "required|numeric",
+                        'pa_to_paid_driver' => "required|numeric",
                         // 'zero_deprication' => "required|numeric",
                         
                     ]);
@@ -800,7 +802,7 @@ class CalculatePremiumController extends Controller
             'pa_to_owner_driver' => "required|numeric",
             'll_to_paid_driver' => "required|numeric",
             // 'zero_deprication' => "required|numeric",
-            'restriccted_tppd' => "required|between:0,1",
+            'restricted_tppd' => "required|between:0,1",
             
         ]);
 
@@ -882,7 +884,7 @@ class CalculatePremiumController extends Controller
 
                     ];
 
-                          $restriccted_tppd =  ( $request->restriccted_tppd == 1)? 150 : 0;
+                          $restricted_tppd =  ( $request->restricted_tppd == 1)? 150 : 0;
                           $passenger_coverage = ($chart->per_passengers_rate * $request->no_of_passengers);
                        
                           $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? 60 :0;
@@ -894,10 +896,10 @@ class CalculatePremiumController extends Controller
                         "pa_owner_driver" => $request->pa_to_owner_driver,
                         "ll_to_paid_driver" => $request->ll_to_paid_driver,
 
-                        "restriccted_tppd" =>  $restriccted_tppd,
+                        "restricted_tppd" =>  $restricted_tppd,
                         "lpg_cng_kit" => $lpg_cng_liablity,
                                                
-                        "total_b" => ($basic_tp + $request->pa_to_owner_driver + $passenger_coverage+$request->ll_to_paid_driver + $lpg_cng_liablity - $restriccted_tppd )
+                        "total_b" => ($basic_tp + $request->pa_to_owner_driver + $passenger_coverage+$request->ll_to_paid_driver + $lpg_cng_liablity - $restricted_tppd )
 
                     ];
 
@@ -943,6 +945,7 @@ class CalculatePremiumController extends Controller
                 'pa_to_owner_driver' => "required|numeric",
                 'll_to_paid_driver' => "required|numeric",
                 'll_to_employee_other_then_paid_driver' => "required|numeric",
+                
                 // 'zero_deprication' => "required|numeric",
             
                 
