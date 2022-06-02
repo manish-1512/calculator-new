@@ -20,11 +20,83 @@ use App\Models\Three_wheeler_pcv_up_to_6_passengers;
 use App\Models\Two_wheeler_cc_tp;
 use App\Models\TwoWheelerRateModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class CalculatePremiumController extends Controller
+
 {
     public function calcuatePolicyPremium(Request $request){
+
+        //this is for testing api         
+        if($request->input('apikey') == null){
+            $message = "Enter Api Key.";
+            
+            return response()->json([
+                "error",$message
+            ]); die;
+
+        }else{
+            if($request->input('apikey') != "964912"){
+                
+                $message = "Enter Valid Api Key.";
+                return response()->json([
+                    "error",$message
+                ]); die;
+                
+                $response = $this->errorOutput("error",$message,'');
+                echo json_encode($response); die;
+            }
+        }
+
+
+        if($request->input('user_id') == null){
+
+            $message = "Enter user_id.";
+            
+            return response()->json([
+                "error",$message
+            ]); die;
+        }else{
+
+                $userDetails	=	DB::table('users')->where('id',$request->input('user_id'))->first();
+                if($userDetails != null ){
+                    if($userDetails->is_active == 0){
+                        $message = "Your account is banned. Please logout and login again or contact to support.";
+                        // $response = $this->errorOutput("logout",$message,'');
+                        // echo json_encode($response); die;
+
+                        return response()->json([
+                            "logout",$message,''
+                        ]); die;
+                    }
+                }else{
+                    $message = "Your account is deleted. Please logout and login again.";
+
+                    return response()->json([
+                        "logout",$message,''
+                    ]); die;
+                    // $response = $this->errorOutput("logout",$message,'');
+                    // echo json_encode($response); die;
+                }
+
+        }
+
+
+        //////////////////
+
+        if($request->id == null){
+
+            return response()->json([
+                "status"=> 401,
+                "error" => [
+                    "id"=> ["the id field is required"]
+                    ]
+            ]);
+        }
+
+
+
 
         $idv =  $request->idv;
         $depreciation =  $request->depreciation;

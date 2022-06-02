@@ -281,7 +281,7 @@ Route::get('/forgot-password', function () {
         echo "dashboard";
     })->name('dashboard');
 
-    Route::post('/policies','Front\PoliciesController@index')->name('policies');
+    Route::post('/policies','Api\PoliciesController@index')->name('policies');
     Route::post('calculate-premium','Api\CalculatePremiumController@calcuatePolicyPremium');
 
     Route::post('dynamic-fields','Api\DynamicFieldsController@index');
