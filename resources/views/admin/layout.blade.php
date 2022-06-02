@@ -387,6 +387,19 @@ table.dataTable thead .sorting_desc_disabled:before {
                   <p>MISC SPECIAL VEHICLE</p>
                   </a>
               </li> 
+
+              <li class="nav-item">                       
+                  <a href="{{route('admin.two_wheeler_ev.index')}}" class="nav-link {{  (request()->segment(2) =='three-wheeler-pcv-upto-17-passengers')? 'active':''; }} ">
+                  <!-- <i class="far fa-circle nav-icon"></i> -->
+                  <p>Two Wheeler EV </p>
+                  </a>
+              </li> 
+              <li class="nav-item">                       
+                  <a href="{{route('admin.private_car_ev.index')}}" class="nav-link {{  (request()->segment(2) =='three-wheeler-pcv-upto-17-passengers')? 'active':''; }} ">
+                  <!-- <i class="far fa-circle nav-icon"></i> -->
+                  <p>Private Car EV </p>
+                  </a>
+              </li> 
             </ul>
            </li>
 

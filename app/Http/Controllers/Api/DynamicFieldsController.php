@@ -863,6 +863,125 @@ class DynamicFieldsController extends Controller
 
             "fields" => array_merge($common_fields,$fields)
             ]);
+        }else if($request->id == 14){
+
+            $seating_capacity = Four_wheeler_above_6_passengers_bus_tp_additional_rates::select('id','passenger')->get();
+                 
+            $fields = [
+  
+              [
+                "key" => "age",
+                "value" => "",
+                "name" => "Vehicle age",
+                "type" => "selectbox",
+                "options" => [
+                    [
+                        "id" =>"0_to_5",
+                        "value" =>"Up to 5 Years"
+                    ],
+                    [
+                        "id" =>"5_to_7",
+                        "value" =>" > 5 Years < 7 Years"
+                    ] ,   
+                    [
+                        "id" =>"7_to_more",
+                        "value" =>"Above 7 Years "
+                    ] 
+                 ]         
+                ],
+  
+          [
+          "key" => "zone",
+          "value" => "",
+          "name" => "Zone",
+          "type" => "selectbox",
+          "options" =>[
+                          [
+                              "id" =>"a",
+                              "value" =>"a"
+                          ],
+                          [
+                              "id" =>"b",
+                              "value" =>"b"
+                          ],     
+                          [
+                              "id" =>"c",
+                              "value" =>"c"
+                          ]     
+                             
+                  ]
+          ], 
+          [
+          "key" => "vehicle_type",
+          "value" => "",
+          "name" => "Vehicle Type",
+          "type" => "selectbox",
+          "options" =>[
+                          [
+                              "id" =>"agriculture",
+                              "value" =>"Agriculture"
+                          ],     
+                          [
+                              "id" =>"others",
+                              "value" =>"Others"
+                          ]     
+                             
+                  ]
+          ], 
+         
+          [
+            "key" => "geographical_ext",
+            "name" => "Geographical Ext",
+            "value" => "",
+            "type" => "textbox",
+        ],
+        
+          [
+              "key" => "imt_23",
+              "name" => "IMT 23",
+              "value" => "",
+              "type" => "selectbox",
+              "options" =>[
+                  [
+                      "id" =>"0",
+                      "value" =>"N"
+                  ],
+                  [
+                      "id" =>"1",
+                      "value" =>"Y"
+                  ]     
+          ]
+          ],
+          [
+              "key" => "ll_to_paid_driver",
+              "name" => "LL To Paid Driver",
+              "value" => "",
+              "type" => "selectbox",
+              "options" =>[
+                  [
+                      "id" =>"0",
+                      "value" =>"0"
+                  ],
+                  [
+                      "id" =>"50",
+                      "value" =>"50"
+                  ]     
+                   ]
+           ],
+           [
+              "key" => "ll_to_employee_other_then_paid_driver",
+              "name" => "LL to Employee Other Then Paid Driver",
+              "value" => "",
+              "type" => "textbox",
+              ],
+  
+      ];
+  
+              return response()->json([
+  
+              "fields" => array_merge($common_fields,$fields)
+              ]);
+
         }
 
      }

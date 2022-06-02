@@ -1172,7 +1172,7 @@ class CalculatePremiumController extends Controller
                               $liablity_premium = [
             
                                   "basic_liability" => $basic_tp,
-                                  "passenger_coverage" => $passenger_coverage,
+  
                                    "geographical_ext" => $request->geographical_ext /4, 
                                   "pa_owner_driver" => $request->pa_to_owner_driver,
                                   "ll_to_paid_driver" => $request->ll_to_paid_driver,

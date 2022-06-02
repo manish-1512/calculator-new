@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Two_wheeler_cc_tp extends Model
+class PrivateCarEv_kw_tp_rate extends Model
 {
     use HasFactory;
     
     protected $fillable = [       
-        'cc','tp_one_year','tp_five_year'
+        'kw','tp_one_year','tp_three_year'
     ];
-    protected $table = "two_wheeler_cc_tp_charges";
+    
+    protected $table = "private_car_ev_kw_tp_rates";
     protected $primaryKey ="id";
     public $timestamps =true;
 }
-

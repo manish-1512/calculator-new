@@ -118,6 +118,26 @@ Route::get('/forgot-password', function () {
         });
     });
 
+    Route::group(['prefix' => 'two-wheeler-ev','as'=>'two_wheeler_ev.'],function() {   
+
+        Route::get('/','TwoWheelerEvController@index')->name('index');
+        Route::post('/store','TwoWheelerEvController@store')->name('store');
+        Route::get('/edit/{id}','TwoWheelerEvController@edit')->name('edit');
+        Route::delete('/delete/{id}','TwoWheelerEvController@destroy')->name('destroy');
+
+
+        Route::group(['prefix' => 'kw-tp','as'=>'kw_tp.'],function() {   
+
+            Route::get('/','TwoWheeler_kw_and_tp_Controller@index')->name('index');
+            Route::post('/store','TwoWheeler_kw_and_tp_Controller@store')->name('store');
+            Route::get('/edit/{id}','TwoWheeler_kw_and_tp_Controller@edit')->name('edit');
+            Route::delete('/delete/{id}','TwoWheeler_kw_and_tp_Controller@destroy')->name('destroy');
+            
+    
+        });
+
+    });
+
     Route::group(['prefix' => 'private-car','as'=>'private_car.'],function() {   
 
         Route::get('/','PrivateCarController@index')->name('index');
@@ -134,12 +154,31 @@ Route::get('/forgot-password', function () {
 
         });
 
-        Route::group(['prefix' => 'lpg-cng','as'=>'lpg_cng.'],function() {   
+        // Route::group(['prefix' => 'lpg-cng','as'=>'lpg_cng.'],function() {   
 
-            Route::get('/','PrivateCar_lpg_and_cng_Controller@index')->name('index');
-            Route::post('/store','PrivateCar_lpg_and_cng_Controller@store')->name('store');
-            Route::get('/edit/{id}','PrivateCar_lpg_and_cng_Controller@edit')->name('edit');
-            Route::delete('/delete/{id}','PrivateCar_lpg_and_cng_Controller@destroy')->name('destroy');
+        //     Route::get('/','PrivateCar_lpg_and_cng_Controller@index')->name('index');
+        //     Route::post('/store','PrivateCar_lpg_and_cng_Controller@store')->name('store');
+        //     Route::get('/edit/{id}','PrivateCar_lpg_and_cng_Controller@edit')->name('edit');
+        //     Route::delete('/delete/{id}','PrivateCar_lpg_and_cng_Controller@destroy')->name('destroy');
+
+        // });
+
+
+    });
+
+    Route::group(['prefix' => 'private-car-ev','as'=>'private_car_ev.'],function() {   
+
+        Route::get('/','PrivateCarEVController@index')->name('index');
+        Route::post('/store','PrivateCarEVController@store')->name('store');
+        Route::get('/edit/{id}','PrivateCarEVController@edit')->name('edit');
+        Route::delete('/delete/{id}','PrivateCarEVController@destroy')->name('destroy');
+
+        Route::group(['prefix' => 'kw-tp','as'=>'kw_tp.'],function() {   
+
+            Route::get('/','PrivateCar_ev_kw_and_tp_Controller@index')->name('index');
+            Route::post('/store','PrivateCar_ev_kw_and_tp_Controller@store')->name('store');
+            Route::get('/edit/{id}','PrivateCar_ev_kw_and_tp_Controller@edit')->name('edit');
+            Route::delete('/delete/{id}','PrivateCar_ev_kw_and_tp_Controller@destroy')->name('destroy');
 
         });
 
