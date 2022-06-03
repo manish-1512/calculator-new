@@ -88,7 +88,10 @@ Route::get('/forgot-password', function () {
  Route::group(['prefix' => 'admin','as'=>'admin.' ,'middleware'=> ['auth','isAdmin','preventBackHistory'] ,'namespace' => 'App\Http\Controllers\Admin'],function(){
     
     Route::get('/logout','Auth\LoginController@logout')->name('logout');
+
     Route::get('/dashboard','DashboardController@dashboardData')->name('dashboard');
+
+     Route::get('categories','CategoryController@index')->name('categories');
 
     Route::group(['prefix' => 'moter-policies','as'=>'moter_policies.'],function() {    
         Route::get('/','PoliciesController@index')->name('index');

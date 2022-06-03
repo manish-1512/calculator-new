@@ -8,7 +8,7 @@
 </script>
 
 <div class="row ">
-    <h3 class="text-center">Basic rates and tp charges details for 
+    <h3 class="text-center">Basic rates and tp charges details for EV
         Two Wheeler
     </h3>
     <div class="col-lg-12 margin-tb">
@@ -19,7 +19,7 @@
 </div>
 
 </div>
-{{--
+
 
 <table id="dtHorizontalExample" class="table table-striped  table-bordered table-dark ">
 
@@ -28,42 +28,42 @@
                   <th>#</th>
                   <th>Zone</th>
                   <th>Age  </th>
-                  <th>Engine CC </th>
-           
+                  <th>Kilowatt </th>
                   <th>Vehicle Basic Rate</th>
                   <th>Action</th>
                 </tr>
               </thead>
+              
+              @if (isset($two_wheeler_ev_rate_chart))
+
          
-          @if ($two_wheeler_rate_chart !== null)
-       
-               <tbody>
+                  <tbody>
 
-                @foreach ($two_wheeler_rate_chart as $key =>  $data)
+                  @foreach ($two_wheeler_ev_rate_chart as $key =>  $data)
 
-                  <tr>
-                    <td>{{++$key}}</td>
-                    <td>{{$data->zone}}</td>                       
-                    <td>{{$data->age}}</td>
-                    <td>{{$data->cubic}}</td>
-                    <td>{{$data->vehicle_basic_rate}}</td>
-                    <td style="width: 220px;">
+                    <tr>
+                      <td>{{++$key}}</td>
+                      <td>{{$data->zone}}</td>                       
+                      <td>{{$data->age}}</td>
+                      <td>{{$data->kilowatt}}</td>
+                      <td>{{$data->vehicle_basic_rate}}</td>
+                      <td style="width: 220px;">
 
-                        <form action="" method="POST">
+                          <form action="" method="POST">
+                            
                           
-                       
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#edit_policy" class="edit_policy btn-sm  btn btn-primary "  value="{{$data->id }}" >Edit</button>
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#delete_policy" class="delete_policy btn-sm  btn btn-danger" value="{{$data->id }}" >Delete</button>
+                          <button type="button" data-bs-toggle="modal" data-bs-target="#edit_policy" class="edit_policy btn-sm  btn btn-primary "  value="{{$data->id }}" >Edit</button>
+                          <button type="button" data-bs-toggle="modal" data-bs-target="#delete_policy" class="delete_policy btn-sm  btn btn-danger" value="{{$data->id }}" >Delete</button>
 
-                        </form>
-                    </td>
-                  
-                 </tr>
-               @endforeach 
-           
-              </tbody>
-       
-      @endif
+                          </form>
+                      </td>
+                    
+                    </tr>
+                  @endforeach 
+              
+                </tbody>
+         @endif
+        
 </table>
 
 <!-- model add loan slab -->
@@ -80,21 +80,11 @@
                     
                 <div class="container" >
 
-                  <form action="{{route('admin.two_wheeler_one_year.store')}}"  method="POST" id="two_wheeler_create" enctype="multipart/form-data" >
+                  <form action="{{route('admin.two_wheeler_ev.store')}}"  method="POST" id="two_wheeler_ev_create" enctype="multipart/form-data" >
 
                           @csrf                  
 
-                    <div class="form-group">
-                      <label for="name">Select Policy</label>
-                      <select name="policy_id" id="" class="form-control" required> 
-                        @if($policies !== null)
-                            @foreach ( $policies as $policy)
-                            <option value="{{$policy->id}}">{{$policy->name}}</option>                              
-                            @endforeach
-                        @endif
-                      </select>
-                      <span class="text-danger error-text policy_id "></span>
-                    </div>
+                   
                     
                     <div class="form-group">
                       <label for="">Select Zone</label>
@@ -107,7 +97,7 @@
                       <span class="text-danger error-text  zone_error "></span>
                     </div>
 
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                       <label for="age">Vehicle  Age  </label>
                       <select name="age" id="" class="form-control" required> 
 
@@ -119,7 +109,7 @@
                         
                       </select>
                       <span class="text-danger error-text age_error "></span>
-                    </div>
+                    </div> --}}
 
                     <!-- <div class="form-group">
                       <label for="image_order">Vehicle  Age   (<) Year  </label>
@@ -128,19 +118,19 @@
                     </div> -->
 
                     <div class="form-group">
-                      <label for="cc">Vehicle  Engine  </label>
+                      <label for="Kilowatt">Kilowatt  </label>
 
-                      <select name="cc" id="" class="form-control" required> 
+                      <select name="kilowatt" id="" class="form-control" required> 
 
                         <option >Select CC</option>
-                        @foreach ($cc_and_tp_for_two_wheeler as $cc)
-                        <option value="{{$cc->id}}">{{$cc->cc}}</option>
+                        @foreach ($kw_and_tp_for_two_wheeler_ev as $kw)
+                        <option value="{{$kw->id}}">{{$kw->kw}}</option>
                         @endforeach
                         
                         
                       </select>
 
-                      <span class="text-danger error-text cc_error "></span>
+                      <span class="text-danger error-text Kilowatt_error "></span>
                     </div>
 
                    
@@ -183,21 +173,10 @@
 
                     
                 <div class="container" >
-                <form action="{{route('admin.two_wheeler_one_year.store')}}"  method="POST" id="two_wheeler_update" enctype="multipart/form-data" >
+                <form action="{{route('admin.two_wheeler_ev.store')}}"  method="POST" id="two_wheeler_ev_update" >
                       @csrf                  
 
-                      <div class="form-group">
-                      <label for="name">Select Policy</label>
-                      <input type="text" name="id" id="edit_id">
-                      <select name="policy_id" id="edit_policy_id" class="form-control" required> 
-                      @if($policies !== null)
-                        @foreach ( $policies as $policy)
-                        <option value="{{$policy->id}}">{{$policy->name}}</option>                              
-                        @endforeach
-                      @endif
-                      </select>
-                      <span class="text-danger error-text policy_id "></span>
-                      </div>
+                      
 
                       <div class="form-group">
                       <label for="">Select Zone</label>
@@ -209,7 +188,7 @@
                       <span class="text-danger error-text  zone_error "></span>
                       </div>
 
-                      <div class="form-group">
+                      {{-- <div class="form-group">
                       <label for="age">Vehicle  Age  </label>
                       <select name="age" id="edit_age" class="form-control" required> 
 
@@ -221,7 +200,7 @@
                         
                       </select>
                       <span class="text-danger error-text age_error "></span>
-                    </div>
+                    </div> --}}
 
                     <!-- <div class="form-group">
                       <label for="image_order">Vehicle  Age   (<) Year  </label>
@@ -230,19 +209,19 @@
                     </div> -->
 
                     <div class="form-group">
-                      <label for="cc">Vehicle  Engine  </label>
+                      <label for="Kilowatt">Kilowatt </label>
 
-                      <select name="cc" id="edit_cc" class="form-control" required> 
+                     
+                      <select name="kilowatt" id="edit_kilowatt" class="form-control" required> 
 
                         <option >Select CC</option>
-                        @foreach ($cc_and_tp_for_two_wheeler as $cc)
-                        <option value="{{$cc->id}}">{{$cc->cc}}</option>
+                        @foreach ($kw_and_tp_for_two_wheeler_ev as $kw)
+                        <option value="{{$kw->id}}">{{$kw->kw}}</option>
                         @endforeach
-                        
                         
                       </select>
 
-                      <span class="text-danger error-text cc_error "></span>
+                      <span class="text-danger error-text Kilowatt_error "></span>
                     </div>
 
 
@@ -311,7 +290,7 @@
     
     $(document).ready( function(){
       
-      $("#two_wheeler_create").on('submit',function(e){
+      $("#two_wheeler_ev_create").on('submit',function(e){
 
           e.preventDefault();
 
@@ -346,7 +325,7 @@
                             );
                       }else if(data.status == 200){
 
-                        $('#two_wheeler_create')[0].reset();
+                        $('#two_wheeler_ev_create')[0].reset();
 
                         Swal.fire({
 
@@ -383,7 +362,7 @@
       $.ajax({
 
       type:"GET",
-      url:  "{{APP_PATH}}"+"admin/two-wheeler-one-year/edit/"+rate_chart_id,
+      url:  "{{APP_PATH}}"+"admin/two-wheeler-ev/edit/"+rate_chart_id,
 
 
               success:function(response){
@@ -398,13 +377,14 @@
                                 );
             }else{
 
+              console.log(response);
+
                 $('#edit_id').val(rate_chart_id);
-                $('#edit_policy_id').val(response.two_wheeler_one_year_data.policy_id );
-                $('#edit_zone').val(response.two_wheeler_one_year_data.zone );
-                $('#edit_age').val(response.two_wheeler_one_year_data.age);
-                $('#edit_cc').val(response.two_wheeler_one_year_data.cc);
-                $('#edit_tp_one_year').val(response.two_wheeler_one_year_data.tp_one_year );
-                $('#edit_vehicle_basic_rate').val(response.two_wheeler_one_year_data.vehicle_basic_rate );
+            
+                $('#edit_zone').val(response.two_wheeler_ev_data.zone );
+                $('#edit_kilowatt').val(response.two_wheeler_ev_data.kilowatt);
+                // $('#edit_tp_one_year').val(response.two_wheeler_ev_data.tp_one_year );
+                $('#edit_vehicle_basic_rate').val(response.two_wheeler_ev_data.vehicle_basic_rate );
                  
 
             }  
@@ -419,7 +399,7 @@
 
 
 
-$("#two_wheeler_update").on('submit',function(e){
+$("#two_wheeler_ev_update").on('submit',function(e){
 
         e.preventDefault();
 
@@ -445,7 +425,7 @@ $("#two_wheeler_update").on('submit',function(e){
 
                     }else if(data.status == 200){
 
-                        $('#two_wheeler_update')[0].reset();
+                        $('#two_wheeler_ev_update')[0].reset();
 
                         Swal.fire(
                                     'Good job!',
@@ -499,7 +479,7 @@ var policy_id = $('#delete_policy_id').val();
 $.ajax({
 
     type:"DELETE",
-    url: "{{APP_PATH}}"+"admin/two-wheeler-one-year/delete/"+policy_id,
+    url: "{{APP_PATH}}"+"admin/two-wheeler-ev/delete/"+policy_id,
 
     data:{'_token': '{{ csrf_token() }}' },
 
@@ -524,7 +504,7 @@ $.ajax({
 
 
 </script>
---}}
+
 
 @endsection
 

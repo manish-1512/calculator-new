@@ -307,6 +307,18 @@ table.dataTable thead .sorting_desc_disabled:before {
             </a>
           </li>
               <!--  -->
+          <!--  -->
+          <li class="nav-item">
+            <a href="{{route('admin.categories')}}" class="nav-link {{  (request()->segment(2) =='moter-policies')? 'active':''; }} ">
+            <img  src="{{asset('images/policy.png')}}" alt="" height="25" width="30">
+              <p class="ps-3"> MOTER POLICIES View </p>
+            </a>
+          </li>
+              <!--  -->
+
+
+
+
           <li class="nav-item">
             <a href="{{route('admin.moter_policies.index')}}" class="nav-link {{  (request()->segment(2) =='user-management')? 'active':''; }} ">
             <img  src="{{asset('images/policy.png')}}" alt="" height="25" width="30">
