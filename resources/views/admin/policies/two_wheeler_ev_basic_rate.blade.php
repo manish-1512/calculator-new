@@ -97,7 +97,7 @@
                       <span class="text-danger error-text  zone_error "></span>
                     </div>
 
-                    {{-- <div class="form-group">
+                    <div class="form-group">
                       <label for="age">Vehicle  Age  </label>
                       <select name="age" id="" class="form-control" required> 
 
@@ -109,7 +109,7 @@
                         
                       </select>
                       <span class="text-danger error-text age_error "></span>
-                    </div> --}}
+                    </div>
 
                     <!-- <div class="form-group">
                       <label for="image_order">Vehicle  Age   (<) Year  </label>
@@ -122,7 +122,7 @@
 
                       <select name="kilowatt" id="" class="form-control" required> 
 
-                        <option >Select CC</option>
+                        <option >Select KW</option>
                         @foreach ($kw_and_tp_for_two_wheeler_ev as $kw)
                         <option value="{{$kw->id}}">{{$kw->kw}}</option>
                         @endforeach
@@ -180,6 +180,7 @@
 
                       <div class="form-group">
                       <label for="">Select Zone</label>
+                      <input type="text" name="id" id="edit_id" >
                       <select name="zone" id="edit_zone" class="form-control" required> 
                         <option >Select Zone</option>
                         <option value="a">A</option>
@@ -188,7 +189,7 @@
                       <span class="text-danger error-text  zone_error "></span>
                       </div>
 
-                      {{-- <div class="form-group">
+                      <div class="form-group">
                       <label for="age">Vehicle  Age  </label>
                       <select name="age" id="edit_age" class="form-control" required> 
 
@@ -200,7 +201,7 @@
                         
                       </select>
                       <span class="text-danger error-text age_error "></span>
-                    </div> --}}
+                    </div>
 
                     <!-- <div class="form-group">
                       <label for="image_order">Vehicle  Age   (<) Year  </label>
@@ -382,6 +383,7 @@
                 $('#edit_id').val(rate_chart_id);
             
                 $('#edit_zone').val(response.two_wheeler_ev_data.zone );
+                $('#edit_age').val(response.two_wheeler_ev_data.age );
                 $('#edit_kilowatt').val(response.two_wheeler_ev_data.kilowatt);
                 // $('#edit_tp_one_year').val(response.two_wheeler_ev_data.tp_one_year );
                 $('#edit_vehicle_basic_rate').val(response.two_wheeler_ev_data.vehicle_basic_rate );

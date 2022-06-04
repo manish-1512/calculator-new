@@ -9,7 +9,7 @@ class TwoWheelerEVModel extends Model
 {
     use HasFactory;
     protected $fillable = [       
-        'zone','kilowatt','vehicle_basic_rate'
+        'age','zone','kilowatt','vehicle_basic_rate'
     ];
     protected $table = "two_wheeler_ev_basic_rates";
     protected $primaryKey ="id";

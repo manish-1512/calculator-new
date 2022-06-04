@@ -32,7 +32,7 @@ class TwoWheelerEvController extends Controller
                 'required',              
                 Rule::in(['a', 'b']),
             ],
-            // 'age' => "required|min:0|string",
+             'age' => "required|min:0|string",
             'kilowatt' => "required|numeric|min:0",
 
            
@@ -53,10 +53,8 @@ class TwoWheelerEvController extends Controller
                         $two_wheeler_ev_rate_model = new TwoWheelerEVModel();
                     }
 
-                // $two_wheeler_ev_rate_model->policy_id = $request->policy_id;
                 $two_wheeler_ev_rate_model->zone = $request->zone;
-        
-                // $two_wheeler_ev_rate_model->age = $request->age;
+                $two_wheeler_ev_rate_model->age = $request->age;
                 $two_wheeler_ev_rate_model->kilowatt = $request->kilowatt;
 
                 $two_wheeler_ev_rate_model->vehicle_basic_rate = (float) $request->vehicle_basic_rate;
