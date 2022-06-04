@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Policies;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\DB;
 
 class PoliciesController extends Controller
@@ -60,11 +61,12 @@ class PoliciesController extends Controller
 
 
 
-    public function index(Request $request){
+    public function index(){
+    
+            $input =   FacadesRequest::json()->all();
 
 
-
-        if($request->input('apikey') == null){
+        if( empty($input['apikey'])){
 			$message = "Enter Api Key.";
             
             return response()->json([
@@ -72,7 +74,7 @@ class PoliciesController extends Controller
             ]); die;
 		
 		}else{
-			if($request->input('apikey') != "964912"){
+			if($input['apikey'] != "964912"){
 				
                 $message = "Enter Valid Api Key.";
                 return response()->json([
@@ -85,7 +87,7 @@ class PoliciesController extends Controller
 		}
 
         
-		if($request->input('user_id') == null){
+		if( empty($input['user_id'])){
 
             $message = "Enter user_id.";
             
@@ -93,8 +95,8 @@ class PoliciesController extends Controller
                 "error",$message
             ]); die;
         }else{
-         
-                $userDetails	=	DB::table('users')->where('id',$request->input('user_id'))->first();
+           
+                $userDetails	=	DB::table('users')->where('id',$input['user_id'])->first();
                 if($userDetails != null ){
                     if($userDetails->is_active == 0){
                         $message = "Your account is banned. Please logout and login again or contact to support.";
@@ -118,7 +120,7 @@ class PoliciesController extends Controller
         }
 	
 
-         $policies = Policies::where('is_active',1)->OrderBy('order','ASC')->get();
+         $policies = Policies::select('id','name','image')->where('is_active',1)->OrderBy('order','ASC')->get();
 
                 foreach($policies as $policy){
 
