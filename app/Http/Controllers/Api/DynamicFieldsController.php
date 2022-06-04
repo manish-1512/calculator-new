@@ -12,6 +12,7 @@ use App\Models\GoodsCarryingVehicle_public_other_then_three_wheeler_tp_rates;
 use App\Models\PrivateCar_cc_tp;
 use App\Models\Three_wheeler_goods_carrying_vehicle_public;
 use App\Models\Two_wheeler_cc_tp;
+use App\Models\TwoWheelerEv_kw_tp_rate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -78,9 +79,6 @@ class DynamicFieldsController extends Controller
 
         }
 	
-
-//////////////////
-
 
 
 
@@ -981,6 +979,100 @@ class DynamicFieldsController extends Controller
   
               "fields" => array_merge($common_fields,$fields)
               ]);
+
+        }else if( ($request->id == 15) || ($request->id == 16) ){
+
+            $kw =  TwoWheelerEv_kw_tp_rate::select('id','kw as value')->get();
+
+
+            $fields = [
+
+                        [
+                        "key" => "accessories_value",
+                        "name" => "Accessories Value",
+                        "value" => "",
+                        "type" => "textbox",
+                        ],
+
+                        [
+                        "key" => "kilowatt",
+                        "value" => "",
+                        "name" => "Kilowatt ",
+                        "type" => "selectbox",
+                        "options" =>$kw          
+                        ],
+                        [
+                        "key" => "age",
+                        "value" => "",
+                        "name" => "Vehicle age",
+                        "type" => "selectbox",
+                        "options" => [
+                                [
+                                    "id" =>"0_to_5",
+                                    "value" =>"Up to 5 Years"
+                                ],
+                                [
+                                    "id" =>"5_to_10",
+                                    "value" =>" > 5 Years < 10 Years"
+                                ] ,   
+                                [
+                                    "id" =>"10_to_more",
+                                    "value" =>"Above 10 Years "
+                                ]     
+                         ]         
+                        ],
+
+                        [
+                        "key" => "zone",
+                        "value" => "",
+                         "name" => "Zone",
+                        "type" => "selectbox",
+                        "options" =>[
+                                        [
+                                            "id" =>"a",
+                                            "value" =>"a"
+                                        ],
+                                        [
+                                            "id" =>"b",
+                                            "value" =>"b"
+                                        ]     
+                                ]
+                        ], 
+                    [
+                        "key" => "ll_to_paid_driver",
+                        "name" => "LL To Paid Driver",
+                        "value" => "",
+                        "type" => "selectbox",
+                        "options" =>[
+                            [
+                                "id" =>"0",
+                                "value" =>"0"
+                            ],
+                            [
+                                "id" =>"50",
+                                "value" =>"50"
+                            ]     
+                    ]
+                    ],
+                    [
+                        "key" => "pa_to_unnamed_passenger",
+                        "name" => "PA  To UnNamed Passenger",
+                        "value" => "",
+                        "type" => "textbox",
+                        ],
+                    [
+                        "key" => "zero_depreciation",
+                        "name" => "Zero Depreciation",
+                        "value" => "",
+                        "type" => "textbox",
+                        ],
+
+        ];
+
+            return response()->json([
+
+                "fields" => array_merge($common_fields,$fields)
+            ]);
 
         }
 

@@ -18,10 +18,13 @@ use App\Models\Three_wheeler_goods_carrying_vehicle_private;
 use App\Models\Three_wheeler_goods_carrying_vehicle_public;
 use App\Models\Three_wheeler_pcv_up_to_6_passengers;
 use App\Models\Two_wheeler_cc_tp;
+use App\Models\TwoWheelerEv_kw_tp_rate;
+use App\Models\TwoWheelerEVModel;
 use App\Models\TwoWheelerRateModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class CalculatePremiumController extends Controller
 
@@ -109,6 +112,10 @@ class CalculatePremiumController extends Controller
         if(($request->id ==1) ||  ($request->id == 2) ){
 
             $validator = Validator::make($request->all(), [ 
+                'zone' => [
+                    'required',              
+                    Rule::in(['a', 'b']),
+                ],
                 "age" => "required",  
                 'idv' => "required|numeric",
                 'depreciation' => "required|numeric",
@@ -130,6 +137,7 @@ class CalculatePremiumController extends Controller
     
             }else{
                         $age =  $request->age;
+                        $zone = $request->zone;
                         $cubic_capacity =  $request->cc;
                         $accessories_value =  $request->accessories_value;
                         $zero_depreciation =  $request->zero_depreciation;
@@ -229,7 +237,10 @@ class CalculatePremiumController extends Controller
                     'discount_on_od_premium' => "required|numeric",
                     'accessories_value' => "required|numeric",
                     'age' => "required",
-                    'zone' => "required",
+                    'zone' => [
+                        'required',              
+                        Rule::in(['a', 'b']),
+                    ],
                     'cc' => "required",
                     'electrical_accessories' => "required", 
                     'lpg_cng_kit' => "required",
@@ -359,7 +370,10 @@ class CalculatePremiumController extends Controller
                         'idv' => "required|numeric",
                         'depreciation' => "required|numeric",
                         'age' => "required",
-                        'zone' => "required",
+                        'zone' => [
+                            'required',              
+                            Rule::in(['a', 'b','c']),
+                        ],
                         'gross_vehicle_weight' => "required",
                         'discount_on_od_premium' => "required|numeric",
                         'electrical_accessories' => "required", 
@@ -512,7 +526,10 @@ class CalculatePremiumController extends Controller
                         'idv' => "required|numeric",
                         'depreciation' => "required|numeric",
                         'age' => "required",
-                        'zone' => "required",
+                        'zone' => [
+                            'required',              
+                            Rule::in(['a', 'b']),
+                        ],
                         'year_of_manufacture' => "required",
                         "no_of_passengers" => "required|integer",
                         'discount_on_od_premium' => "required|numeric",
@@ -650,7 +667,10 @@ class CalculatePremiumController extends Controller
                         'idv' => "required|numeric",
                         'depreciation' => "required|numeric",
                         'age' => "required",
-                        'zone' => "required",
+                        'zone' => [
+                            'required',              
+                            Rule::in(['a', 'b','c']),
+                        ],
                         'year_of_manufacture' => "required",
                         'discount_on_od_premium' => "required|numeric",
                         // 'electrical_accessories' => "required", 
@@ -792,7 +812,10 @@ class CalculatePremiumController extends Controller
             'idv' => "required|numeric",
             'depreciation' => "required|numeric",
             'age' => "required",
-            'zone' => "required",
+            'zone' => [
+                'required',              
+                Rule::in(['a', 'b','c']),
+            ],
             "no_of_passengers" => "required|integer",
             'discount_on_od_premium' => "required|numeric",
             'electrical_accessories' => "required", 
@@ -933,7 +956,10 @@ class CalculatePremiumController extends Controller
                 'idv' => "required|numeric",
                 'depreciation' => "required|numeric",
                 'age' => "required",
-                'zone' => "required",
+                'zone' => [
+                    'required',              
+                    Rule::in(['a', 'b','c']),
+                ],
                 'year_of_manufacture' => "required",
                 "seating_capacity" => "required|integer",
                 "no_of_seat" => "required|integer",
@@ -1083,7 +1109,10 @@ class CalculatePremiumController extends Controller
                         'depreciation' => "required|numeric",
                         'year_of_manufacture' => "required",
                         'age' => "required",
-                        'zone' => "required",
+                        'zone' => [
+                            'required',              
+                            Rule::in(['a', 'b','c']),
+                        ],
                         'vehicle_type' =>"required|string",
                         'discount_on_od_premium' => "required|numeric",         
                         'geographical_ext' => "required",         
@@ -1206,7 +1235,128 @@ class CalculatePremiumController extends Controller
             
                     }
             
+                    //this is for two wheeler electronic vehicle one year and five year 
+
+                }else if(($request->id == 15) || ($request->id ==16)){
+
+                    $validator = Validator::make($request->all(), [ 
+                        'zone' => [
+                            'required',              
+                            Rule::in(['a', 'b']),
+                        ],
+                        "age" => "required",  
+                        'idv' => "required|numeric",
+                        'depreciation' => "required|numeric",
+                        'discount_on_od_premium' => "required|numeric",
+                        "year_of_manufacture"=> "required|numeric",
+                        "kilowatt" => "required",
+                        'accessories_value' => "required|numeric",
+                        'no_claim_bonus' => 'required|numeric',
+                        'pa_to_owner_driver' => "required|numeric",
+                        'll_to_paid_driver' => "required|numeric",
+                        'pa_to_unnamed_passenger' => "required|numeric",
+                        'zero_depreciation' => "required|numeric"
+                       
+                    ]);
             
+                    if($validator->fails()){
+            
+                        return response()->json(['status' => 401 ,'error' => $validator->errors()->toArray() ]);
+            
+                    }else{
+                                $age =  $request->age;
+                                $zone = $request->zone;
+                                $kilowatt =  $request->kilowatt;
+                                $accessories_value =  $request->accessories_value;
+                                $zero_depreciation =  $request->zero_depreciation;
+                                $ll_to_paid_driver =  $request->ll_to_paid_driver;
+                                $pa_to_unnamed_passenger =  $request->pa_to_unnamed_passenger;
+            
+                                
+                                $chart  =  TwoWheelerEVModel::where('zone',$zone)->where('age',$age)->where('kilowatt',$kilowatt)->first();
+                        
+                            
+        
+                                            $current_idv = $idv - ( ($idv * $depreciation) / 100);
+                                            $Vehicle_basic_rate = $chart->vehicle_basic_rate;                                   
+                                            $basic_for_vehicle = ( ($current_idv * $Vehicle_basic_rate) / 100) ;
+           
+                                            $basic_od_premium_after_discount = $basic_for_vehicle - ( ($basic_for_vehicle * $discount_on_od_premium) / 100 ) ;
+            
+                                            $accessories_value = (($accessories_value * 4) / 100 ) ;
+                                            
+                                            $total_basic_premium = $basic_od_premium_after_discount + $accessories_value;
+            
+                                            $no_claim_bonus = ($total_basic_premium * $no_claim_bonus)/100;
+            
+                                            $net_own_damage_premium = $total_basic_premium - $no_claim_bonus ;
+                                            $total = $net_own_damage_premium ;
+            
+                                //liability premium
+                                
+            
+            
+                                $own_damage_premium=  [
+            
+                                            "idv" => $idv,
+                                            "depreciatio"=> $depreciation,
+                                            "current_idv" => $current_idv,
+                                            "year_of_manufacture" => $year_of_manufacture,    
+                                            "Vehicle_basic_rate" => $Vehicle_basic_rate,                           
+                                            "basic_for_vehicle" => $basic_for_vehicle   ,
+                                            "discount_on_od_premium" => $discount_on_od_premium,
+                                            "basic_od_premium_after_discount" => $basic_od_premium_after_discount,
+                                            "accessories_value" => $accessories_value ,
+                                            "total_basic_premium" => $total_basic_premium,
+                                            "no_claim_bonus" =>  $no_claim_bonus,
+                                            "net_own_damage_premium" => $net_own_damage_premium ,
+                                            "zero_depreciation" => $zero_depreciation,
+                                            "total_a" => $total ,
+                
+                                ];
+            
+                                //   $restriccted_tppd =  ( $request->restriccted_tppd)? 50 : 0;
+                                $kw_tp_charges =  TwoWheelerEv_kw_tp_rate::where('id',$kilowatt)->first();   
+        
+                                if($request->id == 15){
+                                    $basic_liablity = $kw_tp_charges->tp_one_year;
+        
+                                }elseif($request->id == 16){
+                                    $basic_liablity = $kw_tp_charges->tp_five_year;
+                                }else{
+                                    $basic_liablity = 0;
+                                }
+            
+                                $liablity_premium = [
+            
+                                    "basic_liability" => $basic_liablity ,
+                                    "pa_owner_driver" => $pa_to_owner_driver,
+                                    "ll_to_paid_driver" => $ll_to_paid_driver,
+                                    "pa_to_unnamed_passenger" => $pa_to_unnamed_passenger  ,
+                                    // "restriccted_tppd" =>  $restriccted_tppd,
+                                    "total_b" => ($basic_liablity + $pa_to_owner_driver + $ll_to_paid_driver+ $pa_to_unnamed_passenger)
+            
+                                ];
+            
+            
+                                $premium_before_gst=  $own_damage_premium['total_a'] + $liablity_premium['total_b'];
+                                 $gst =  ( $premium_before_gst * 18  / 100);
+                                  $total_premium = [
+            
+                                            "premium_before_gst" => $premium_before_gst,                               
+                                            "gst" => $gst ,
+                                            "final_premium" => $premium_before_gst + $gst 
+                                  ]  ;
+            
+                                    return response()->json([
+                                        'own_damage_premium' => $own_damage_premium,
+                                        'liability_premium' => $liablity_premium,
+                                        'total_premium' => $total_premium
+            
+                                    ]);
+            
+                          }
+
 
                 }
 

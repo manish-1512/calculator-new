@@ -91,6 +91,16 @@ Route::get('/forgot-password', function () {
 
     Route::get('/dashboard','DashboardController@dashboardData')->name('dashboard');
 
+    
+    Route::group(['prefix' => 'users','as'=>'users.'],function() {    
+
+        Route::get('/','UserController@index')->name('index');
+        Route::get('/status/{id}','UserController@changeStatus')->name('status');
+        Route::delete('/delete/{id}','UserController@destroy')->name('destroy');
+    });
+
+
+
      Route::get('categories','CategoryController@index')->name('categories');
 
     Route::group(['prefix' => 'moter-policies','as'=>'moter_policies.'],function() {    

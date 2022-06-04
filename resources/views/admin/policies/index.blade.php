@@ -22,7 +22,7 @@
 
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th>id</th>
                   <th>Name</th>
                   <th>Image</th>
                   <th>Order</th>
@@ -39,7 +39,7 @@
                 @foreach ($policy_data as $key =>  $data)
 
                   <tr>
-                    <td>{{++$key}}</td>
+                    <td>{{$data->id}}</td>
                     <td>{{$data->name}}</td>                    
                     <td>
                       @if(isset($data->image))

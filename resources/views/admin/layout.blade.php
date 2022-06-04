@@ -299,6 +299,16 @@ table.dataTable thead .sorting_desc_disabled:before {
             </a>
 
           </li>
+
+          <li class="nav-item menu-open">
+            
+            <a href="{{route('admin.users.index')}}" class="nav-link {{  (request()->segment(2) =='dashboard')? 'active':''; }} ">
+              
+            <img  src="{{asset('images/dashboard.png')}}" alt="" height="25" width="30">
+              <p class="ps-3">Users</p>
+            </a>
+
+          </li>
           <!--  -->
           <li class="nav-item">
             <a href="{{route('admin.moter_policies.index')}}" class="nav-link {{  (request()->segment(2) =='moter-policies')? 'active':''; }} ">

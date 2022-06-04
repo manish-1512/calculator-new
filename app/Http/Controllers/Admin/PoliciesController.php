@@ -14,7 +14,7 @@ class PoliciesController extends Controller
 
     public function index(){
 
-        $policy_data =   Policies::get();
+        $policy_data =   Policies::orderBy('order')->get();
 
 
         return view('admin.policies.index',compact('policy_data'));
