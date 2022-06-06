@@ -12,7 +12,7 @@
     <div class="col-lg-12 margin-tb mx-auto ">
 
       <button type="button" class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#add_policy">Add New</button>
-      <a href="{{route('admin.two_wheeler_ev.index')}}" class="btn btn-info">Go Back</a>
+      <a href="{{route('admin.private_car_ev.index')}}" class="btn btn-info">Go Back</a>
 
 </div>
 

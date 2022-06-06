@@ -13,9 +13,12 @@ use App\Models\GoodsCarryingVehicle_public_other_then_three_wheeler;
 use App\Models\GoodsCarryingVehicle_public_other_then_three_wheeler_tp_rates;
 use App\Models\MiscSpecialVehiclesModel;
 use App\Models\PrivateCar_cc_tp;
+use App\Models\PrivateCarEv_kw_tp_rate;
+use App\Models\PrivateCarEvBasicRateModel;
 use App\Models\PrivateCarModelRate;
 use App\Models\Three_wheeler_goods_carrying_vehicle_private;
 use App\Models\Three_wheeler_goods_carrying_vehicle_public;
+use App\Models\Three_wheeler_pcv_up_to_17_passengers;
 use App\Models\Three_wheeler_pcv_up_to_6_passengers;
 use App\Models\Two_wheeler_cc_tp;
 use App\Models\TwoWheelerEv_kw_tp_rate;
@@ -31,87 +34,102 @@ class CalculatePremiumController extends Controller
 {
     public function calcuatePolicyPremium(Request $request){
 
-        //this is for testing api         
-        if($request->input('apikey') == null){
-            $message = "Enter Api Key.";
+    //this is for testing api         
+    if($request->input('apikey') == null){
+        $message = "Enter Api Key.";
+        
+        return response()->json([
+            "error",$message
+        ]); die;
+
+    }else{
+        if($request->input('apikey') != "964912"){
             
+            $message = "Enter Valid Api Key.";
             return response()->json([
                 "error",$message
             ]); die;
-
-        }else{
-            if($request->input('apikey') != "964912"){
-                
-                $message = "Enter Valid Api Key.";
-                return response()->json([
-                    "error",$message
-                ]); die;
-                
-                $response = $this->errorOutput("error",$message,'');
-                echo json_encode($response); die;
-            }
+            
+            $response = $this->errorOutput("error",$message,'');
+            echo json_encode($response); die;
         }
+    }
 
 
-        if($request->input('user_id') == null){
+    if($request->input('user_id') == null){
 
-            $message = "Enter user_id.";
-            
-            return response()->json([
-                "error",$message
-            ]); die;
-        }else{
+        $message = "Enter user_id.";
+        
+        return response()->json([
+            "error",$message
+        ]); die;
+    }else{
 
-                $userDetails	=	DB::table('users')->where('id',$request->input('user_id'))->first();
-                if($userDetails != null ){
-                    if($userDetails->is_active == 0){
-                        $message = "Your account is banned. Please logout and login again or contact to support.";
-                        // $response = $this->errorOutput("logout",$message,'');
-                        // echo json_encode($response); die;
-
-                        return response()->json([
-                            "logout",$message,''
-                        ]); die;
-                    }
-                }else{
-                    $message = "Your account is deleted. Please logout and login again.";
+            $userDetails	=	DB::table('users')->where('id',$request->input('user_id'))->first();
+            if($userDetails != null ){
+                if($userDetails->is_active == 0){
+                    $message = "Your account is banned. Please logout and login again or contact to support.";
+                    // $response = $this->errorOutput("logout",$message,'');
+                    // echo json_encode($response); die;
 
                     return response()->json([
                         "logout",$message,''
                     ]); die;
-                    // $response = $this->errorOutput("logout",$message,'');
-                    // echo json_encode($response); die;
                 }
+            }else{
+                $message = "Your account is deleted. Please logout and login again.";
 
-        }
+                return response()->json([
+                    "logout",$message,''
+                ]); die;
+                // $response = $this->errorOutput("logout",$message,'');
+                // echo json_encode($response); die;
+            }
 
-
-        //////////////////
-
-        if($request->id == null){
-
-            return response()->json([
-                "status"=> 401,
-                "error" => [
-                    "id"=> ["the id field is required"]
-                    ]
-            ]);
-        }
+    }
 
 
+    //////////////////
+
+    if($request->id == null){
+
+        return response()->json([
+            "status"=> 401,
+            "error" => [
+                "id"=> ["the id field is required"]
+                ]
+        ]);
+    }
 
 
-        $idv =  $request->idv;
-        $depreciation =  $request->depreciation;
-        $no_claim_bonus =  $request->no_claim_bonus;
-        $year_of_manufacture =  $request->year_of_manufacture;
-        $zone =  $request->zone;
-        $discount_on_od_premium =  $request->discount_on_od_premium;
-        $pa_to_owner_driver =  $request->pa_to_owner_driver;
+
+   $cat_id =  $request->id ;
+
+
+   $d= $request->all();
+
+    $fields = $d['fields'];
+
+    $modify_array = array_column($fields, 'value', 'key');
+     
+    
+    $request = json_decode(json_encode($modify_array));
+
+    $request->id = $cat_id;
+
+    $idv =  ($request->idv)?? 0;
+    $depreciation =  ($request->depreciation)?? 0;
+    $no_claim_bonus =  ($request->no_claim_bonus)?? 0;
+    $year_of_manufacture =  ($request->year_of_manufacture)?? 0;
+    $zone =  ($request->zone)?? 0;
+    $discount_on_od_premium =  ($request->discount_on_od_premium)?? 0;
+    $pa_to_owner_driver =  ($request->pa_to_owner_driver)?? 0;
+
+
 
         if(($request->id ==1) ||  ($request->id == 2) ){
 
-            $validator = Validator::make($request->all(), [ 
+            $validator = Validator::make($modify_array, [ 
                 'zone' => [
                     'required',              
                     Rule::in(['a', 'b']),
@@ -231,7 +249,7 @@ class CalculatePremiumController extends Controller
         }elseif(($request->id == 3 ) || ($request->id == 4)){
 
 
-                $validator = Validator::make($request->all(), [   
+                $validator = Validator::make($modify_array, [   
                     'idv' => "required|numeric",
                     'depreciation' => "required|numeric",
                     'discount_on_od_premium' => "required|numeric",
@@ -259,7 +277,6 @@ class CalculatePremiumController extends Controller
                             $age_of_vehicle =  $request->age;
                             $cubic_capacity =  $request->cc;
                             $electrical_accessories =  $request->electrical_accessories;
-   
                             $lpg_cng_kit = $request->lpg_cng_kit;            
                             $zero_depreciation =  $request->zero_depreciation;
                             $ll_to_paid_driver =  $request->ll_to_paid_driver;
@@ -320,6 +337,7 @@ class CalculatePremiumController extends Controller
                             ];
         
                                 //   $restriccted_tppd =  ( $request->restriccted_tppd == 1)? 100 : 0;
+                                
                                   $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? 60 :0;
 
                                   $cc_tp_charges =  PrivateCar_cc_tp::where('id',$cubic_capacity)->first();   
@@ -365,7 +383,7 @@ class CalculatePremiumController extends Controller
                       //this is for goods carriying vehicle public and private 
                 }else if( ($request->id == 5 ) || ($request->id == 6)  ){
 
-                    $validator = Validator::make($request->all(), [  
+                    $validator = Validator::make($modify_array, [  
 
                         'idv' => "required|numeric",
                         'depreciation' => "required|numeric",
@@ -521,7 +539,7 @@ class CalculatePremiumController extends Controller
                           //this is for taxi
                 }else if( $request->id == 7 ){
              
-                    $validator = Validator::make($request->all(), [  
+                    $validator = Validator::make($modify_array, [  
 
                         'idv' => "required|numeric",
                         'depreciation' => "required|numeric",
@@ -662,7 +680,7 @@ class CalculatePremiumController extends Controller
 
                 }else if(($request->id == 8) || ($request->id == 9)){
 
-                    $validator = Validator::make($request->all(), [  
+                    $validator = Validator::make($modify_array, [  
 
                         'idv' => "required|numeric",
                         'depreciation' => "required|numeric",
@@ -807,7 +825,7 @@ class CalculatePremiumController extends Controller
 
                     
 
-        $validator = Validator::make($request->all(), [  
+        $validator = Validator::make($modify_array, [  
 
             'idv' => "required|numeric",
             'depreciation' => "required|numeric",
@@ -843,7 +861,7 @@ class CalculatePremiumController extends Controller
                        $chart =  Three_wheeler_pcv_up_to_6_passengers::where('zone',$request->zone)->where('age',$request->age)->first();
                    }else if($request->id == 11){
 
-                    $chart =  Three_wheeler_pcv_up_to_6_passengers::where('zone',$request->zone)->where('age',$request->age)->first();
+                    $chart =  Three_wheeler_pcv_up_to_17_passengers::where('zone',$request->zone)->where('age',$request->age)->first();
                    }
       
              
@@ -951,7 +969,7 @@ class CalculatePremiumController extends Controller
                 }else if(($request->id == 12) || ($request->id == 13) ){
 
                     
-            $validator = Validator::make($request->all(), [  
+            $validator = Validator::make($modify_array, [  
 
                 'idv' => "required|numeric",
                 'depreciation' => "required|numeric",
@@ -1104,7 +1122,7 @@ class CalculatePremiumController extends Controller
 
                 }else if($request->id == 14){
 
-                    $validator = Validator::make($request->all(), [  
+                    $validator = Validator::make($modify_array, [  
                         'idv' => "required|numeric",
                         'depreciation' => "required|numeric",
                         'year_of_manufacture' => "required",
@@ -1239,7 +1257,7 @@ class CalculatePremiumController extends Controller
 
                 }else if(($request->id == 15) || ($request->id ==16)){
 
-                    $validator = Validator::make($request->all(), [ 
+                    $validator = Validator::make($modify_array, [ 
                         'zone' => [
                             'required',              
                             Rule::in(['a', 'b']),
@@ -1358,10 +1376,143 @@ class CalculatePremiumController extends Controller
                           }
 
 
-                }
+                }elseif(($request->id == 17 ) || ($request->id == 18)){
+
+
+                    $validator = Validator::make($modify_array, [   
+                        'idv' => "required|numeric",
+                        'depreciation' => "required|numeric",
+                        'discount_on_od_premium' => "required|numeric",
+                        'accessories_value' => "required|numeric",
+                        'age' => "required",
+                        'zone' => [
+                            'required',              
+                            Rule::in(['a', 'b']),
+                        ],
+                        'kw' => "required",
+                        'electrical_accessories' => "required", 
+                        'lpg_cng_kit' => "required",
+           
+                        'no_claim_bonus' => 'required|numeric',
+                        'pa_to_owner_driver' => "required|numeric",
+                        'll_to_paid_driver' => "required|numeric",
+                        'pa_to_unnamed_passenger' => "required|numeric",
+                    ]);
+            
+                    if($validator->fails()){
+            
+                        return response()->json(['status' => 401 ,'error' => $validator->errors()->toArray() ]);
+            
+                    }else{
+                                $age_of_vehicle =  $request->age;
+                                $cubic_capacity =  $request->kw;
+                                $electrical_accessories =  $request->electrical_accessories;
+                                $lpg_cng_kit = $request->lpg_cng_kit;            
+                                $zero_depreciation =  $request->zero_depreciation;
+                                $ll_to_paid_driver =  $request->ll_to_paid_driver;
+                                $pa_to_unnamed_passenger =  $request->pa_to_unnamed_passenger;
+            
+                                
+                                $chart  =  PrivateCarEvBasicRateModel::where('zone',$zone)->where('age',$age_of_vehicle)->where('kw',$cubic_capacity)->first();
+    
+                                            $current_idv = $idv - ( ($idv * $depreciation) / 100);
+            
+                                            $Vehicle_basic_rate = $chart->vehicle_basic_rate;
+                                            
+                                            $basic_for_vehicle = ( ($current_idv * $Vehicle_basic_rate) / 100) ;
+    
+                                            $basic_od_premium_after_discount = $basic_for_vehicle - ( ($basic_for_vehicle * $discount_on_od_premium) / 100 );
+            
+                                            $electrical_accessories = (($electrical_accessories * 4) / 100 ) ;
+            
+                                            $lpg_cng_kit = ($request->lpg_cng_kit * 4 ) / 100;
+    
+                                            $total_basic_premium = $basic_od_premium_after_discount + $electrical_accessories  + $lpg_cng_kit;
+            
+                                            $no_claim_bonus = ($total_basic_premium * $no_claim_bonus)/100;
+    
+                                            $net_own_damage_premium = $total_basic_premium - $no_claim_bonus ;
+    
+                                            $total = $net_own_damage_premium ;
+            
+                                //liability premium
+                                
+            
+            
+                                $own_damage_premium=  [
+            
+                                            "idv" => $idv,
+                                            "depreciatio"=> $depreciation,
+                                            "current_idv" => $current_idv,
+            
+                                            "Vehicle_basic_rate" => $Vehicle_basic_rate,
+                                            
+                                            "basic_for_vehicle" => $basic_for_vehicle   ,
+            
+                                            "discount_on_od_premium" => $discount_on_od_premium,
+            
+                                            "basic_od_premium_after_discount" => $basic_od_premium_after_discount,
+            
+                                            "electrical_accessories" => $electrical_accessories ,
+                                         
+            
+                                            "cng_lpg_price" => $lpg_cng_kit,
+                                            "total_basic_premium" => $total_basic_premium,
+            
+                                            "no_claim_bonus" =>  $no_claim_bonus,
+            
+                                            "net_own_damage_premium" => $net_own_damage_premium ,
+                                            "total_a" => $total  ,
+              
+                                ];
+            
+                                    //   $restriccted_tppd =  ( $request->restriccted_tppd == 1)? 100 : 0;
+                                    
+                                      $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? 60 :0;
+    
+                                      $kw_tp_charges =  PrivateCarEv_kw_tp_rate::where('id',$cubic_capacity)->first();   
+    
+                                      if($request->id == 17 ){
+                                            $basic_liablity = $kw_tp_charges->tp_one_year;  
+                                      }else if($request->id == 18){
+                                        $basic_liablity = $kw_tp_charges->tp_three_year; 
+                                      }else{
+                                        $basic_liablity = 0; 
+                                      }
+    
+            
+                                $liablity_premium = [
+            
+                                    "basic_liability" => $basic_liablity  ,
+                                    "pa_owner_driver" => $pa_to_owner_driver,
+                                    "ll_to_paid_driver" => $ll_to_paid_driver,
+                                    "pa_to_unnamed_passenger" => $pa_to_unnamed_passenger  ,
+                                    // "restriccted_tppd" =>  $restriccted_tppd,
+                                    "lpg_cng_kit" => $lpg_cng_liablity,
+                                    "total_b" => ($basic_liablity + $pa_to_owner_driver + $ll_to_paid_driver+ $pa_to_unnamed_passenger + $lpg_cng_liablity)
+            
+                                ];
+            
+            
+                                $premium_before_gst=  $own_damage_premium['total_a'] + $liablity_premium['total_b'];
+                                 $gst =  ( $premium_before_gst * 18  / 100);
+                                  $total_premium = [
+        
+                                            "premium_before_gst" => $premium_before_gst,                               
+                                            "gst" => $gst ,
+                                            "final_premium" => $premium_before_gst + $gst 
+                                  ];
+            
+                                    return response()->json([
+                                        'own_damage_premium' => $own_damage_premium,
+                                        'liability_premium' => $liablity_premium,
+                                        'total_premium' => $total_premium
+                                    ]);
+            
+                          }
 
             }
 
-        }
+    }
     
-
+}

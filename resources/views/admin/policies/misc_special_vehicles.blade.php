@@ -41,7 +41,7 @@
                   <tr>
                     <td>{{++$key}}</td>
                     <td>{{$data->zone}}</td>                       
-                    <td>{{$data->age}}</td>
+                    <td>{{str_replace('_',' ',$data->age)}} Years </td>
                     <td>{{$data->vehicle_basic_rate}}</td>
                     <td>{{$data->tp_other_misc_vehicle}}</td>
                     <td>{{$data->tp_agriculture_6hp}}</td>

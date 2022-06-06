@@ -17,7 +17,7 @@
 
       <a href="{{route('admin.private_car.cc_tp.index')}}" class="btn btn-warning mb-2">show TP rates for private car</a>
 
-      <a href="{{route('admin.private_car.lpg_cng.index')}}" class="btn btn-warning mb-2">Lpg and Cng price for private car</a>
+      {{-- <a href="{{route('admin.private_car.lpg_cng.index')}}" class="btn btn-warning mb-2">Lpg and Cng price for private car</a> --}}
 
 </div>
 
@@ -47,7 +47,7 @@
                   <tr>
                     <td>{{++$key}}</td>
                     <td>{{$data->zone}}</td>                       
-                    <td>{{$data->age}}</td>
+                    <td>{{ str_replace('_',' ',$data->age)}} Years </td>
                     <td>{{$data->cubic}}</td>
                     <td>{{$data->vehicle_basic_rate}}</td>
                     <td style="width: 220px;">

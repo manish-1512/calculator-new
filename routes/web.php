@@ -99,6 +99,17 @@ Route::get('/forgot-password', function () {
         Route::delete('/delete/{id}','UserController@destroy')->name('destroy');
     });
 
+    Route::group(['prefix' => 'gst-and-others-rates','as'=>'gst_and_other_rates.'],function() {    
+
+        Route::get('/','GstAndOtherRateController@index')->name('index');
+        Route::post('/store','GstAndOtherRateController@store')->name('store');
+        Route::get('/edit/{id}','GstAndOtherRateController@edit')->name('edit');
+        Route::post('/update','GstAndOtherRateController@update')->name('update');
+        // Route::get('/status/{id}','GstAndOtherRateController@changeStatus')->name('status');
+        Route::delete('/delete/{id}','GstAndOtherRateController@destroy')->name('destroy');
+        
+    });
+
 
 
      Route::get('categories','CategoryController@index')->name('categories');

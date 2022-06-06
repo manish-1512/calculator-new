@@ -2,18 +2,14 @@
 
 @section('content')
 
-<script>
 
-
-</script>
 
 <div class="row">
-    <h3 class="text-center">Basic rates for 4 Wheeler Bus (Above 6 passenger) </h3>
 
+    <h3 class="text-center">  </h3>
+    
     <div class="col-lg-12 margin-tb mx-auto ">
       <button type="button" class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#add_policy">Add new Type</button>
-
-      <a href="{{route('admin.four_wheeler_bus_above_6_passengers_basic_rates.additional_tp.index')}}" class="btn btn-warning mb-2">show TP Rates And Additional Charges  </a>
 
 </div>
 
@@ -25,29 +21,37 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Zone</th>
-                  <th>Age  </th>
-                  <th>Vehicle Basic Rate</th>
+                  <th>Policy </th>
+                  <th>Gst On Basic (%)</th>
+                  <th>Gst On Rest (%)</th>
+                  <th>IMT 23 (%)</th>
+                  <th>LPG/CNG %</th>
+                  <th>LPG/CNG Addition On Tp(₹)</th>
+                  <th>Electrical % </th>
                   <th>Action</th>
                 </tr>
               </thead>
          
-          @if (isset($four_wheeler_bus_rate_chart))
+          @if (isset($gst_other_rate_data))
        
                <tbody>
 
-                @foreach ($four_wheeler_bus_rate_chart as $key =>  $data)
+                @foreach ($gst_other_rate_data as $key =>  $data)
 
                   <tr>
                     <td>{{++$key}}</td>
-                    <td>{{$data->zone}}</td>                       
-                    <td>{{ str_replace('_',' ',$data->age)}}</td>
-                    <td>{{$data->vehicle_basic_rate}}</td>
+                    <td>{{$data->policy }}</td>                       
+                    <td>{{$data->gst_on_basic_liability}}</td>
+                    <td>{{$data->gst_on_rest_of_other}} </td>
+                    <td>{{$data->imt_23}} </td>
+                    <td>{{$data->lpg_cng_percentage}} </td>
+                    <td>{{$data->lpg_cng_additional_on_tp}} </td>
+                    <td>{{$data->electrical_percentage}} </td>
+
+
                     <td style="width: 220px;">
 
                         <form action="" method="POST">
-                          
-                       
                         <button type="button" data-bs-toggle="modal" data-bs-target="#edit_policy" class="edit_policy btn-sm  btn btn-primary "  value="{{$data->id }}" >Edit</button>
                         <button type="button" data-bs-toggle="modal" data-bs-target="#delete_policy" class="delete_policy btn-sm  btn btn-danger" value="{{$data->id }}" >Delete</button>
 
@@ -76,56 +80,57 @@
                     
                 <div class="container" >
 
-                  <form action="{{route('admin.four_wheeler_bus_above_6_passengers_basic_rates.store')}}"  method="POST" id="taxi_create"  >
+                  <form action="{{route('admin.gst_and_other_rates.store')}}"  method="POST" id="gst_other_rates_create"  >
 
                           @csrf                  
 
                     <div class="form-group">
                       <label for="name">Select Policy</label>
-                      <select name="policy_id" id="" class="form-control" required> 
+                      <select name="id" id="id" class="form-control" required> 
                         @if($policies !== null)
                             @foreach ( $policies as $policy)
                             <option value="{{$policy->id}}">{{$policy->name}}</option>                              
                             @endforeach
                         @endif
                       </select>
-                      <span class="text-danger error-text policy_id "></span>
+                      <span class="text-danger error-text error_id "></span>
                     </div>
-                    
+               
                     <div class="form-group">
-                      <label for="">Select Zone</label>
-                      <select name="zone" id="" class="form-control" required> 
-
-                        <option >Select Zone</option>
-                        <option value="a">A</option>
-                        <option value="b">B</option>
-                        <option value="c">C</option>
-                      </select>
-                      <span class="text-danger error-text  zone_error "></span>
+                      <label for="image_order">Gst On Basic Liabilities (%)</label>
+                      <input type="text" class="form-control" value=""  name="gst_on_basic_liability" >
+                      <span class="text-danger error-text gst_on_basic_liability_error "></span>
                     </div>
 
                     <div class="form-group">
-                      <label for="age">Vehicle  Age  </label>
-                      <select name="age" id="" class="form-control" required> 
-
-                        <option >Select Age</option>
-
-                        <option value="0_to_5">Up to 5 years</option>
-                        <option value="5_to_7">5 to 7 years</option>
-                        <option value="7_to_more"> > 7 years</option>
-                        
-                      </select>
-                      <span class="text-danger error-text age_error "></span>
+                      <label for="image_order">Gst On Rest Of Others (%) </label>
+                      <input type="text" class="form-control" value=""  name="gst_on_rest_of_other" >
+                      <span class="text-danger error-text gst_on_rest_of_other_error "></span>
                     </div>
-                  
-
 
                     <div class="form-group">
-                      <label for="image_order">Vehicle Basic Rate</label>
-                      <input type="text" class="form-control" value="" min="0" name="vehicle_basic_rate" required>
-                      <span class="text-danger error-text vehicle_basic_rate_error "></span>
+                      <label for="image_order">IMT 23  (%)</label>
+                      <input type="text" class="form-control" value=""  name="imt_23" >
+                      <span class="text-danger error-text imt_23_error "></span>
                     </div>
 
+                    <div class="form-group">
+                      <label for="image_order">LPG/CNG (%) </label>
+                      <input type="text" class="form-control" value=""  name="lpg_cng_percentage" >
+                      <span class="text-danger error-text lpg_cng_percentage_error "></span>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="image_order">LPG/CNG  Additional On TP (₹)</label>
+                      <input type="text" class="form-control" value=""  name="lpg_cng_additional_on_tp" >
+                      <span class="text-danger error-text lpg_cng_additional_on_tp_error "></span>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="image_order">Electrical Item  (%) </label>
+                      <input type="text" class="form-control" value=""  name="electrical_percentage" >
+                      <span class="text-danger error-text electrical_percentage_error "></span>
+                    </div>
                                
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </form>
@@ -157,64 +162,54 @@
 
                     
                 <div class="container" >
-                <form action="{{route('admin.four_wheeler_upto_6_passengers_taxi.store')}}"  method="POST" id="taxi_update" enctype="multipart/form-data" >
-                      @csrf                  
+                  <form action="{{route('admin.gst_and_other_rates.update')}}"  method="POST" id="gst_other_rates_update"  >
 
-                      <div class="form-group">
-                      <label for="name">Select Policy</label>
-                      <input type="text" name="id" id="edit_id">
-                      <select name="policy_id" id="edit_policy_id" class="form-control" required> 
-                      @if($policies !== null)
-                        @foreach ( $policies as $policy)
-                        <option value="{{$policy->id}}">{{$policy->name}}</option>                              
-                        @endforeach
-                      @endif
-                      </select>
-                      <span class="text-danger error-text policy_id "></span>
-                      </div>
+                    @csrf                  
 
-                      <div class="form-group">
-                      <label for="">Select Zone</label>
-                      <select name="zone" id="edit_zone" class="form-control" required> 
-                        <option >Select Zone</option>
-                        <option value="a">A</option>
-                        <option value="b">B</option>
-                      </select>
-                      <span class="text-danger error-text  zone_error "></span>
-                      </div>
+              <div class="form-group">
+                        <input type="hidden" class="form-control" id="edit_id" value=""  name="id" >
+                </select>
+                <span class="text-danger error-text id_error "></span>
+              </div>
+         
+              <div class="form-group">
+                <label for="image_order">Gst On Basic Liabilities (%)</label>
+                <input type="text" class="form-control" id="edit_gst_on_basic_liability" value=""  name="gst_on_basic_liability" >
+                <span class="text-danger error-text gst_on_basic_liability_error "></span>
+              </div>
 
-                      <div class="form-group">
-                      <label for="age">Vehicle  Age  </label>
-                      <select name="age" id="edit_age" class="form-control" required> 
+              <div class="form-group">
+                <label for="image_order">Gst On Rest Of Others (%) </label>
+                <input type="text" class="form-control" id="edit_gst_on_rest_of_other" value=""  name="gst_on_rest_of_other" >
+                <span class="text-danger error-text gst_on_rest_of_other_error "></span>
+              </div>
 
-                        <option >Select Zone</option>
+              <div class="form-group">
+                <label for="image_order">IMT 23  (%)</label>
+                <input type="text" class="form-control" value="" id="edit_imt_23"  name="imt_23" >
+                <span class="text-danger error-text imt_23_error "></span>
+              </div>
 
-                        <option value="0_to_5">Up to 5 years</option>
-                        <option value="5_to_7">5 to 7 years</option>
-                        <option value="7_to_more"> > 7 years</option>
-                        
-                      </select>
-                      <span class="text-danger error-text age_error "></span>
-                    </div>
+              <div class="form-group">
+                <label for="image_order">LPG/CNG (%) </label>
+                <input type="text" class="form-control" value="" id="edit_lpg_cng_percentage" name="lpg_cng_percentage" >
+                <span class="text-danger error-text lpg_cng_percentage_error "></span>
+              </div>
 
-                    <!-- <div class="form-group">
-                      <label for="image_order">Vehicle  Age   (<) Year  </label>
-                      <input type="number" class="form-control" value="" name="age_lessthen" min="0" required>
-                      <span class="text-danger error-text age_lessthen_error "></span>
-                    </div> -->
+              <div class="form-group">
+                <label for="image_order">LPG/CNG  Additional On TP (₹)</label>
+                <input type="text" class="form-control" value="" id="edit_lpg_cng_additional_on_tp"  name="lpg_cng_additional_on_tp" >
+                <span class="text-danger error-text lpg_cng_additional_on_tp_error "></span>
+              </div>
 
-                
-
-
-                      <div class="form-group">
-                        <label for="image_order">Vehicle Basic Rate</label>
-                        <input type="text" class="form-control" value="" name="vehicle_basic_rate" min="0" id="edit_vehicle_basic_rate" required>
-                        <span class="text-danger error-text vehicle_basic_rate_error "></span>
-                      </div>
-
-                          
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                      </form>
+              <div class="form-group">
+                <label for="image_order">Electrical Item  (%) </label>
+                <input type="text" class="form-control" value="" id="edit_electrical_percentage"  name="electrical_percentage" >
+                <span class="text-danger error-text electrical_percentage_error "></span>
+              </div>
+                         
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
 
 
                 </div>
@@ -271,7 +266,7 @@
     
     $(document).ready( function(){
       
-      $("#taxi_create").on('submit',function(e){
+      $("#gst_other_rates_create").on('submit',function(e){
 
           e.preventDefault();
 
@@ -306,7 +301,7 @@
                             );
                       }else if(data.status == 200){
 
-                        $('#taxi_create')[0].reset();
+                        $('#gst_other_rates_create')[0].reset();
 
                         Swal.fire({
 
@@ -343,11 +338,12 @@
       $.ajax({
 
       type:"GET",
-      url:  "{{APP_PATH}}"+"admin/private-car/edit/"+rate_chart_id,
+      url:  "{{APP_PATH}}"+"admin/gst-and-others-rates/edit/"+rate_chart_id,
 
 
               success:function(response){
 
+                console.log(response);
             
             if(response.status == 404){
                 
@@ -358,12 +354,14 @@
                                 );
             }else{
 
-                $('#edit_id').val(rate_chart_id);
-                $('#edit_policy_id').val(response.four_wheeler_bus_data.policy_id );
-                $('#edit_zone').val(response.four_wheeler_bus_data.zone );
-                $('#edit_age').val(response.four_wheeler_bus_data.age);
-                $('#edit_vehicle_basic_rate').val(response.four_wheeler_bus_data.vehicle_basic_rate );    
-
+                $('#edit_id').val(response.gst_and_other_rates_data.id);
+                $('#edit_gst_on_basic_liability').val(response.gst_and_other_rates_data.gst_on_basic_liability );
+                $('#edit_gst_on_rest_of_other').val(response.gst_and_other_rates_data.gst_on_rest_of_other );
+                $('#edit_imt_23').val(response.gst_and_other_rates_data.imt_23 );
+                $('#edit_lpg_cng_percentage').val(response.gst_and_other_rates_data.lpg_cng_percentage );
+                $('#edit_lpg_cng_additional_on_tp').val(response.gst_and_other_rates_data.lpg_cng_additional_on_tp );
+                $('#edit_electrical_percentage').val(response.gst_and_other_rates_data.electrical_percentage );
+        
             }  
     
 
@@ -376,7 +374,7 @@
 
 
 
-$("#taxi_update").on('submit',function(e){
+$("#gst_other_rates_update").on('submit',function(e){
 
         e.preventDefault();
 
@@ -402,7 +400,7 @@ $("#taxi_update").on('submit',function(e){
 
                     }else if(data.status == 200){
 
-                        $('#taxi_update')[0].reset();
+                        $('#gst_other_rates_update')[0].reset();
 
                         Swal.fire(
                                     'Good job!',
@@ -456,7 +454,7 @@ var policy_id = $('#delete_policy_id').val();
 $.ajax({
 
     type:"DELETE",
-    url: "{{APP_PATH}}"+"admin/private-car/delete/"+policy_id,
+    url: "{{APP_PATH}}"+"admin/gst-and-others-rates/delete/"+policy_id,
 
     data:{'_token': '{{ csrf_token() }}' },
 
