@@ -131,7 +131,7 @@ class DynamicFieldsController extends Controller
             [
                 "key" => "pa_to_owner_driver",
                 "name" => "PA to Owner Driver ",
-                "value" => "",
+                "value" => "0",
                 "type" => "textbox",
             ],
            
@@ -215,13 +215,13 @@ class DynamicFieldsController extends Controller
                     [
                         "key" => "pa_to_unnamed_passenger",
                         "name" => "PA  To UnNamed Passenger",
-                        "value" => "",
+                        "value" => "0",
                         "type" => "textbox",
                         ],
                     [
                         "key" => "zero_depreciation",
                         "name" => "Zero Depreciation",
-                        "value" => "",
+                        "value" => "0",
                         "type" => "textbox",
                         ],
 
@@ -290,13 +290,13 @@ class DynamicFieldsController extends Controller
                         [
                             "key" => "electrical_accessories",
                             "name" => "Electrical/Electronic Fitting",
-                            "value" => "",
+                            "value" => "0",
                             "type" => "textbox",
                         ],
                         [
                             "key" => "lpg_cng_kit",
                             "name" => "CNG/LPG Fule Kit ",
-                            "value" => "",
+                            "value" => "0",
                             "type" => "textbox",
                         ],
 
@@ -319,13 +319,13 @@ class DynamicFieldsController extends Controller
                     [
                         "key" => "pa_to_unnamed_passenger",
                         "name" => "PA  To UnNamed Passenger",
-                        "value" => "",
+                        "value" => "0",
                         "type" => "textbox",
                         ],
                     [
                         "key" => "zero_depreciation",
                         "name" => "Zero Depreciation",
-                        "value" => "",
+                        "value" => "0",
                         "type" => "textbox",
                         ],
 
@@ -402,7 +402,7 @@ class DynamicFieldsController extends Controller
                         [
                             "key" => "geographical_ext",
                             "name" => "Geographical Ext",
-                            "value" => "",
+                            "value" => "0",
                             "type" => "textbox",
                         ],
                         [
@@ -426,7 +426,7 @@ class DynamicFieldsController extends Controller
                     [
                         "key" => "ll_to_paid_driver",
                         "name" => "LL To Paid Driver",
-                        "value" => "",
+                        "value" => "0",
                         "type" => "selectbox",
                         "options" =>[
                             [
@@ -442,7 +442,7 @@ class DynamicFieldsController extends Controller
                     [
                         "key" => "ll_to_employee_other_then_paid_driver",
                         "name" => "LL to Employee Other Then Paid Driver",
-                        "value" => "",
+                        "value" => "0",
                         "type" => "textbox",
                         ],
                     
@@ -509,13 +509,13 @@ class DynamicFieldsController extends Controller
                 [
                     "key" => "geographical_ext",
                     "name" => "Geographical Ext",
-                    "value" => "",
+                    "value" => "0",
                     "type" => "textbox",
                 ],
                 [
                     "key" => "no_of_passengers",
                     "name" => "Seating Capacity",
-                    "value" => "",
+                    "value" => "0",
                     "type" => "textbox",
                 ],
                 [
@@ -539,7 +539,7 @@ class DynamicFieldsController extends Controller
             [
                 "key" => "ll_to_paid_driver",
                 "name" => "LL To Paid Driver",
-                "value" => "",
+                "value" => "0",
                 "type" => "selectbox",
                 "options" =>[
                     [
@@ -626,7 +626,7 @@ class DynamicFieldsController extends Controller
               [
                 "key" => "pa_to_paid_driver",
                 "name" => "PA to Paid Driver",
-                "value" => "",
+                "value" => "0",
                 "type" => "textbox",
             ],
               
@@ -691,13 +691,13 @@ class DynamicFieldsController extends Controller
         [
             "key" => "no_of_passengers",
             "name" => "Seating Capacity",
-            "value" => "",
+            "value" => "0",
             "type" => "textbox",
         ],
         [
             "key" => "lpg_cng_kit",
             "name" => "CNG/LPG Fule Kit ",
-            "value" => "",
+            "value" => "0",
             "type" => "textbox",
         ],
         [
@@ -719,7 +719,7 @@ class DynamicFieldsController extends Controller
         [
             "key" => "ll_to_paid_driver",
             "name" => "LL To Paid Driver",
-            "value" => "",
+            "value" => "0",
             "type" => "selectbox",
             "options" =>[
                 [
@@ -812,7 +812,7 @@ class DynamicFieldsController extends Controller
         [
             "key" => "seating_capacity",
             "name" => "Seating Capacity",
-            "value" => "",
+            "value" => "0",
             "type" => "selectbox",
             "options" =>$seating_capacity
         ],
@@ -852,7 +852,7 @@ class DynamicFieldsController extends Controller
          [
             "key" => "ll_to_employee_other_then_paid_driver",
             "name" => "LL to Employee Other Then Paid Driver",
-            "value" => "",
+            "value" => "0",
             "type" => "textbox",
             ],
 
@@ -931,7 +931,7 @@ class DynamicFieldsController extends Controller
           [
             "key" => "geographical_ext",
             "name" => "Geographical Ext",
-            "value" => "",
+            "value" => "0",
             "type" => "textbox",
         ],
         
@@ -954,7 +954,7 @@ class DynamicFieldsController extends Controller
           [
               "key" => "ll_to_paid_driver",
               "name" => "LL To Paid Driver",
-              "value" => "",
+              "value" => "0",
               "type" => "selectbox",
               "options" =>[
                   [
@@ -970,7 +970,7 @@ class DynamicFieldsController extends Controller
            [
               "key" => "ll_to_employee_other_then_paid_driver",
               "name" => "LL to Employee Other Then Paid Driver",
-              "value" => "",
+              "value" => "0",
               "type" => "textbox",
               ],
   
@@ -991,7 +991,7 @@ class DynamicFieldsController extends Controller
                         [
                         "key" => "accessories_value",
                         "name" => "Accessories Value",
-                        "value" => "",
+                        "value" => "0",
                         "type" => "textbox",
                         ],
 
@@ -1058,13 +1058,13 @@ class DynamicFieldsController extends Controller
                     [
                         "key" => "pa_to_unnamed_passenger",
                         "name" => "PA  To UnNamed Passenger",
-                        "value" => "",
+                        "value" => "0",
                         "type" => "textbox",
                         ],
                     [
                         "key" => "zero_depreciation",
                         "name" => "Zero Depreciation",
-                        "value" => "",
+                        "value" => "0",
                         "type" => "textbox",
                         ],
 
@@ -1130,20 +1130,20 @@ class DynamicFieldsController extends Controller
                 [
                     "key" => "geographical_ext",
                     "name" => "Geographical Ext",
-                    "value" => "",
+                    "value" => "0",
                     "type" => "textbox",
                 ],
 
                 [
                     "key" => "electrical_accessories",
                     "name" => "Electrical/Electronic Fitting",
-                    "value" => "",
+                    "value" => "0",
                     "type" => "textbox",
                 ],
                 [
                     "key" => "lpg_cng_kit",
                     "name" => "CNG/LPG Fule Kit ",
-                    "value" => "",
+                    "value" => "0",
                     "type" => "textbox",
                 ],
 
@@ -1166,13 +1166,13 @@ class DynamicFieldsController extends Controller
             [
                 "key" => "pa_to_unnamed_passenger",
                 "name" => "PA  To UnNamed Passenger",
-                "value" => "",
+                "value" => "0",
                 "type" => "textbox",
                 ],
             [
                 "key" => "zero_depreciation",
                 "name" => "Zero Depreciation",
-                "value" => "",
+                "value" => "0",
                 "type" => "textbox",
                 ],
 

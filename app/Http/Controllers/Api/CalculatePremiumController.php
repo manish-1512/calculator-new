@@ -11,6 +11,7 @@ use App\Models\GoodsCarryingVehicle_private_other_then_three_wheeler;
 use App\Models\GoodsCarryingVehicle_private_other_then_three_wheeler_tp_rates;
 use App\Models\GoodsCarryingVehicle_public_other_then_three_wheeler;
 use App\Models\GoodsCarryingVehicle_public_other_then_three_wheeler_tp_rates;
+use App\Models\GstAndOtherRateModel;
 use App\Models\MiscSpecialVehiclesModel;
 use App\Models\PrivateCar_cc_tp;
 use App\Models\PrivateCarEv_kw_tp_rate;
@@ -34,97 +35,106 @@ class CalculatePremiumController extends Controller
 {
     public function calcuatePolicyPremium(Request $request){
 
-    //this is for testing api         
-    if($request->input('apikey') == null){
-        $message = "Enter Api Key.";
-        
-        return response()->json([
-            "error",$message
-        ]); die;
+            //this is for testing api         
+            if($request->input('apikey') == null){
+                $message = "Enter Api Key.";
+                
+                return response()->json([
+                    "error",$message
+                ]); die;
 
-    }else{
-        if($request->input('apikey') != "964912"){
-            
-            $message = "Enter Valid Api Key.";
-            return response()->json([
-                "error",$message
-            ]); die;
-            
-            $response = $this->errorOutput("error",$message,'');
-            echo json_encode($response); die;
-        }
-    }
+            }else{
+                if($request->input('apikey') != "964912"){
+                    
+                    $message = "Enter Valid Api Key.";
+                    return response()->json([
+                        "error",$message
+                    ]); die;
+                    
+                    $response = $this->errorOutput("error",$message,'');
+                    echo json_encode($response); die;
+                }
+            }
 
 
-    if($request->input('user_id') == null){
+            if($request->input('user_id') == null){
 
-        $message = "Enter user_id.";
-        
-        return response()->json([
-            "error",$message
-        ]); die;
-    }else{
+                $message = "Enter user_id.";
+                
+                return response()->json([
+                    "error",$message
+                ]); die;
+                    
+            }else{
 
-            $userDetails	=	DB::table('users')->where('id',$request->input('user_id'))->first();
-            if($userDetails != null ){
-                if($userDetails->is_active == 0){
-                    $message = "Your account is banned. Please logout and login again or contact to support.";
-                    // $response = $this->errorOutput("logout",$message,'');
-                    // echo json_encode($response); die;
+                $userDetails	=	DB::table('users')->where('id',$request->input('user_id'))->first();
+                if($userDetails != null ){
+                    if($userDetails->is_active == 0){
+                        $message = "Your account is banned. Please logout and login again or contact to support.";
+                        // $response = $this->errorOutput("logout",$message,'');
+                        // echo json_encode($response); die;
+
+                        return response()->json([
+                            "logout",$message,''
+                        ]); die;
+                    }
+                }else{
+                    $message = "Your account is deleted. Please logout and login again.";
 
                     return response()->json([
                         "logout",$message,''
                     ]); die;
+                    // $response = $this->errorOutput("logout",$message,'');
+                    // echo json_encode($response); die;
                 }
-            }else{
-                $message = "Your account is deleted. Please logout and login again.";
 
-                return response()->json([
-                    "logout",$message,''
-                ]); die;
-                // $response = $this->errorOutput("logout",$message,'');
-                // echo json_encode($response); die;
-            }
-
-    }
+         }
 
 
     //////////////////
 
-    if($request->id == null){
+        if($request->id == null){
 
-        return response()->json([
-            "status"=> 401,
-            "error" => [
-                "id"=> ["the id field is required"]
-                ]
-        ]);
-    }
-
-
-
-   $cat_id =  $request->id ;
+            return response()->json([
+                "status"=> 401,
+                "error" => [
+                    "id"=> ["the id field is required"]
+                    ]
+            ]);
+        }
 
 
-   $d= $request->all();
 
-    $fields = $d['fields'];
+            $cat_id =  $request->id;
 
-    $modify_array = array_column($fields, 'value', 'key');
-     
-    
-    $request = json_decode(json_encode($modify_array));
+            $gst_and_other =   GstAndOtherRateModel::where('id',$cat_id)->first();
 
-    $request->id = $cat_id;
+            $gst_on_basic_rate = $gst_and_other->gst_on_basic_liability ?? 0 ;
+            $gst_on_rest_rate = $gst_and_other->gst_on_rest_of_other ?? 0;
+            $imt_23_rate = $gst_and_other->imt_23 ?? 0;
+            $lpg_cng_rate = $gst_and_other->lpg_cng_percentage ?? 0;
+            $lpg_cng_additional_on_tp_rate = $gst_and_other->lpg_cng_additional_on_tp ?? 0;
+            $electrical_percentage_rate = $gst_and_other->electrical_percentage ?? 0;
 
-    $idv =  ($request->idv)?? 0;
-    $depreciation =  ($request->depreciation)?? 0;
-    $no_claim_bonus =  ($request->no_claim_bonus)?? 0;
-    $year_of_manufacture =  ($request->year_of_manufacture)?? 0;
-    $zone =  ($request->zone)?? 0;
-    $discount_on_od_premium =  ($request->discount_on_od_premium)?? 0;
-    $pa_to_owner_driver =  ($request->pa_to_owner_driver)?? 0;
 
+
+            $d= $request->all();
+
+            $fields = $d['fields'];
+
+            $modify_array = array_column($fields, 'value', 'key');
+            
+            $request = json_decode(json_encode($modify_array));
+
+            $request->id = $cat_id;
+
+            $idv =  ($request->idv)?? 0;
+            $depreciation =  ($request->depreciation)?? 0;
+            $no_claim_bonus =  ($request->no_claim_bonus)?? 0;
+            $year_of_manufacture =  ($request->year_of_manufacture)?? 0;
+            $zone =  ($request->zone)?? 0;
+            $discount_on_od_premium =  ($request->discount_on_od_premium)?? 0;
+            $pa_to_owner_driver =  ($request->pa_to_owner_driver)?? 0;
 
 
         if(($request->id ==1) ||  ($request->id == 2) ){
@@ -229,7 +239,7 @@ class CalculatePremiumController extends Controller
     
     
                         $premium_before_gst=  $own_damage_premium['total_a'] + $liablity_premium['total_b'];
-                         $gst =  ( $premium_before_gst * 18  / 100);
+                         $gst =  ( $premium_before_gst * $gst_on_basic_rate  / 100);
                           $total_premium = [
     
                                     "premium_before_gst" => $premium_before_gst,                               
@@ -293,9 +303,9 @@ class CalculatePremiumController extends Controller
 
                                         $basic_od_premium_after_discount = $basic_for_vehicle - ( ($basic_for_vehicle * $discount_on_od_premium) / 100 );
         
-                                        $electrical_accessories = (($electrical_accessories * 4) / 100 ) ;
+                                        $electrical_accessories = (($electrical_accessories * $electrical_percentage_rate) / 100 ) ;
         
-                                        $lpg_cng_kit = ($request->lpg_cng_kit * 4 ) / 100;
+                                        $lpg_cng_kit = ($request->lpg_cng_kit * $lpg_cng_rate ) / 100;
 
                                         $total_basic_premium = $basic_od_premium_after_discount + $electrical_accessories  + $lpg_cng_kit;
         
@@ -338,7 +348,7 @@ class CalculatePremiumController extends Controller
         
                                 //   $restriccted_tppd =  ( $request->restriccted_tppd == 1)? 100 : 0;
                                 
-                                  $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? 60 :0;
+                                  $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? $lpg_cng_additional_on_tp_rate :0 ;
 
                                   $cc_tp_charges =  PrivateCar_cc_tp::where('id',$cubic_capacity)->first();   
 
@@ -365,7 +375,8 @@ class CalculatePremiumController extends Controller
         
         
                             $premium_before_gst=  $own_damage_premium['total_a'] + $liablity_premium['total_b'];
-                             $gst =  ( $premium_before_gst * 18  / 100);
+                             $gst =  ( $premium_before_gst * $gst_on_basic_rate  / 100);
+
                               $total_premium = [
     
                                         "premium_before_gst" => $premium_before_gst,                               
@@ -443,9 +454,9 @@ class CalculatePremiumController extends Controller
             
                                             $basic_for_vehicle = ( ($current_idv * $Vehicle_basic_rate) / 100) ;
                                             
-                                            $electrical_accessories = (($request->electrical_accessories * 4) / 100 );
+                                            $electrical_accessories = (($request->electrical_accessories * $electrical_percentage_rate) / 100 );
             
-                                            $lpg_cng_kit = ($request->lpg_cng_kit * 4 ) / 100;
+                                            $lpg_cng_kit = ($request->lpg_cng_kit * $lpg_cng_rate ) / 100;
             
                                             $basic_od_premium = $basic_for_vehicle + $electrical_accessories + $lpg_cng_kit;
             
@@ -453,7 +464,7 @@ class CalculatePremiumController extends Controller
             
                                             $basic_od_premium_after_discount = $basic_od_premium - $discount_on_od_premium ;
                                             
-                                            $imt_23 = ( ( ($basic_od_premium_after_discount + $geographical_ext) * 15) /100 );
+                                            $imt_23 = ( ( ($basic_od_premium_after_discount + $geographical_ext) * $imt_23_rate) /100 );
                 
                                             
                                             $basic_od_before_ncb = $basic_od_premium_after_discount + $imt_23 +$geographical_ext ;
@@ -499,7 +510,8 @@ class CalculatePremiumController extends Controller
             
                                 ];
             
-                                      $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? 60 :0;
+                                      $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? $lpg_cng_additional_on_tp_rate :0;
+
                                       $geographical_ext = $geographical_ext/4;
             
                                 $liablity_premium = [
@@ -516,8 +528,8 @@ class CalculatePremiumController extends Controller
             
             
                                 $premium_before_gst=  $own_damage_premium['total_a'] + $liablity_premium['total_b'];
-                                 $gst_on_basic_tp =  ( ($basic_tp )* 12  / 100);
-                                 $gst_on_rest_others =  ( $net_own_damage_premium * 18  / 100);
+                                 $gst_on_basic_tp =  ( ($basic_tp )* $gst_on_basic_rate  / 100);
+                                 $gst_on_rest_others =  ( $net_own_damage_premium * $gst_on_rest_rate  / 100);
             
                                   $total_premium = [
             
@@ -587,12 +599,12 @@ class CalculatePremiumController extends Controller
 
                                 $basic_for_vehicle = ( ($current_idv * $Vehicle_basic_rate) / 100) ;
                                 
-                                $electrical_accessories = (($request->electrical_accessories * 4) / 100 );
+                                $electrical_accessories = (($request->electrical_accessories * $electrical_percentage_rate) / 100 );
 
 
                                 $basic_od_premium = $basic_for_vehicle + $electrical_accessories ;
 
-                                $imt_23 = ($request->imt_23 == 1) ?  ( ( ($basic_od_premium ) * 15) /100 ) : 0;
+                                $imt_23 = ($request->imt_23 == 1) ?  ( ( ($basic_od_premium ) * $imt_23_rate ) /100 ) : 0;
 
                                 $basic_od_premium_before_discount = $basic_od_premium  + $imt_23;
                                 
@@ -659,7 +671,7 @@ class CalculatePremiumController extends Controller
 
                     $premium_before_gst=  $own_damage_premium['total_a'] + $liablity_premium['total_b'];
                   
-                     $gst_18_per =  ( $premium_before_gst * 18  / 100);
+                     $gst_18_per =  ( $premium_before_gst * $gst_on_basic_rate  / 100);
 
                       $total_premium = [
                                 "premium_before_gst" => $premium_before_gst,                                                           
@@ -726,9 +738,9 @@ class CalculatePremiumController extends Controller
             
                                             $basic_for_vehicle = ( ($current_idv * $Vehicle_basic_rate) / 100) ;
                                             
-                                            $electrical_accessories = (($request->electrical_accessories * 4) / 100 );
+                                            $electrical_accessories = (($request->electrical_accessories * $electrical_percentage_rate) / 100 );
             
-                                            $lpg_cng_kit = ($request->lpg_cng_kit * 4 ) / 100;
+                                            $lpg_cng_kit = ($request->lpg_cng_kit * $lpg_cng_rate ) / 100;
             
                                             $basic_od_premium = $basic_for_vehicle + $electrical_accessories + $lpg_cng_kit;
 
@@ -736,7 +748,7 @@ class CalculatePremiumController extends Controller
                                             
                                             $basic_od_premium_after_discount = $basic_od_premium - $discount_on_od_premium ;
 
-                                            $imt_23 = ($request->imt_23 == 1) ?  ( ( ($basic_od_premium_after_discount ) * 15) /100 ) : 0;
+                                            $imt_23 = ($request->imt_23 == 1) ?  ( ( ($basic_od_premium_after_discount ) * $imt_23_rate ) /100 ) : 0;
             
                                             
                                             
@@ -783,7 +795,7 @@ class CalculatePremiumController extends Controller
             
                                 ];
             
-                                $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? 60 :0;
+                                $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? $lpg_cng_additional_on_tp_rate :0;
                                    
             
                                 $liablity_premium = [
@@ -800,8 +812,8 @@ class CalculatePremiumController extends Controller
             
             
                                 $premium_before_gst=  $own_damage_premium['total_a'] + $liablity_premium['total_b'];
-                                 $gst_on_basic_tp =  ( ($basic_tp )* 12  / 100);
-                                 $gst_on_rest_others =  ( $net_own_damage_premium * 18  / 100);
+                                 $gst_on_basic_tp =  ( ($basic_tp )* $gst_on_basic_rate  / 100);
+                                 $gst_on_rest_others =  ( $net_own_damage_premium * $gst_on_rest_rate  / 100);
             
                                   $total_premium = [
             
@@ -871,14 +883,14 @@ class CalculatePremiumController extends Controller
 
                                 $basic_for_vehicle = ( ($current_idv * $Vehicle_basic_rate) / 100) ;
                                 
-                                $electrical_accessories = (($request->electrical_accessories * 4) / 100 );
+                                $electrical_accessories = (($request->electrical_accessories * $electrical_percentage_rate) / 100 );
 
-                                $lpg_cng_kit = ($request->lpg_cng_kit * 4 ) / 100;
+                                $lpg_cng_kit = ($request->lpg_cng_kit * $lpg_cng_rate ) / 100;
 
 
                                 $basic_od_premium = $basic_for_vehicle + $electrical_accessories + $lpg_cng_kit;
 
-                                $imt_23 = ($request->imt_23 == 1) ?  ( ( ($basic_od_premium ) * 15) /100 ) : 0;
+                                $imt_23 = ($request->imt_23 == 1) ?  ( ( ($basic_od_premium ) * $imt_23_rate ) /100 ) : 0;
 
                                 $basic_od_premium_before_discount = $basic_od_premium  + $imt_23;
                                 
@@ -928,7 +940,7 @@ class CalculatePremiumController extends Controller
                           $restricted_tppd =  ( $request->restricted_tppd == 1)? 150 : 0;
                           $passenger_coverage = ($chart->per_passengers_rate * $request->no_of_passengers);
                        
-                          $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? 60 :0;
+                          $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? $lpg_cng_additional_on_tp_rate :0;
 
                     $liablity_premium = [
 
@@ -947,7 +959,7 @@ class CalculatePremiumController extends Controller
 
                     $premium_before_gst=  $own_damage_premium['total_a'] + $liablity_premium['total_b'];
                   
-                     $gst_18_per =  ( $premium_before_gst * 18  / 100);
+                     $gst_18_per =  ( $premium_before_gst * $gst_on_basic_rate  / 100);
 
                       $total_premium = [
                                 "premium_before_gst" => $premium_before_gst,                                                           
@@ -1018,7 +1030,7 @@ class CalculatePremiumController extends Controller
 
                                     $basic_for_vehicle = ( ($current_idv * $Vehicle_basic_rate) / 100)  + $bus_tp_rate_additional->additional_charges ;
                                     
-                                    $electrical_accessories = (($request->electrical_accessories * 4) / 100 );
+                                    $electrical_accessories = (($request->electrical_accessories * $electrical_percentage_rate ) / 100 );
 
 
                                     $basic_od_premium = $basic_for_vehicle + $electrical_accessories ;
@@ -1026,7 +1038,7 @@ class CalculatePremiumController extends Controller
                                     $discount_on_od_premium = ($basic_od_premium * $request->discount_on_od_premium) /100 ;
                                     $basic_od_premium_after_discount = $basic_od_premium - $discount_on_od_premium;
 
-                                    $imt_23 = ($request->imt_23 == 1) ?  ( ( ($basic_od_premium_after_discount ) * 15) /100 ) : 0;
+                                    $imt_23 = ($request->imt_23 == 1) ?  ( ( ($basic_od_premium_after_discount ) * $imt_23_rate )  /100 ) : 0;
 
                             
                                     
@@ -1101,7 +1113,7 @@ class CalculatePremiumController extends Controller
 
                         $premium_before_gst=  $own_damage_premium['total_a'] + $liablity_premium['total_b'];
                     
-                        $gst_18_per =  ( $premium_before_gst * 18  / 100);
+                        $gst_18_per =  ( $premium_before_gst * $gst_on_basic_rate  / 100);
 
                         $total_premium = [
                                     "premium_before_gst" => $premium_before_gst,                                                           
@@ -1155,7 +1167,6 @@ class CalculatePremiumController extends Controller
                                
                               $chart =  MiscSpecialVehiclesModel::where('zone',$request->zone)->where('age',$request->age)->first();
                                
-
                                           $current_idv = $idv - ( ($idv * $depreciation) / 100);
             
                                           $Vehicle_basic_rate = $chart->vehicle_basic_rate;
@@ -1169,7 +1180,7 @@ class CalculatePremiumController extends Controller
                                           $basic_od_after_discount = $basic_od_premium - $discount_on_od_premium; 
 
                                           
-                                          $imt_23 = ($request->imt_23 == 1) ?  ( ( ($basic_od_after_discount +$request->geographical_ext ) * 15) /100 ) : 0;
+                                          $imt_23 = ($request->imt_23 == 1) ?  ( ( ($basic_od_after_discount +$request->geographical_ext ) * $imt_23_rate ) /100 ) : 0;
 
                                           $basic_od_before_ncb = $basic_od_after_discount + $imt_23 + $request->geographical_ext ;
                                           
@@ -1189,7 +1200,6 @@ class CalculatePremiumController extends Controller
                                           "idv" => $idv,
                                           "depreciation"=> $depreciation,
                                           "current_idv" => $current_idv,
-            
                                           "Vehicle_basic_rate" => $Vehicle_basic_rate,
                                           
                                           "basic_for_vehicle" => $basic_for_vehicle   ,
@@ -1197,9 +1207,8 @@ class CalculatePremiumController extends Controller
                                           "basic_od_premium" => $basic_od_premium,
                                           "discount_on_od_premium" => $discount_on_od_premium,
 
-                                         
                                           'basic_od_after_discount'=> $basic_od_after_discount,
-                                            "imt_23" => $imt_23,
+                                          "imt_23" => $imt_23,
                                           
                                           "basic_od_before_ncb" =>$basic_od_before_ncb,
                                           "no_claim_bonus" =>  $no_claim_bonus,
@@ -1214,13 +1223,13 @@ class CalculatePremiumController extends Controller
                                     $restriccted_tppd =  ( $request->restriccted_tppd == 1)? 150 : 0;
                                     $passenger_coverage = ($chart->per_passengers_rate * $request->no_of_passengers);
                                  
-                                    $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? 60 :0;
+                                    $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? $lpg_cng_additional_on_tp_rate : 0 ;
             
                               $liablity_premium = [
             
                                   "basic_liability" => $basic_tp,
   
-                                   "geographical_ext" => $request->geographical_ext /4, 
+                                  "geographical_ext" => $request->geographical_ext /4, 
                                   "pa_owner_driver" => $request->pa_to_owner_driver,
                                   "ll_to_paid_driver" => $request->ll_to_paid_driver,
                                   "ll_to_employee_other_then_paid_driver" => $request->ll_to_employee_other_then_paid_driver,
@@ -1235,7 +1244,7 @@ class CalculatePremiumController extends Controller
             
                               $premium_before_gst=  $own_damage_premium['total_a'] + $liablity_premium['total_b'];
                             
-                               $gst_18_per =  ( $premium_before_gst * 18  / 100);
+                               $gst_18_per =  ( $premium_before_gst * $gst_on_basic_rate  / 100);
             
                                 $total_premium = [
                                           "premium_before_gst" => $premium_before_gst,                                                           
@@ -1358,7 +1367,7 @@ class CalculatePremiumController extends Controller
             
             
                                 $premium_before_gst=  $own_damage_premium['total_a'] + $liablity_premium['total_b'];
-                                 $gst =  ( $premium_before_gst * 18  / 100);
+                                 $gst =  ( $premium_before_gst * $gst_on_basic_rate  / 100);
                                   $total_premium = [
             
                                             "premium_before_gst" => $premium_before_gst,                               
@@ -1392,7 +1401,6 @@ class CalculatePremiumController extends Controller
                         'kw' => "required",
                         'electrical_accessories' => "required", 
                         'lpg_cng_kit' => "required",
-           
                         'no_claim_bonus' => 'required|numeric',
                         'pa_to_owner_driver' => "required|numeric",
                         'll_to_paid_driver' => "required|numeric",
@@ -1423,9 +1431,9 @@ class CalculatePremiumController extends Controller
     
                                             $basic_od_premium_after_discount = $basic_for_vehicle - ( ($basic_for_vehicle * $discount_on_od_premium) / 100 );
             
-                                            $electrical_accessories = (($electrical_accessories * 4) / 100 ) ;
+                                            $electrical_accessories = (($electrical_accessories * $electrical_percentage_rate ) / 100 ) ;
             
-                                            $lpg_cng_kit = ($request->lpg_cng_kit * 4 ) / 100;
+                                            $lpg_cng_kit = ($request->lpg_cng_kit * $lpg_cng_rate ) / 100;
     
                                             $total_basic_premium = $basic_od_premium_after_discount + $electrical_accessories  + $lpg_cng_kit;
             
@@ -1468,7 +1476,7 @@ class CalculatePremiumController extends Controller
             
                                     //   $restriccted_tppd =  ( $request->restriccted_tppd == 1)? 100 : 0;
                                     
-                                      $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? 60 :0;
+                                      $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? $lpg_cng_additional_on_tp_rate :0;
     
                                       $kw_tp_charges =  PrivateCarEv_kw_tp_rate::where('id',$cubic_capacity)->first();   
     
@@ -1495,7 +1503,7 @@ class CalculatePremiumController extends Controller
             
             
                                 $premium_before_gst=  $own_damage_premium['total_a'] + $liablity_premium['total_b'];
-                                 $gst =  ( $premium_before_gst * 18  / 100);
+                                 $gst =  ( $premium_before_gst * $gst_on_basic_rate  / 100);
                                   $total_premium = [
         
                                             "premium_before_gst" => $premium_before_gst,                               

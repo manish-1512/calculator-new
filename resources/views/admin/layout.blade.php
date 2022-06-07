@@ -288,49 +288,58 @@ table.dataTable thead .sorting_desc_disabled:before {
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills  flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
+
             <a href="{{route('admin.dashboard')}}" class="nav-link {{  (request()->segment(2) =='dashboard')? 'active':''; }} ">
-              
-            <img  src="{{asset('images/dashboard.png')}}" alt="" height="25" width="30">
-              <p class="ps-3">Dashboard</p>
+              <div class="d-flex d-flex justify-content-between">
+                <p class="">DASHBOARD</p>
+                <i class="fa-solid fa-gauge-high " style="font-size: 20px" ></i>
+              </div>
             </a>
 
           </li>
 
           <li class="nav-item menu-open">
             
-            <a href="{{route('admin.users.index')}}" class="nav-link {{  (request()->segment(2) =='dashboard')? 'active':''; }} ">
-              
-            <img  src="{{asset('images/dashboard.png')}}" alt="" height="25" width="30">
-              <p class="ps-3">Users</p>
+            <a href="{{route('admin.users.index')}}" class="nav-link {{  (request()->segment(2) =='users')? 'active':''; }} ">
+              <div class="d-flex d-flex justify-content-between" >
+                <p class="">USERS</p>
+              <i class="fa fa-users " style="font-size: 20px"></i>
+              </div>
             </a>
 
           </li>
           <!--  -->
           <li class="nav-item">
             <a href="{{route('admin.moter_policies.index')}}" class="nav-link {{  (request()->segment(2) =='moter-policies')? 'active':''; }} ">
-            <img  src="{{asset('images/policy.png')}}" alt="" height="25" width="30">
-              <p class="ps-3"> MOTER POLICIES </p>
+
+              <div class="d-flex d-flex justify-content-between" >
+                <p class=""> MOTER POLICIES </p>
+              <i class="fa fa-book" style="font-size: 20px" aria-hidden="true"></i>
+              </div>
             </a>
           </li>
               <!--  -->
           <!--  -->
           <li class="nav-item">
-            <a href="{{route('admin.gst_and_other_rates.index')}}" class="nav-link {{  (request()->segment(2) =='moter-policies')? 'active':''; }} ">
-            <img  src="{{asset('images/policy.png')}}" alt="" height="25" width="30">
-            
-              <p class="ps-3"> GST AND OTHER RATES </p>
+            <a href="{{route('admin.gst_and_other_rates.index')}}" class="nav-link {{  (request()->segment(2) =='gst-and-others-rates')? 'active':''; }} ">
+              <div class="d-flex d-flex justify-content-between" >
+                <p class="">GST AND OTHER  RATES </p>
+                <i class="fa-solid fa-percent" style="font-size: 20px"></i>
+              </div>
             </a>
           </li>
               <!--  -->
           <!--  -->
           <li class="nav-item">
-            <a href="{{route('admin.categories')}}" class="nav-link {{  (request()->segment(2) =='moter-policies')? 'active':''; }} ">
-            <img  src="{{asset('images/policy.png')}}" alt="" height="25" width="30">
-              <p class="ps-3"> MOTER POLICIES View </p>
+            <a href="{{route('admin.categories')}}" class="nav-link {{  (request()->segment(2) =='categories')? 'active':''; }} ">
+              <div class="d-flex d-flex justify-content-between" >
+                <p class=""> MOTER POLICIES VIEW </p>
+              <i class="fa-regular fa-eye " style="font-size: 20px"></i>
+              </div>
             </a>
           </li>
               <!--  -->
@@ -338,7 +347,7 @@ table.dataTable thead .sorting_desc_disabled:before {
 
 
 
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a href="{{route('admin.moter_policies.index')}}" class="nav-link {{  (request()->segment(2) =='user-management')? 'active':''; }} ">
             <img  src="{{asset('images/policy.png')}}" alt="" height="25" width="30">
               <p class="ps-3"> MOTER POLICIES <i class="fa-solid fa-angle-down ps-2"></i> </p>
@@ -432,7 +441,7 @@ table.dataTable thead .sorting_desc_disabled:before {
                   </a>
               </li> 
             </ul>
-           </li>
+           </li> --}}
 
 
 
