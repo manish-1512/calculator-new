@@ -144,8 +144,6 @@ class UserController extends Controller
                         "title" => "this is title",
                         "body" => $otp
                     ];  
-                
-                
 
                     if ( Mail::to("kumarvijesh089@gmail.com")->send(new NotifyMail($details))) {
 
@@ -162,7 +160,7 @@ class UserController extends Controller
 
                         return response()->json([
                             'status' => 'failed' ,
-                            'message' => "Sorry! Please try again latter",
+                            'message' => "Sorry! Please try again latter but opt is set 123456",
                             'data' => [
                 
                             ],401
@@ -263,7 +261,8 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(), [  
             'email' => "required|email",
-            'password' => "required|min:6",         
+            'password' => "required|min:6",
+            'otp' => "required|numeric"         
         ]);
 
         if($validator->fails()){
@@ -272,13 +271,12 @@ class UserController extends Controller
 
         }else{ 
 
-                $check_user_data = User::where('email',$request->email)->first();
+                $check_user_data = User::where('email',$request->email)->where('otp',$request->otp)->first();
 
                 if($check_user_data != null){
 
                     $check_user_data->password = bcrypt($request->password);
-                    $check_user_data->otp = Null;
-
+             
                     if($check_user_data->save()){
 
                         $check_user_data->otp  = Null;
@@ -302,6 +300,16 @@ class UserController extends Controller
                         ]);
 
                     }
+
+                }else{
+                    
+                    return response()->json([
+                        'status' => 'failed' ,
+                        'message' => "The provided credential do not match our records",
+                        'data' => [
+            
+                        ],401
+                    ]);
 
                 }
 

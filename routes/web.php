@@ -330,7 +330,7 @@ Route::get('/forgot-password', function () {
  });
 
 
- //=======================================front end ==================//////////////
+ //=======================================front end routes for mobile  ==================//////////////
 
  Route::post('register', 'App\Http\Controllers\UserController@register');
  Route::post('login', 'App\Http\Controllers\UserController@login');
@@ -341,17 +341,15 @@ Route::get('/forgot-password', function () {
 
  Route::post('dynamic-fields','App\Http\Controllers\Api\DynamicFieldsController@index');
 
- use App\Http\Controllers\SendEmailController;
-
- Route::get('send-email', [SendEmailController::class, 'index']);
-
-
 
  Route::post('forgot-password','App\Http\Controllers\UserController@forgotPassword');
  Route::post('verify-otp','App\Http\Controllers\UserController@verifyOtp');
  Route::post('reset-password','App\Http\Controllers\UserController@resetPassword');
  Route::get('/logout','App\Http\Controllers\UserController@logout')->name('logout');
 
+
+
+ 
  Route::group(['middleware'=> ['auth','preventBackHistory'] ,'namespace' => 'App\Http\Controllers'],function(){
     
   
