@@ -111,7 +111,6 @@ Route::get('/forgot-password', function () {
     });
 
 
-
      Route::get('categories','CategoryController@index')->name('categories');
 
     Route::group(['prefix' => 'moter-policies','as'=>'moter_policies.'],function() {    
@@ -336,18 +335,32 @@ Route::get('/forgot-password', function () {
  Route::post('register', 'App\Http\Controllers\UserController@register');
  Route::post('login', 'App\Http\Controllers\UserController@login');
 
+ Route::post('/policies','App\Http\Controllers\Api\PoliciesController@index')->name('policies');
+
+ Route::post('calculate-premium','App\Http\Controllers\Api\CalculatePremiumController@calcuatePolicyPremium');
+
+ Route::post('dynamic-fields','App\Http\Controllers\Api\DynamicFieldsController@index');
+
+ use App\Http\Controllers\SendEmailController;
+
+ Route::get('send-email', [SendEmailController::class, 'index']);
+
+
+
+ Route::post('forgot-password','App\Http\Controllers\UserController@forgotPassword');
+ Route::post('verify-otp','App\Http\Controllers\UserController@verifyOtp');
+ Route::post('reset-password','App\Http\Controllers\UserController@resetPassword');
+ Route::get('/logout','App\Http\Controllers\UserController@logout')->name('logout');
+
  Route::group(['middleware'=> ['auth','preventBackHistory'] ,'namespace' => 'App\Http\Controllers'],function(){
     
-    Route::get('/logout','UserController@logout')->name('logout');
+  
 
     Route::get('/dashboard',function(){
         echo "dashboard";
     })->name('dashboard');
 
-    Route::post('/policies','Api\PoliciesController@index')->name('policies');
-    Route::post('calculate-premium','Api\CalculatePremiumController@calcuatePolicyPremium');
-
-    Route::post('dynamic-fields','Api\DynamicFieldsController@index');
+  
 
 
 

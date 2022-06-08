@@ -816,6 +816,25 @@ class DynamicFieldsController extends Controller
             "type" => "selectbox",
             "options" =>$seating_capacity
         ],
+        
+         [
+            "key" => "no_of_seat",
+            "name" => "No Of Seats",
+            "value" => "0",
+            "type" => "textbox",
+         ],
+         [
+            "key" => "electrical_accessories",
+            "name" => "Electrical Accessories",
+            "value" => "0",
+            "type" => "textbox",
+         ],
+         [
+            "key" => "lpg_cng_kit",
+            "name" => "LPG/CNG kit",
+            "value" => "0",
+            "type" => "textbox",
+         ],
        
         [
             "key" => "imt_23",
@@ -854,7 +873,7 @@ class DynamicFieldsController extends Controller
             "name" => "LL to Employee Other Then Paid Driver",
             "value" => "0",
             "type" => "textbox",
-            ],
+         ],
 
     ];
 
