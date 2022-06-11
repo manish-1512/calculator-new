@@ -353,6 +353,32 @@
             </a>
 
         </div>
+     {{--  --}}
+        <div class="col-xl-3 col-lg-3 col-md-6">
+            
+            <a href="{{route('admin.e_rickshow_upto_6_passengers.index')}}" class="text-decoration-none" >
+
+                <div class="card">
+                    <div class="card-statistic-3 p-2">
+                        <div class="card-icon card-icon-large"></div>
+                    
+                        <div class="row align-items-center d-flex">
+                            <div class="col-12">
+                                <h5 class="d-flex text-dark pt-1 ps-1 align-items-center mb-0">
+                                    E-RickShaow (up to 6 passanger)
+                                </h5>
+                            </div>
+                            <div class="col-12 text-center">
+                             <img  src="https://freepngimg.com/thumb/bike/23003-6-motorbike-image.png" alt="" height="100" width="100" class="img-fluid">
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+            </a>
+
+        </div>
     
   
     

@@ -159,7 +159,7 @@ class UserController extends Controller
                         
 
                         return response()->json([
-                            'status' => 'failed' ,
+                            'status' => 'success' ,
                             'message' => "Sorry! Please try again latter but opt is set 123456",
                             'data' => [
                 

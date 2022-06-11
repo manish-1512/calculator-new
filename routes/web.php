@@ -271,6 +271,14 @@ Route::get('/forgot-password', function () {
         Route::get('/edit/{id}','ThreeWheelerPCV_UpTo_6_PassengersController@edit')->name('edit');
         Route::delete('/delete/{id}','ThreeWheelerPCV_UpTo_6_PassengersController@destroy')->name('destroy');
     });
+    
+    Route::group(['prefix' => 'e-rickshow-upto-6-passengers','as'=>'e_rickshow_upto_6_passengers.'],function() {   
+
+        Route::get('/','ERickshawUp_To_Six_PassangerController@index')->name('index');
+        Route::post('/store','ERickshawUp_To_Six_PassangerController@store')->name('store');
+        Route::get('/edit/{id}','ERickshawUp_To_Six_PassangerController@edit')->name('edit');
+        Route::delete('/delete/{id}','ERickshawUp_To_Six_PassangerController@destroy')->name('destroy');
+    });
 
     Route::group(['prefix' => 'three-wheeler-pcv-upto-17-passengers','as'=>'three_wheeler_pcv_upto_17_passengers.'],function() {   
         Route::get('/','ThreeWheelerPCV_UpTo_17_PassengersController@index')->name('index');

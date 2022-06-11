@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\E_Rickshaw_up_to_6_passanger_rates;
 use App\Models\Four_wheeler_above_6_passengers_bus_basic_rates;
 use App\Models\Four_wheeler_above_6_passengers_bus_tp_additional_rates;
 use App\Models\Four_wheeler_up_to_6_passengers_taxi;
@@ -2097,6 +2098,8 @@ class CalculatePremiumController extends Controller
                                 ];
             
                                     //   $restriccted_tppd =  ( $request->restriccted_tppd == 1)? 100 : 0;
+
+                                    E_Rickshaw_up_to_6_passanger_rates::get();
                                     
                                       $lpg_cng_liablity= $request->lpg_cng_kit != 0 ? $lpg_cng_additional_on_tp_rate :0;
     

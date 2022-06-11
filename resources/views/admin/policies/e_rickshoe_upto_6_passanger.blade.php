@@ -33,16 +33,16 @@
                 </tr>
               </thead>
          
-          @if (isset($goods_carrying_data))
+          @if (isset($e_rickshow_data))
        
                <tbody>
 
-                @foreach ($goods_carrying_data as $key =>  $data)
+                @foreach ($e_rickshow_data as $key =>  $data)
 
                   <tr>
                     <td>{{++$key}}</td>
                     <td>{{$data->zone}}</td>                       
-                    <td>{{ str_replace('_',' ', $data->age)  }} Years</td>
+                    <td>{{ str_replace('_',' ', $data->age) }} Years </td>
                     <td>{{$data->vehicle_basic_rate}}</td>
                     <td>{{$data->vehicle_tp_rate}}</td>
                     <td>{{$data->per_passengers_rate}}</td>
@@ -79,7 +79,7 @@
                     
                 <div class="container" >
 
-                  <form action="{{route('admin.three_wheeler_pcv_upto_6_passengers.store')}}"  method="POST" id="three_wheeler_pcv_upto_6_create" enctype="multipart/form-data" >
+                  <form action="{{route('admin.e_rickshow_upto_6_passengers.store')}}"  method="POST" id="e_reckshow_upto_6_create" enctype="multipart/form-data" >
 
                           @csrf                  
 
@@ -166,7 +166,7 @@
 
                     
                 <div class="container" >
-                <form action="{{route('admin.three_wheeler_pcv_upto_6_passengers.store')}}"  method="POST" id="goods_carrying_public_update" enctype="multipart/form-data" >
+                <form action="{{route('admin.e_rickshow_upto_6_passengers.store')}}"  method="POST" id="goods_carrying_public_update" enctype="multipart/form-data" >
                       @csrf                  
 
                       <div class="form-group">
@@ -290,7 +290,7 @@
     
     $(document).ready( function(){
       
-      $("#three_wheeler_pcv_upto_6_create").on('submit',function(e){
+      $("#e_reckshow_upto_6_create").on('submit',function(e){
 
           e.preventDefault();
 
@@ -325,7 +325,7 @@
                             );
                       }else if(data.status == 200){
 
-                        $('#three_wheeler_pcv_upto_6_create')[0].reset();
+                        $('#e_reckshow_upto_6_create')[0].reset();
 
                         Swal.fire({
 
@@ -362,7 +362,7 @@
       $.ajax({
 
       type:"GET",
-      url:  "{{APP_PATH}}"+"admin/three-wheeler-pcv-upto-6-passengers/edit/"+rate_chart_id,
+      url:  "{{APP_PATH}}"+"admin/e-rickshow-upto-6-passengers/edit/"+rate_chart_id,
 
 
               success:function(response){
@@ -379,12 +379,12 @@
 
 
                 $('#edit_id').val(rate_chart_id);
-                $('#edit_policy_id').val(response.three_wheeler_pcv_upto_6_data.policy_id );
-                $('#edit_zone').val(response.three_wheeler_pcv_upto_6_data.zone );
-                $('#edit_age').val(response.three_wheeler_pcv_upto_6_data.age);
-                $('#edit_vehicle_basic_rate').val(response.three_wheeler_pcv_upto_6_data.vehicle_basic_rate );
-                $('#edit_vehicle_tp_rate').val(response.three_wheeler_pcv_upto_6_data.vehicle_tp_rate );
-                $('#edit_per_passengers_rate').val(response.three_wheeler_pcv_upto_6_data.per_passengers_rate );
+                $('#edit_policy_id').val(response.e_rickshaw_upto_6_passanger_data.policy_id );
+                $('#edit_zone').val(response.e_rickshaw_upto_6_passanger_data.zone );
+                $('#edit_age').val(response.e_rickshaw_upto_6_passanger_data.age);
+                $('#edit_vehicle_basic_rate').val(response.e_rickshaw_upto_6_passanger_data.vehicle_basic_rate );
+                $('#edit_vehicle_tp_rate').val(response.e_rickshaw_upto_6_passanger_data.vehicle_tp_rate );
+                $('#edit_per_passengers_rate').val(response.e_rickshaw_upto_6_passanger_data.per_passengers_rate );
                  
 
             }  
@@ -479,7 +479,7 @@ var policy_id = $('#delete_policy_id').val();
 $.ajax({
 
     type:"DELETE",
-    url: "{{APP_PATH}}"+"admin/three-wheeler-pcv-upto-6-passengers/delete/"+policy_id,
+    url: "{{APP_PATH}}"+"admin/e-rickshow-upto-6-passengers/delete/"+policy_id,
 
     data:{'_token': '{{ csrf_token() }}' },
 

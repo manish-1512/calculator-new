@@ -26,6 +26,7 @@ class LoginController extends Controller
             
         );
             $credentials['is_active'] = 1; 
+            $credentials['role'] = "admin"; 
    
 
                 if(Auth::attempt($credentials)){

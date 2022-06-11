@@ -1202,7 +1202,94 @@ class DynamicFieldsController extends Controller
         "fields" => array_merge($common_fields,$fields)
     ]);
 
-        }
+        }else if( $request->id == 19) {
+
+              
+            $fields = [
+  
+              [
+                "key" => "age",
+                "value" => "",
+                "name" => "Vehicle age",
+                "type" => "selectbox",
+                "options" => [
+                    [
+                        "id" =>"0_to_5",
+                        "value" =>"Up to 5 Years"
+                    ],
+                    [
+                        "id" =>"5_to_7",
+                        "value" =>" > 5 Years < 7 Years"
+                    ] ,   
+                    [
+                        "id" =>"7_to_more",
+                        "value" =>"Above 7 Years "
+                    ] 
+                 ]         
+                ],
+  
+          [
+          "key" => "zone",
+          "value" => "",
+          "name" => "Zone",
+          "type" => "selectbox",
+          "options" =>[
+                          [
+                              "id" =>"a",
+                              "value" =>"a"
+                          ],
+                          [
+                              "id" =>"b",
+                              "value" =>"b"
+                          ],     
+                          [
+                              "id" =>"c",
+                              "value" =>"c"
+                          ]     
+                             
+                  ]
+          ], 
+         
+          [
+              "key" => "no_of_passengers",
+              "name" => "Seating Capacity",
+              "value" => "0",
+              "type" => "textbox",
+          ],
+          [
+              "key" => "value_added_service",
+              "name" => "Value Added Service(Amount)",
+              "value" => "0",
+              "type" => "textbox",
+          ],
+         
+         
+          [
+              "key" => "ll_to_paid_driver",
+              "name" => "LL To Paid Driver",
+              "value" => "0",
+              "type" => "selectbox",
+              "options" =>[
+                  [
+                      "id" =>"0",
+                      "value" =>"0"
+                  ],
+                  [
+                      "id" =>"50",
+                      "value" =>"50"
+                  ]     
+                   ]
+           ],
+
+      
+      ];
+  
+              return response()->json([
+  
+              "fields" => array_merge($common_fields,$fields)
+              ]); 
+              
+          }
 
      }
     }
