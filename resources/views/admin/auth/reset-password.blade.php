@@ -34,7 +34,7 @@
                   <div class="card-header">Reset Password</div>
                   <div class="card-body">
   
-                      <form action="{{ route('password.update') }}" method="POST">
+                      <form action="{{ route('admin.password.update') }}" method="POST">
                           @csrf
                           <input type="hidden" name="token" value="{{ $token }}">
   
@@ -92,7 +92,7 @@
           <div class="card-header"><h3> Reset Password</h3></div>
             <div class="mb-md-5 mt-md-4 pb-5">
            
-                <form action="{{route('password.update')}}" method="Post" >
+                <form action="{{route('admin.password.update')}}" method="Post" >
                  
                 @csrf      
 

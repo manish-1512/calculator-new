@@ -34,38 +34,38 @@
 
             <div class="mb-md-5 mt-md-4 pb-5">
 
-                <form action="{{route('password.email')}}" method="Post" >
+                <form action="/admin/forgot-password" method="POST" >
                   @csrf
-              <h2 class="fw-bold mb-5 text-uppercase">Reset Password</h2>
+                  <h2 class="fw-bold mb-5 text-uppercase">Reset Password</h2>
 
-              @if(session('status'))
-                  <p class=" alert alert-success ">{{session('status')}}</p>
-              @elseif(session('email'))
+                  @if(session('status'))
+                      <p class=" alert alert-success ">{{session('status')}}</p>
+                  @elseif(session('email'))
 
-              <p class="text-white bg-danger">{{session('email')}}</p>
+                  <p class="text-white bg-danger">{{session('email')}}</p>
 
-              @endif
-             
+                  @endif
+                
 
-              <div class="form-outline form-white mb-4">
-                <label class="form-label" for="typeEmailX">Email</label>
-                <input type="email" id="typeEmailX" class="form-control form-control-lg" name="email" />
-                @if ($errors->has('email'))
-                    <span class="text-danger">{{ $errors->first('email') }}</span>
-                @endif
-              </div>
+                  <div class="form-outline form-white mb-4">
+                    <label class="form-label" for="typeEmailX">Email</label>
+                    <input type="email" id="typeEmailX" class="form-control form-control-lg" name="email" />
+                    @if ($errors->has('email'))
+                        <span class="text-danger">{{ $errors->first('email') }}</span>
+                    @endif
+                  </div>
 
 
-              <!-- <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p> -->
+                  <!-- <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p> -->
 
-              <button class="btn btn-outline-light btn-lg px-5" type="submit">Reset</button>
+                  <button class="btn btn-outline-light btn-lg px-5" type="submit">Reset</button>
 
-              @if (Session::has('wrong_details'))
+                  @if (Session::has('wrong_details'))
 
-                <div class="mt-3 bg-danger">
-                  <span class="">{{ Session::get('wrong_details') }}</span>
-                </div>
-               @endif
+                    <div class="mt-3 bg-danger">
+                      <span class="">{{ Session::get('wrong_details') }}</span>
+                    </div>
+                  @endif
 
 
               </form>

@@ -61,7 +61,7 @@
 
               <div class="form-outline form-white mb-4">
                 
-                <a href="{{route('password.request') }}">forgot password</a>
+                <a href="{{route('admin.password.request') }}">forgot password</a>
               </div>
 
               @if (Session::has('wrong_details'))
