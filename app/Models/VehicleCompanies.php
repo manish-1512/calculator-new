@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class VehicleCompanies extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [       
+        'title','is_active','order_by'
+       ];
+    protected $table = "vehicle_companies";
+    protected $primaryKey ="id";
+    public $timestamps =true;
+}

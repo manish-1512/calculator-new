@@ -16,6 +16,8 @@ class VerifyCsrfToken extends Middleware
         'login','calculate-premium/two-wheeler-one-year',
         'calculate-premium',
         'forgot-password',
+        'vehicle-companies',
+        'vehicle-model',
         'calculate-premium/pdf-generate',
         'verify-otp',
         'reset-password',

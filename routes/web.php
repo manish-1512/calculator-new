@@ -105,7 +105,35 @@ Route::group(['prefix' => 'admin','as'=>'admin.'],function(){
 
     Route::get('/dashboard','DashboardController@dashboardData')->name('dashboard');
 
-    
+
+    // this is for vehicle companies
+
+    Route::group(['prefix' => 'vehicle-company','as'=>'vehicle_company.'],function() {    
+
+        Route::get('/','VehicleCompaniesController@index')->name('index');
+        Route::post('/store','VehicleCompaniesController@store')->name('store');
+        Route::get('/edit/{id}','VehicleCompaniesController@edit')->name('edit');
+        Route::get('/status/{id}','VehicleCompaniesController@changeStatus')->name('status');
+        Route::delete('/delete/{id}','VehicleCompaniesController@destroy')->name('destroy');
+        Route::post('/update','VehicleCompaniesController@update')->name('update');
+    });
+
+    Route::group(['prefix' => 'vehicle-model','as'=>'vehicle_model.'],function() {    
+        Route::get('/','VehicleModelController@index')->name('index');
+        Route::post('/store','VehicleModelController@store')->name('store');
+        Route::post('/update','VehicleModelController@update')->name('update');
+        Route::get('/edit/{id}','VehicleModelController@edit')->name('edit');
+        Route::get('/status/{id}','VehicleModelController@changeStatus')->name('status');
+        Route::delete('/delete/{id}','VehicleModelController@destroy')->name('destroy');
+
+    });
+
+
+////////////////////////////////////////////////////////
+
+
+
+
     Route::group(['prefix' => 'users','as'=>'users.'],function() {    
 
         Route::get('/','UserController@index')->name('index');
@@ -357,12 +385,14 @@ Route::group(['prefix' => 'admin','as'=>'admin.'],function(){
  Route::post('register', 'App\Http\Controllers\UserController@register');
  Route::post('login', 'App\Http\Controllers\UserController@login');
 
+ Route::post('/vehicle-companies','App\Http\Controllers\Api\VehicleCompaniesController@index')->name('vehicle_companies');
+ Route::post('/vehicle-model','App\Http\Controllers\Api\VehicleModelController@index')->name('vehicle_model');
+
  Route::post('/policies','App\Http\Controllers\Api\PoliciesController@index')->name('policies');
 
  Route::post('calculate-premium','App\Http\Controllers\Api\CalculatePremiumController@calcuatePolicyPremium');
 
  Route::post('calculate-premium/pdf-generate','App\Http\Controllers\Api\GeneratePdfController@index');
-
  Route::post('dynamic-fields','App\Http\Controllers\Api\DynamicFieldsController@index');
 
 
